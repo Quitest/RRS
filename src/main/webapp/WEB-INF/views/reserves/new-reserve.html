@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Создание нового ресурса</title>
+</head>
+<body>
+<form th:method="POST" th:action="@{/reserves}" th:object="${newReserve}">
+    <label for="reserveTitle">Название ресурса: </label>
+    <input id="reserveTitle" type="text" th:field="*{title}"/>
+    <br/>
+    <label for="eventDateTime">Укажите дату и время: </label>
+    <input id="eventDateTime" type="datetime-local" th:field="*{eventDateTime}"/>
+
+    <input type="submit" value="Создать"/>
+</form>
+</body>
+</html>

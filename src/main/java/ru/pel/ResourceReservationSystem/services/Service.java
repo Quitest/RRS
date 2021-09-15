@@ -1,6 +1,6 @@
 package ru.pel.ResourceReservationSystem.services;
 
-import ru.pel.ResourceReservationSystem.models.Resource;
+import ru.pel.ResourceReservationSystem.models.Reserve;
 import ru.pel.ResourceReservationSystem.models.User;
 
 import java.time.LocalDateTime;
@@ -10,14 +10,14 @@ public interface Service {
      * Резервировать ресурс. Если ресурс свободен возвращать идентификатор, если нет бросать ошибку.
      *
      * @param user     Пользователь, пытающийся зарезервировать ресурс.
-     * @param resource резервируемый ресурс.
+     * @param reserve резервируемый ресурс.
      * @param start    дата и время начала резервирования ресурса.
      * @param stop     дата и время окончания резервирования ресурса.
      * @return id ресурса, если он свободен.
      * @throws Throwable Если ресурс занят
      */
     //TODO написать свое исключение. Вариант - конкретный тип исключения может бросать конкретный тип ресурса.
-    long acquire(User user, Resource resource, LocalDateTime start, LocalDateTime stop) throws Throwable;
+    long acquire(User user, Reserve reserve, LocalDateTime start, LocalDateTime stop) throws Throwable;
 
     /**
      * Поиск резерва по идентификатору
@@ -26,7 +26,7 @@ public interface Service {
      * @return найденный ресурс.
      */
     //TODO Решить: если ресурс не найден, что возвращать null или пустой ресурс, или вообще Optional?
-    Resource findById(long id);
+    Reserve findById(long id);
 
     /**
      * Освободить ресурс, по идентификатору.

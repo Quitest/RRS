@@ -4,7 +4,8 @@ package ru.pel.ResourceReservationSystem;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
+//TODO для создания сильно нагруженного приложения необходим переход на реактивное программирование -
+// Spring Reactive Web. Использовать реактивные БД, клиент и сервер.
 @SpringBootApplication
 public class ResourceReservationSystemApplication {
 

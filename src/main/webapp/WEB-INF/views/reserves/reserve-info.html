@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Сведения о ресурсе</title>
+</head>
+<body>
+<table>
+    <tr>
+        <td>Название: </td>
+        <td th:text="${reserveInfo.getTitle}"></td>
+    </tr>
+    <tr>
+        <td>Идентификатор: </td>
+        <td th:text="${reserveInfo.getId()}"></td>
+    </tr>
+    <tr>
+        <td>Дата и время ресурса: </td>
+        <td th:text="${reserveInfo.getEventDateTime()}"></td>
+    </tr>
+
+</table>
+<p><a href="/reserves">To list of reserves</a></p>
+</body>
+</html>

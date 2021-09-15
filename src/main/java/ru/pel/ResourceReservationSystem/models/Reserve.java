@@ -2,12 +2,15 @@ package ru.pel.ResourceReservationSystem.models;
 
 import java.time.LocalDateTime;
 
-public class Resource {
+public class Reserve {
     private int id;
     private LocalDateTime eventDateTime;
     private String title;
 
-    public Resource(int id, LocalDateTime eventDateTime, String title) {
+    public Reserve() {
+    }
+
+    public Reserve(int id, LocalDateTime eventDateTime, String title) {
         this.id = id;
         this.eventDateTime = eventDateTime;
         this.title = title;
