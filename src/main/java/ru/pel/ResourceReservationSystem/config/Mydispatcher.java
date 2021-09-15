@@ -10,7 +10,7 @@ public class Mydispatcher extends AbstractAnnotationConfigDispatcherServletIniti
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class[]{ThymeleafConfig.class};
+        return new Class[]{AppConfig.class};
     }
 
     @Override

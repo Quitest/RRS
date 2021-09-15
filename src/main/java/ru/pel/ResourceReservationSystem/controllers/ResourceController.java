@@ -19,15 +19,15 @@ public class ResourceController {
     @Autowired
     private ResourceDAO resourceDAO;
 
-    @GetMapping()
+    @GetMapping
     public String getAllResources(Model model) {
         model.addAttribute("resourcesList", resourceDAO.getAllResources());
-        return "resources/index";
+        return "index";
     }
 
     @GetMapping("/{id}")
     public String getResourceById(@PathVariable("id") int id, Model model) {
         model.addAttribute("resourceInfo", resourceDAO.getResourceById(id));
-        return "resources/resource_info";
+        return "resource-info";
     }
 }

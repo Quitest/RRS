@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Список всех ресурсов</title>
+</head>
+<body>
+
+<div th:each="res : ${resourcesList}">
+    <a th:href="@{/resources/{id}(id=${res.getId()})}" th:text="${res.getTitle()}">resource</a>
+</div>
+
+</body>
+</html>
