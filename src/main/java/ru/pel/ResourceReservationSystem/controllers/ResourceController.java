@@ -22,12 +22,12 @@ public class ResourceController {
     @GetMapping
     public String getAllResources(Model model) {
         model.addAttribute("resourcesList", resourceDAO.getAllResources());
-        return "index";
+        return "resources/index";
     }
 
     @GetMapping("/{id}")
     public String getResourceById(@PathVariable("id") int id, Model model) {
         model.addAttribute("resourceInfo", resourceDAO.getResourceById(id));
-        return "resource-info";
+        return "resources/resource-info";
     }
 }

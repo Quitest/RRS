@@ -6,19 +6,20 @@ import org.springframework.context.annotation.Description;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.thymeleaf.spring5.SpringTemplateEngine;
+import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
-import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 @Configuration
 public class AppConfig implements WebMvcConfigurer {
     @Bean
     @Description("Thymeleaf template resolver serving HTML 5")
-    public ClassLoaderTemplateResolver templateResolver() {
+    public SpringResourceTemplateResolver templateResolver() {
 
-        ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
+//        ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
+        SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
 
-        templateResolver.setPrefix("/templates/");
-//        templateResolver.setPrefix("/webapp/WEB-INF/views/");
+//        templateResolver.setPrefix("/templates/");
+        templateResolver.setPrefix("/WEB-INF/views/");
         templateResolver.setCacheable(false);
         templateResolver.setSuffix(".html");
         templateResolver.setTemplateMode("HTML");
