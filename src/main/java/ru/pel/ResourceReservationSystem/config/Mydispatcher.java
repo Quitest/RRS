@@ -3,7 +3,7 @@ package ru.pel.ResourceReservationSystem.config;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class Mydispatcher extends AbstractAnnotationConfigDispatcherServletInitializer {
-        @Override
+    @Override
     protected Class<?>[] getRootConfigClasses() {
         return null;
     }

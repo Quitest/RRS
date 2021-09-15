@@ -5,8 +5,10 @@
     <title>Сведения о ресурсе</title>
 </head>
 <body>
-<a th:text="${resourceInfo.getTitle}"></a>
-<a th:text="${resourceInfo.getId()}"></a>
-<!--<a th:text="${resourceInfo.getEventDateTime()"></a>-->
+<p th:text="${resourceInfo.getTitle}"></p>
+<p th:text="${resourceInfo.getId()}"></p>
+<p th:text="${resourceInfo.getEventDateTime()}"></p>
+
+<p><a href="/resources">To list of resources</a> </p>
 </body>
 </html>

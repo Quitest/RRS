@@ -23,7 +23,7 @@ public class AppConfig implements WebMvcConfigurer {
         templateResolver.setCacheable(false);
         templateResolver.setSuffix(".html");
         templateResolver.setTemplateMode("HTML");
-        templateResolver.setOrder(0);
+//        templateResolver.setOrder(0);
         templateResolver.setCharacterEncoding("UTF-8");
 
         return templateResolver;
