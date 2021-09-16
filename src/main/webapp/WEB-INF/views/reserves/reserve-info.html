@@ -20,6 +20,11 @@
     </tr>
 
 </table>
+<form th:action="@{/reserves/{id}(id=${reserveInfo.getId()})}" th:method="DELETE">
+<!--<form th:action="@{/reserves/delete/{id}(id=${reserveInfo.getId()})}" th:method="POST">-->
+<!--    <input type="hidden" name="_method" value="DELETE" />-->
+    <input type="submit" value="Удалить"/>
+</form>
 <p><a href="/reserves">To list of reserves</a></p>
 </body>
 </html>

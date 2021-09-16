@@ -59,4 +59,10 @@ public class ReserveController {
         // Далее аннотация передает новый объект в модель.
         return "reserves/new-reserve";
     }
+
+    @DeleteMapping("delete/{id}")
+    public String deleteReserve(@PathVariable("id") int id){
+        reserveDAO.delete(id);
+        return "redirect:/reserves";
+    }
 }

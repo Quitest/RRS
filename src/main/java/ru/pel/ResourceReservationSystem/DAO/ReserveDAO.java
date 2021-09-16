@@ -9,7 +9,7 @@ import java.util.List;
 
 @Component
 public class ReserveDAO {
-    private static int ID = 0;
+    private static int ID = -1;
     private List<Reserve> reserveList;
 
     {
@@ -19,6 +19,10 @@ public class ReserveDAO {
         reserveList.add(new Reserve(++ID, LocalDateTime.now(), "Reserve title #" + ID));
         reserveList.add(new Reserve(++ID, LocalDateTime.now(), "Reserve title #" + ID));
         reserveList.add(new Reserve(++ID, LocalDateTime.now(), "Reserve title #" + ID));
+    }
+
+    public Reserve delete(int id) {
+        return reserveList.remove(id);
     }
 
     public List<Reserve> getAllReserves() {
