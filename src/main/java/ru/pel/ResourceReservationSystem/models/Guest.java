@@ -2,7 +2,7 @@
 // PVS-Studio Static Code Analyzer for C, C++, C#, and Java: http://www.viva64.com
 package ru.pel.ResourceReservationSystem.models;
 
-public class User {
+public class Guest {
     private long id;
     private String name;
     private String position; //должность
@@ -31,7 +31,7 @@ public class User {
         this.position = position;
     }
 
-    public User(long id, String name, String position) {
+    public Guest(long id, String name, String position) {
         this.id = id;
         this.name = name;
         this.position = position;

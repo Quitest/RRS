@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Сведения о номере</title>
+</head>
+<body>
+<table>
+    <tr>
+        <td>Название:</td>
+        <td th:text="${roomInfo.getTitle}"></td>
+    </tr>
+    <tr>
+        <td>Идентификатор:</td>
+        <td th:text="${roomInfo.getId()}"></td>
+    </tr>
+    <tr>
+        <td>Дата и время номера:</td>
+        <td th:text="${roomInfo.getEventDateTime()}"></td>
+    </tr>
+    <tr>
+        <td>
+            <form th:action="@{/rooms/edit/{id}(id=${roomInfo.getId()})}" th:method="GET">
+                <input type="submit" value="Изменить"/>
+            </form>
+        </td>
+        <td>
+            <form th:action="@{/rooms/delete/{id}(id=${roomInfo.getId()})}" th:method="DELETE">
+                <!--<form th:action="@{/reserves/delete/{id}(id=${reserveInfo.getId()})}" th:method="POST">-->
+                <!--    <input type="hidden" name="_method" value="DELETE" />-->
+                <input type="submit" value="Удалить"/>
+            </form>
+        </td>
+    </tr>
+
+</table>
+
+
+<p><a href="/rooms">To index of rooms</a></p>
+</body>
+</html>

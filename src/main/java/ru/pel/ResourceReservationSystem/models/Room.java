@@ -1,16 +1,19 @@
 package ru.pel.ResourceReservationSystem.models;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDateTime;
 
-public class Reserve {
+public class Room {
     private int id;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime eventDateTime;
     private String title;
 
-    public Reserve() {
+    public Room() {
     }
 
-    public Reserve(int id, LocalDateTime eventDateTime, String title) {
+    public Room(int id, LocalDateTime eventDateTime, String title) {
         this.id = id;
         this.eventDateTime = eventDateTime;
         this.title = title;

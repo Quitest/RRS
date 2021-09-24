@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Список всех номеров</title>
+</head>
+<body>
+
+<div th:each="res : ${roomsList}">
+    <a th:href="@{/rooms/{id}(id=${res.getId()})}" th:text="${res.getTitle()}">room</a>
+</div>
+
+<!--<a href="/reserves/new-room">Создать резерв</a>-->
+<br/>
+<hr/>
+<form th:action="@{/rooms/new-room}" th:method="GET">
+    <input type="submit" value="Создать резерв">
+</form>
+
+</body>
+</html>
