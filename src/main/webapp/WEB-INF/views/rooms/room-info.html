@@ -7,8 +7,8 @@
 <body>
 <table>
     <tr>
-        <td>Название:</td>
-        <td th:text="${roomInfo.getTitle}"></td>
+        <td>Класс номера:</td>
+        <td th:text="${roomInfo.getClassOfAccommodations()}"></td>
     </tr>
     <tr>
         <td>Идентификатор:</td>
@@ -16,7 +16,7 @@
     </tr>
     <tr>
         <td>Дата и время номера:</td>
-        <td th:text="${roomInfo.getEventDateTime()}"></td>
+        <td th:text="${roomInfo.getCheckIn()}"></td>
     </tr>
     <tr>
         <td>

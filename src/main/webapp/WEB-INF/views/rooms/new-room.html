@@ -1,18 +1,32 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Создание нового номера</title>
 </head>
 <body>
 <form th:method="POST" th:action="@{/rooms}" th:object="${newRoom}">
-    <label for="roomTitle">Название ресурса: </label>
-    <input id="roomTitle" type="text" th:field="*{title}"/>
-    <br/>
-    <label for="eventDateTime">Укажите дату и время: </label>
-    <input id="eventDateTime" type="datetime-local" th:field="*{eventDateTime}"/>
 
-    <input type="submit" value="Создать"/>
+    <table>
+        <tr>
+            <td><label for="id">Номер комнаты:</label></td>
+            <td><input id="id" type="text" th:field="*{id}" /></td>
+        </tr>
+        <tr>
+            <td><label for="roomClassOfAccommodations">Класс номера: </label></td>
+            <td><input id="roomClassOfAccommodations" type="text" th:field="*{classOfAccommodations}"/>
+                <div th:if="${#fields.hasErrors('classOfAccommodations')}" th:errors="*{classOfAccommodations}"></div>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="checkIn">Укажите дату и время: </label></td>
+            <td><input id="checkIn" type="datetime-local" th:field="*{checkIn}"/></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Создать"/></td>
+        </tr>
+    </table>
+
 </form>
 </body>
 </html>

@@ -6,8 +6,8 @@
 </head>
 <body>
 
-<div th:each="res : ${roomsList}">
-    <a th:href="@{/rooms/{id}(id=${res.getId()})}" th:text="${res.getTitle()}">room</a>
+<div th:each="room : ${roomsList}">
+    <a th:href="@{/rooms/{id}(id=${room.getId()})}" th:text="${room.getId() + room.getClassOfAccommodations()}">room</a>
 </div>
 
 <!--<a href="/reserves/new-room">Создать резерв</a>-->

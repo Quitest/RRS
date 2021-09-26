@@ -2,29 +2,52 @@ package ru.pel.ResourceReservationSystem.models;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 public class Room {
+    //    @Digits(integer = 3, fraction = 0)
     private int id;
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-    private LocalDateTime eventDateTime;
-    private String title;
+    private LocalDateTime checkIn;
+    private LocalDateTime checkOut;
+
+    @NotEmpty(message = "Должно быть не пустым")
+    @Size(min = 2, max = 15, message = "Длинна должна быть от 2 до 15 символов")
+    private String classOfAccommodations;
 
     public Room() {
     }
 
-    public Room(int id, LocalDateTime eventDateTime, String title) {
+    public Room(int id, LocalDateTime checkIn, String classOfAccommodations) {
         this.id = id;
-        this.eventDateTime = eventDateTime;
-        this.title = title;
+        this.checkIn = checkIn;
+        this.classOfAccommodations = classOfAccommodations;
     }
 
-    public LocalDateTime getEventDateTime() {
-        return eventDateTime;
+    public LocalDateTime getCheckIn() {
+        return checkIn;
     }
 
-    public void setEventDateTime(LocalDateTime eventDateTime) {
-        this.eventDateTime = eventDateTime;
+    public void setCheckIn(LocalDateTime checkIn) {
+        this.checkIn = checkIn;
+    }
+
+    public LocalDateTime getCheckOut() {
+        return checkOut;
+    }
+
+    public void setCheckOut(LocalDateTime checkOut) {
+        this.checkOut = checkOut;
+    }
+
+    public String getClassOfAccommodations() {
+        return classOfAccommodations;
+    }
+
+    public void setClassOfAccommodations(String classOfAccommodations) {
+        this.classOfAccommodations = classOfAccommodations;
     }
 
     public int getId() {
@@ -33,13 +56,5 @@ public class Room {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 }
