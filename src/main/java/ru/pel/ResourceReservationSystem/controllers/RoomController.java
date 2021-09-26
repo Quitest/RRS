@@ -80,14 +80,13 @@ public class RoomController {
         return "rooms/new-room";
     }
 
-    // FIXME: 26.09.2021 Разобраться с "Skipping URI variable 'id' because request contains bind value with same name"
     @PatchMapping("update/{id}")
-    public String updateRoom(@ModelAttribute("room") @Valid Room editedRoom, BindingResult bindingResult,
-                             @PathVariable("id") int id) {
+    public String updateRoom(@ModelAttribute("room") @Valid Room editedRoom, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "/rooms/edit-room";
         }
-        roomDAO.update(id, editedRoom);
-        return "redirect:/rooms/" + id;
+
+        roomDAO.update(editedRoom.getId(),editedRoom);
+        return "redirect:/rooms/"+editedRoom.getId();
     }
 }
