@@ -22,6 +22,8 @@ public class Room {
     @Size(min = 2, max = 15, message = "Длинна должна быть от 2 до 15 символов")
     private String classOfAccommodations;
 
+    private boolean reserved;
+
     public Room() {
     }
 
