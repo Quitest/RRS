@@ -45,8 +45,8 @@ public class RoomDAO {
                 Room room = new Room();
                 room.setId(resultSet.getInt("id"));
                 room.setClassOfAccommodations(resultSet.getString("class_of_accommodations"));
-                // FIXME: 26.09.2021 Читать реальную дату.
-//                room.setCheckIn(resultSet.getDate("check_in")); 
+                room.setCheckIn(resultSet.getTimestamp("check_in").toLocalDateTime());
+                room.setCheckOut(resultSet.getTimestamp("check_out").toLocalDateTime());
                 rooms.add(room);
             }
         } catch (SQLException e) {
@@ -67,6 +67,7 @@ public class RoomDAO {
                 room.setId(resultSet.getInt("id"));
                 room.setClassOfAccommodations(resultSet.getString("class_of_accommodations"));
                 room.setCheckIn(resultSet.getTimestamp("check_in").toLocalDateTime());
+                room.setCheckOut(resultSet.getTimestamp("check_out").toLocalDateTime());
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -80,7 +81,7 @@ public class RoomDAO {
             statement.setInt(1,room.getId());
             statement.setString(2, room.getClassOfAccommodations());
             statement.setTimestamp(3, Timestamp.valueOf(room.getCheckIn()));
-            statement.setDate(4, null); // FIXME: 26.09.2021 заполнять реальной датой выезда
+            statement.setTimestamp(4, Timestamp.valueOf(room.getCheckOut()));
             statement.setInt(5, 0); // FIXME: 26.09.2021 вставлять ID реального гостя
             statement.executeUpdate();
             connection.commit();
@@ -100,7 +101,7 @@ public class RoomDAO {
                     "UPDATE rooms SET class_of_accommodations=?, check_in=?, check_out=?, guest_id=? WHERE id=?");
             statement.setString(1, editedRoom.getClassOfAccommodations());
             statement.setTimestamp(2, Timestamp.valueOf(editedRoom.getCheckIn()));
-            statement.setTimestamp(3, Timestamp.valueOf("2000-01-01 00:00:00")); // FIXME: 26.09.2021 Вводить реальную дату
+            statement.setTimestamp(3, Timestamp.valueOf(editedRoom.getCheckOut()));
             statement.setInt(4, 1); // FIXME: 26.09.2021 Вводить реальный ID гостя
             statement.setInt(5,id);
             statement.executeUpdate();

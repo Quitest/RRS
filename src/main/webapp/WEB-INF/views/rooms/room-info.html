@@ -19,6 +19,10 @@
         <td th:text="${roomInfo.getCheckIn()}"></td>
     </tr>
     <tr>
+        <td>Дата и время выезда:</td>
+        <td th:text="${roomInfo.getCheckOut()}"></td>
+    </tr>
+    <tr>
         <td>
             <form th:action="@{/rooms/edit/{id}(id=${roomInfo.getId()})}" th:method="GET">
                 <input type="submit" value="Изменить">

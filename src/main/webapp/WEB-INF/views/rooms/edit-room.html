@@ -16,12 +16,19 @@
         <tr>
             <td><label for="classOfAccommodations">Класс размещения:</label></td>
             <td><input id="classOfAccommodations" type="text" th:field="*{classOfAccommodations}" ></td>
-            <td><div class="error-style" th:if="${#fields.hasErrors('classOfAccommodations')}" th:errors="*{classOfAccommodations}"></div></td>
+            <td class="error-style" th:if="${#fields.hasErrors('classOfAccommodations')}"
+                th:errors="*{classOfAccommodations}"></td>
 <!--            <td><p class="error-style">TEST</p></td>-->
         </tr>
         <tr>
-            <td><label for="dateTime">Дата и время заезда:</label></td>
-            <td><input type="datetime-local" th:field="*{checkIn}" id="dateTime"></td>
+            <td><label for="dateTimeCheckIn">Дата и время заезда:</label></td>
+            <td><input type="datetime-local" th:field="*{checkIn}" id="dateTimeCheckIn"></td>
+            <td class="error-style" th:if="${#fields.hasErrors('checkIn')}" th:errors="*{checkIn}"></td>
+        </tr>
+        <tr>
+            <td><label for="dateTimeCheckOut">Дата и время выезда:</label></td>
+            <td><input type="datetime-local" th:field="*{checkOut}" id="dateTimeCheckOut"></td>
+            <td class="error-style" th:if="${#fields.hasErrors('checkOut')}" th:errors="*{checkOut}"></td>
         </tr>
         <tr>
             <td>

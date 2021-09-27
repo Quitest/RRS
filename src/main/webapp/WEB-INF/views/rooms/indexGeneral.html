@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Список всех номеров</title>
+</head>
+<body>
+
+<table cellspacing="0" border="1" cellpadding="2">
+    <tr>
+    <td>Номер</td>
+    <td>Класс размещения</td>
+    <td>Заезд</td>
+    <td>Выезд</td>
+    </tr>
+    <tr th:each="room : ${roomsList}">
+        <td th:text="${room.getId()}">номер комнаты</td>
+        <td th:text="${room.getClassOfAccommodations()}">класс размещения</td>
+        <td th:text="${room.getCheckIn()}">дата и время заезда</td>
+        <td th:text="${room.getCheckOut()}">дата и время выезда</td>
+        <td>
+            <form th:action="@{/rooms/edit/{id}(id=${room.getId()})}" th:method="GET">
+                <input type="submit" value="Изменить">
+            </form>
+        </td>
+        <td>
+            <form th:action="@{/rooms/delete/{id}(id=${room.getId()})}" th:method="DELETE">
+                <input type="submit" value="Удалить">
+            </form>
+        </td>
+    </tr>
+</table>
+<br/>
+<hr/>
+<form th:action="@{/rooms/new-room}" th:method="GET">
+    <input type="submit" value="Создать">
+</form>
+
+</body>
+</html>

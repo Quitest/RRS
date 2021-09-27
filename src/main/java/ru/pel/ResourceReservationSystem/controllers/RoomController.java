@@ -56,11 +56,12 @@ public class RoomController {
     @GetMapping
     public String getAllRooms(Model model) {
         model.addAttribute("roomsList", roomDAO.getAllRooms());
-        return "rooms/index";
+//        return "rooms/index";
+        return "rooms/indexGeneral";
     }
 
     @GetMapping("/{id}")
-    public String getRoomById(@PathVariable("id") int id, Model model) {
+    public String roomInfo(@PathVariable("id") int id, Model model) {
         model.addAttribute("roomInfo", roomDAO.getRoomById(id));
         return "rooms/room-info";
     }
@@ -89,6 +90,7 @@ public class RoomController {
             return "/rooms/edit-room";
         }
         roomDAO.update(room.getId(), room);
-        return "redirect:/rooms/" + room.getId();
+//        return "redirect:/rooms/" + room.getId();
+        return  "redirect:/rooms";
     }
 }
