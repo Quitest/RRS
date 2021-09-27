@@ -22,7 +22,8 @@ public class RoomController {
     @PostMapping
 //Вариант 1: реализация через @ModelAttribute. Для автоматического перевода даты и времени необходимо наличие аннотации
 // на полях с датами и временем @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-    public String createRoom(@ModelAttribute("newRoom") @Valid Room room, BindingResult bindingResult) {
+    //WTF @ModelAttribute в данном случае не очень-то и нужен.
+    public String createRoom(@Valid @ModelAttribute("newRoom") Room room, BindingResult bindingResult) {
 //Вариант 2: реализация через @RequestParameter получается, но необходимо явно распарсить строку с датой и временем в
 // объект LocalDateTime
 //    public String createRoom(@RequestParam("classOfAccommodations") String classOfAccommodations,
@@ -48,7 +49,7 @@ public class RoomController {
 
     @GetMapping("/edit/{id}")
     public String editRoom(Model model, @PathVariable("id") int id) {
-        model.addAttribute("room", roomDAO.getRoomById(id));
+        model.addAttribute("editedRoom", roomDAO.getRoomById(id));
         return "/rooms/edit-room";
     }
 
@@ -80,13 +81,14 @@ public class RoomController {
         return "rooms/new-room";
     }
 
-    @PatchMapping("update/{id}")
-    public String updateRoom(@ModelAttribute("room") @Valid Room editedRoom, BindingResult bindingResult) {
+    @PatchMapping("/{id}")
+//    @PatchMapping("update/")
+    //WTF @ModelAttribute в данном случае не очень-то и нужен.
+    public String updateRoom(@Valid @ModelAttribute("editedRoom") Room room, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "/rooms/edit-room";
         }
-
-        roomDAO.update(editedRoom.getId(),editedRoom);
-        return "redirect:/rooms/"+editedRoom.getId();
+        roomDAO.update(room.getId(), room);
+        return "redirect:/rooms/" + room.getId();
     }
 }

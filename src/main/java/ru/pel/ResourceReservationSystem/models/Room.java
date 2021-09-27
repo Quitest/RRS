@@ -1,16 +1,23 @@
 package ru.pel.ResourceReservationSystem.models;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 public class Room {
-    //    @Digits(integer = 3, fraction = 0)
+    @Digits(integer = 3, fraction = 0)
     private int id;
+    @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime checkIn;
+    @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime checkOut;
 
     @NotEmpty(message = "Должно быть не пустым")

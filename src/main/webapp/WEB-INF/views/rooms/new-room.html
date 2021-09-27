@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
+    <link rel="stylesheet" type="text/css" href="style/global.css">
     <meta charset="UTF-8">
     <title>Создание нового номера</title>
 </head>
@@ -9,17 +10,16 @@
 
     <table>
         <tr>
-            <td><label for="id">Номер комнаты:</label></td>
+            <td><label for="id">Номер:</label></td>
             <td><input id="id" type="text" th:field="*{id}" /></td>
         </tr>
         <tr>
-            <td><label for="roomClassOfAccommodations">Класс номера: </label></td>
-            <td><input id="roomClassOfAccommodations" type="text" th:field="*{classOfAccommodations}"/>
-                <div th:if="${#fields.hasErrors('classOfAccommodations')}" th:errors="*{classOfAccommodations}"></div>
-            </td>
+            <td><label for="roomClassOfAccommodations">Класс размещения: </label></td>
+            <td><input id="roomClassOfAccommodations" type="text" th:field="*{classOfAccommodations}"/></td>
+            <td><div class="error-style" th:if="${#fields.hasErrors('classOfAccommodations')}" th:errors="*{classOfAccommodations}"></div></td>
         </tr>
         <tr>
-            <td><label for="checkIn">Укажите дату и время: </label></td>
+            <td><label for="checkIn">Укажите дату и время заезда: </label></td>
             <td><input id="checkIn" type="datetime-local" th:field="*{checkIn}"/></td>
         </tr>
         <tr>

@@ -1,27 +1,31 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link rel="stylesheet" type="text/css" href="/resources/style/global.css">
     <meta charset="UTF-8">
-    <title>Информация о номере</title>
+    <title>Редактирование номера</title>
 </head>
 <body>
-<form th:action="@{/rooms/update/{id}(id=${room.getId()})}" th:method="PATCH" th:object="${room}">
+<!--<form th:action="@{/rooms/{id}(id=${editedRoom.getId()})}" th:method="PATCH" th:object="${editedRoom}">-->
+<form th:action="@{/rooms/{id}}" th:method="PATCH" th:object="${editedRoom}">
     <table>
         <tr>
-            <td><label for="classOfAccommodations">Название:</label></td>
-            <td><input type="text" th:field="*{classOfAccommodations}" id="classOfAccommodations"></td>
+            <td><label for="roomId">Номер: </label></td>
+            <td><input id="roomId" type="text" readonly  th:field="*{id}"></td>
         </tr>
         <tr>
-            <td><label for="roomId">Идентификатор: </label></td>
-            <td><input type="text" readonly id="roomId" th:field="*{id}"/></td>
+            <td><label for="classOfAccommodations">Класс размещения:</label></td>
+            <td><input id="classOfAccommodations" type="text" th:field="*{classOfAccommodations}" ></td>
+            <td><div class="error-style" th:if="${#fields.hasErrors('classOfAccommodations')}" th:errors="*{classOfAccommodations}"></div></td>
+<!--            <td><p class="error-style">TEST</p></td>-->
         </tr>
         <tr>
-            <td><label for="dateTime">Дата и время события:</label></td>
-            <td><input type="datetime-local" th:field="*{checkIn}" id="dateTime"/></td>
+            <td><label for="dateTime">Дата и время заезда:</label></td>
+            <td><input type="datetime-local" th:field="*{checkIn}" id="dateTime"></td>
         </tr>
         <tr>
             <td>
-                <input type="submit" value="Сохранить"/>
+                <input type="submit" value="Обновить">
             </td>
         </tr>
     </table>

@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Description;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
@@ -20,10 +21,8 @@ public class AppConfig implements WebMvcConfigurer {
     @Bean
     @Description("Thymeleaf template resolver serving HTML 5")
     public SpringResourceTemplateResolver templateResolver() {
-
 //        ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
-
 //        templateResolver.setPrefix("/templates/");
         templateResolver.setPrefix("/WEB-INF/views/");
         templateResolver.setCacheable(false);
@@ -31,33 +30,27 @@ public class AppConfig implements WebMvcConfigurer {
         templateResolver.setTemplateMode("HTML");
 //        templateResolver.setOrder(0);
         templateResolver.setCharacterEncoding("UTF-8");
-
         return templateResolver;
     }
 
     @Bean
     @Description("Thymeleaf template engine with Spring integration")
     public SpringTemplateEngine templateEngine() {
-
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
         templateEngine.setTemplateResolver(templateResolver());
-
         return templateEngine;
     }
 
     @Bean
     @Description("Thymeleaf view resolver")
     public ViewResolver viewResolver() {
-
         ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
-
         viewResolver.setTemplateEngine(templateEngine());
         viewResolver.setCharacterEncoding("UTF-8");
-
         return viewResolver;
     }
 
-   /* @Override
+    /* @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("index");
     }
@@ -69,5 +62,15 @@ public class AppConfig implements WebMvcConfigurer {
         FilterRegistrationBean<Filter> filter = new FilterRegistrationBean<>(new HiddenHttpMethodFilter());
         filter.setUrlPatterns(List.of("/*"));
         return filter;
+    }
+
+    @Override
+    @Description("Подключение путей с необходимыми ресурсами для front end")
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry
+                .addResourceHandler("/resources/**")
+//                .addResourceLocations("file:/opt/files/");
+//                .addResourceLocations("file:/D:/Java Course/ResourceReservationSystem/src/main/webapp/WEB-INF/files/");
+                .addResourceLocations("/WEB-INF/resources/");
     }
 }
