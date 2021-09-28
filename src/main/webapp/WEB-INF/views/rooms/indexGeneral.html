@@ -8,14 +8,16 @@
 
 <table cellspacing="0" border="1" cellpadding="2">
     <tr>
-    <td>Номер</td>
-    <td>Класс размещения</td>
-    <td>Заезд</td>
-    <td>Выезд</td>
+        <td>Номер</td>
+        <td>Класс размещения</td>
+        <td>Забронирован</td>
+        <td>Заезд</td>
+        <td>Выезд</td>
     </tr>
     <tr th:each="room : ${roomsList}">
         <td th:text="${room.getId()}">номер комнаты</td>
         <td th:text="${room.getClassOfAccommodations()}">класс размещения</td>
+        <td th:text="${room.isReserved()}">забронировано</td>
         <td th:text="${room.getCheckIn()}">дата и время заезда</td>
         <td th:text="${room.getCheckOut()}">дата и время выезда</td>
         <td>

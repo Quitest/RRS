@@ -18,7 +18,10 @@
             <td><input id="classOfAccommodations" type="text" th:field="*{classOfAccommodations}" ></td>
             <td class="error-style" th:if="${#fields.hasErrors('classOfAccommodations')}"
                 th:errors="*{classOfAccommodations}"></td>
-<!--            <td><p class="error-style">TEST</p></td>-->
+        </tr>
+        <tr>
+            <td><label for="isReserved">Забронировано</label> </td>
+            <td><input id="isReserved"   type="checkbox" th:field="*{reserved}" /></td>
         </tr>
         <tr>
             <td><label for="dateTimeCheckIn">Дата и время заезда:</label></td>
