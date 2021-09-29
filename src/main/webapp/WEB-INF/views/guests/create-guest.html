@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>$Title$</title>
+</head>
+<body>
+<form th:action="@{/guests/create}" th:method="POST" th:object="${newGuest}">
+    <table>
+        <tr>
+            <td><label for="lastname">Фамилия:</label></td>
+            <td><input id="lastname" type="text" th:field="*{lastname}"></td>
+        </tr>
+        <tr>
+            <td><label for="name">Имя:</label></td>
+            <td><input id="name" type="text" th:field="*{name}"></td>
+        </tr>
+        <tr>
+            <td><label for="middleName">Отчество:</label></td>
+            <td><input id="middleName" type="text" th:field="*{middleName}"></td>
+        </tr>
+        <tr>
+            <td><label for="age">Возраст:</label></td>
+            <td><input id="age" type="text" th:field="*{age}"></td>
+        </tr>
+    </table>
+    <button>Создать</button>
+    <input type="submit" value="Создать 2">
+</form>
+</body>
+</html>

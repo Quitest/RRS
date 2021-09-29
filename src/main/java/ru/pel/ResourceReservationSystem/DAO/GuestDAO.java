@@ -23,12 +23,28 @@ public class GuestDAO implements DAOInterface<Guest, Integer> {
 
     @Override
     public void create(Guest entry) {
-        throw new UnsupportedOperationException();
+        try {
+            var statement = connection
+                    .prepareStatement("INSERT INTO guests (lastname, name, middle_name, age) VALUES (?,?,?,?)");
+            statement.setString(1, entry.getLastname());
+            statement.setString(2, entry.getName());
+            statement.setString(3, entry.getMiddleName());
+            statement.setInt(4, entry.getAge());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void delete(Integer id) {
-        throw new UnsupportedOperationException();
+        try {
+            var statement = connection.prepareStatement("DELETE FROM guests WHERE id=?");
+            statement.setInt(1, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -54,11 +70,11 @@ public class GuestDAO implements DAOInterface<Guest, Integer> {
 
     @Override
     public Guest getById(Integer id) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("Функция все еще не реализована");
     }
 
     @Override
     public void update(Guest entry) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("Функция все еще не реализована");
     }
 }

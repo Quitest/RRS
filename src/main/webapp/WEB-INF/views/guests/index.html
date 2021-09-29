@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Список гостей</title>
+</head>
+<body>
+<table cellspacing="0" border="1" cellpadding="2">
+    <thead align="center">
+    <tr>
+        <td>ID гостя</td>
+        <td>Фамилия</td>
+        <td>Имя</td>
+        <td>Отчество</td>
+        <td>Возраст</td>
+    </tr>
+    </thead>
+    <tr th:each="guest : ${guestsList}">
+        <td th:text="${guest.getId()}">ID гостя</td>
+        <td th:text="${guest.getLastname()}">Ф</td>
+        <td th:text="${guest.getName()}">И</td>
+        <td th:text="${guest.getMiddleName()}">О</td>
+        <td th:text="${guest.getAge()}">Возраст</td>
+        <td>
+            <form th:action="@{/guests/edit/{id}(id=${guest.getId()})}" th:method="GET">
+                <button>Изменить</button>
+            </form>
+        </td>
+        <td>
+            <form th:action="@{/guests}" th:method="DELETE">
+                <button type="submit" th:name="guestIdForDelete" th:value="${guest.getId()}">Удалить</button>
+            </form>
+        </td>
+    </tr>
+</table>
+
+<hr>
+<form th:action="@{/guests/create}" th:method="GET">
+    <input type="submit" value="Создать гостя">
+</form>
+<br>
+<form th:action="@{/rooms}" th:method="GET">
+    <button>Редактировать номера</button>
+</form>
+</body>
+</html>
