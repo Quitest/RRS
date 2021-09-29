@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <link rel="stylesheet" type="text/css" href="/resources/style/global.css">
+    <meta charset="UTF-8">
+    <title>Бронирование номера</title>
+</head>
+<body>
+<form th:method="POST" th:action="@{/reserve/create}" th:object="${newReserve}">
+
+    <table>
+        <tr>
+            <td><label for="guestId">ID гостя: </label></td>
+            <td>
+<!--                <input id="guestId" type="text" th:field="*{guestId}">-->
+                <select id="guestId" th:field="*{guestId}">
+                    <option value="0">Укажите гостя</option>
+                    <option th:each="guest : ${guestList}"
+                            th:value="${guest.id}"
+                            th:text="${guest.lastname}+' '+${guest.name}+' '+${guest.middleName}"></option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="id">Номер:</label></td>
+            <td>
+                <!--                <input id="id" type="text" th:field="*{roomId}"/>-->
+                <select id="id" th:field="*{roomId}">
+                    <option value="0">Укажите номер</option>
+                    <option th:each="room : ${roomList}"
+                            th:value="${room.id}"
+                            th:text="${room.id}">
+                    </option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="checkIn">Укажите дату и время заезда: </label></td>
+            <td><input id="checkIn" type="datetime-local" th:field="*{checkIn}"/></td>
+        </tr>
+        <tr>
+            <td><label for="checkOut">Укажите дату и время выезда: </label></td>
+            <td><input id="checkOut" type="datetime-local" th:field="*{checkOut}"/></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Забронировать номер"/></td>
+        </tr>
+    </table>
+
+</form>
+</body>
+</html>

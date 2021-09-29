@@ -4,6 +4,7 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Description;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -13,6 +14,7 @@ import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
 import javax.servlet.Filter;
+import javax.sql.DataSource;
 import java.util.Arrays;
 import java.util.List;
 
@@ -72,5 +74,18 @@ public class AppConfig implements WebMvcConfigurer {
 //                .addResourceLocations("file:/opt/files/");
 //                .addResourceLocations("file:/D:/Java Course/ResourceReservationSystem/src/main/webapp/WEB-INF/files/");
                 .addResourceLocations("/WEB-INF/resources/");
+    }
+
+    //TODO реализовать пул соединений, что бы DAO брали connection из пула при необходимости, а потом возвращали.
+
+    @Bean
+    public DataSource dataSource(){
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName("org.postgresql.Driver");
+        dataSource.setUrl("jdbc:postgresql://localhost:5432/rrs_db");
+        dataSource.setUsername("rrs_user");
+        dataSource.setPassword("toor");
+
+        return dataSource;
     }
 }

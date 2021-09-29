@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" type="text/css" href="/resources/style/global.css">
+    <meta charset="UTF-8">
+    <title>Список броней</title>
+</head>
+<body>
+<table cellspacing="0" border="1" cellpadding="2">
+    <thead>
+    <tr>
+        <td>ID брони</td>
+        <td>Номер</td>
+        <td>Гость</td>
+        <td>Заезд</td>
+        <td>Выезд</td>
+    </tr>
+    </thead>
+    <tr th:each="reserve : ${reserveList}">
+        <td th:text="${reserve.getId()}">ID брони</td>
+        <td th:text="${reserve.getRoomId()}">номер</td>
+        <td th:text="${reserve.getGuestId()}">гость</td>
+        <td th:text="${reserve.getCheckIn()}">заезд</td>
+        <td th:text="${reserve.getCheckOut()}">выезд</td>
+        <td>
+            <form th:action="@{/reserve/edit/{id}(id=${reserve.getId()})}" th:method="GET">
+                <button>Изменить</button>
+            </form>
+        </td>
+        <td>
+            <form th:action="@{/reserve}" th:method="DELETE">
+                <button type="submit" th:name="roomIdForDelete" th:value="${reserve.getId()}">Удалить</button>
+            </form>
+        </td>
+    </tr>
+</table>
+
+<hr>
+<form th:action="@{/reserve/create}" th:method="GET">
+    <input type="submit" value="Бронирование">
+</form>
+<br>
+<form th:action="@{/rooms}" th:method="GET">
+    <button>Список номеров</button>
+</form>
+</body>
+</html>

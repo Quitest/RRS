@@ -11,17 +11,16 @@ import java.time.LocalDateTime;
 public class Room {
     @Digits(integer = 3, fraction = 0)
     private int id;
+    @NotEmpty(message = "Должно быть не пустым")
+    @Size(min = 2, max = 15, message = "Длинна должна быть от 2 до 15 символов")
+    private String classOfAccommodations;
+    // FIXME: 29.09.2021 Поля ниже не нужны - удалить. Информация подобного рода должна храниться в Reserve
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime checkIn;
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime checkOut;
-
-    @NotEmpty(message = "Должно быть не пустым")
-    @Size(min = 2, max = 15, message = "Длинна должна быть от 2 до 15 символов")
-    private String classOfAccommodations;
-
     private boolean reserved;
 
     public Room() {

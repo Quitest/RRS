@@ -14,7 +14,7 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/rooms")
-public class RoomController {
+public class RoomsController {
 
     @Autowired
     private RoomDAO roomDAO;
@@ -36,7 +36,7 @@ public class RoomController {
         if (bindingResult.hasErrors()) {
             return "rooms/new-room";
         }
-        roomDAO.save(room);
+        roomDAO.create(room);
         return "redirect:/rooms";
     }
 
@@ -49,20 +49,20 @@ public class RoomController {
 
     @GetMapping("/edit/{id}")
     public String editRoom(Model model, @PathVariable("id") int id) {
-        model.addAttribute("editedRoom", roomDAO.getRoomById(id));
+        model.addAttribute("editedRoom", roomDAO.getById(id));
         return "/rooms/edit-room";
     }
 
     @GetMapping
     public String getAllRooms(Model model) {
-        model.addAttribute("roomsList", roomDAO.getAllRooms());
+        model.addAttribute("roomsList", roomDAO.getAll());
 //        return "rooms/index";
         return "rooms/indexGeneral";
     }
 
     @GetMapping("/{id}")
     public String roomInfo(@PathVariable("id") int id, Model model) {
-        model.addAttribute("roomInfo", roomDAO.getRoomById(id));
+        model.addAttribute("roomInfo", roomDAO.getById(id));
         return "rooms/room-info";
     }
 
@@ -89,7 +89,8 @@ public class RoomController {
         if (bindingResult.hasErrors()) {
             return "/rooms/edit-room";
         }
-        roomDAO.update(room.getId(), room);
+        roomDAO.update(room);
+//        roomDAO.update(room.getId(), room);
 //        return "redirect:/rooms/" + room.getId();
         return  "redirect:/rooms";
     }
