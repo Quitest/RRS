@@ -3,7 +3,7 @@
 package ru.pel.ResourceReservationSystem.models;
 
 public class Guest {
-    private long id;
+    private int id;
     private String name;
     private String middleName;
     private String lastname;
@@ -20,11 +20,11 @@ public class Guest {
         this.age = age;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
