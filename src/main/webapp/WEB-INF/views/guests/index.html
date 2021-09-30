@@ -1,10 +1,34 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link rel="stylesheet" type="text/css" href="/resources/style/global.css">
+    <!--    Библиотека иконок для кнопок-->
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
+    <script src="https://kit.fontawesome.com/79be85c73a.js" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <title>Список гостей</title>
 </head>
 <body>
+<table>
+    <tr>
+        <td>
+            <form th:action="@{/reserve}" th:method="GET">
+                <input type="submit" value="Управление бронями">
+            </form>
+        </td>
+        <td>
+            <form th:action="@{/guests}" th:method="GET">
+                <input type="submit" value="Управление гостями">
+            </form>
+        </td>
+        <td>
+            <form th:action="@{/rooms}" th:method="GET">
+                <input type="submit" value="Управление номерами">
+            </form>
+        </td>
+    </tr>
+</table>
+
 <table cellspacing="0" border="1" cellpadding="2">
     <thead align="center">
     <tr>
@@ -13,6 +37,12 @@
         <td>Имя</td>
         <td>Отчество</td>
         <td>Возраст</td>
+        <td colspan="2">
+            <form th:action="@{/guests/create}" th:method="GET">
+<!--                <input type="submit" value="Новый">-->
+                <button title="Новый гость"><i class="fas fa-plus-square"></i></button>
+            </form>
+        </td>
     </tr>
     </thead>
     <tr th:each="guest : ${guestsList}">
@@ -23,24 +53,22 @@
         <td th:text="${guest.getAge()}">Возраст</td>
         <td>
             <form th:action="@{/guests/edit/{id}(id=${guest.getId()})}" th:method="GET">
-                <button>Изменить</button>
+                <!--                <button>Изменить</button>-->
+                <button class="btn" title="Изменить"><i class="fas fa-user-edit"></i></button>
             </form>
         </td>
         <td>
             <form th:action="@{/guests}" th:method="DELETE">
-                <button type="submit" th:name="guestIdForDelete" th:value="${guest.getId()}">Удалить</button>
+                <!--                <button type="submit" th:name="guestIdForDelete" th:value="${guest.getId()}">Удалить</button>-->
+                <button type="submit" th:name="guestIdForDelete" th:value="${guest.getId()}" title="Удалить"><i
+                        class="fas fa-trash"></i></button>
             </form>
         </td>
     </tr>
 </table>
 
 <hr>
-<form th:action="@{/guests/create}" th:method="GET">
-    <input type="submit" value="Создать гостя">
-</form>
-<br>
-<form th:action="@{/rooms}" th:method="GET">
-    <button>Редактировать номера</button>
-</form>
+
+
 </body>
 </html>

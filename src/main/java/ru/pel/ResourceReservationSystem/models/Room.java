@@ -63,4 +63,12 @@ public class Room {
     public void setId(int id) {
         this.id = id;
     }
+
+    public boolean isReserved() {
+        return reserved;
+    }
+
+    public void setReserved(boolean reserved) {
+        this.reserved = reserved;
+    }
 }
