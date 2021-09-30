@@ -5,6 +5,7 @@ import ru.pel.ResourceReservationSystem.models.Guest;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,11 +71,37 @@ public class GuestDAO implements DAOInterface<Guest, Integer> {
 
     @Override
     public Guest getById(Integer id) {
-        throw new UnsupportedOperationException("Функция все еще не реализована");
+        Guest guest = null;
+        try {
+            var statement = connection.prepareStatement("SELECT * from guests WHERE id=?");
+            statement.setInt(1, id);
+            var rs = statement.executeQuery();
+            rs.next();
+            guest = new Guest();
+            guest.setId(rs.getInt("id"));
+            guest.setLastname(rs.getString("lastname"));
+            guest.setName(rs.getString("name"));
+            guest.setMiddleName(rs.getString("middle_name"));
+            guest.setAge(rs.getInt("age"));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return guest;
     }
 
     @Override
     public void update(Guest entry) {
-        throw new UnsupportedOperationException("Функция все еще не реализована");
+        try {
+            var statement = connection
+                    .prepareStatement("UPDATE guests SET lastname=?, name=?, middle_name=?, age=? WHERE id=?");
+            statement.setString(1, entry.getLastname());
+            statement.setString(2, entry.getName());
+            statement.setString(3, entry.getMiddleName());
+            statement.setInt(4,entry.getAge());
+            statement.setInt(5,entry.getId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
