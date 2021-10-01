@@ -9,10 +9,22 @@
     <!--		<relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
     <!--	</parent>-->
     <groupId>ru.pel</groupId>
-    <artifactId>ResourceReservationSystem</artifactId>
+<!--    <artifactId>ResourceReservationSystem</artifactId>-->
+    <artifactId>RRS</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Resource Reservation System</name>
+<!--    <name>RRS</name>-->
     <description>Term paper for Sberbank Java Developer school</description>
+    <packaging>war</packaging>
+<!--    <profiles>-->
+<!--        <profile>-->
+<!--            <id>externalTomcatServer</id>-->
+<!--            <properties>-->
+<!--                <java.version>16</java.version>-->
+<!--&lt;!&ndash;                <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>&ndash;&gt;-->
+<!--            </properties>-->
+<!--        </profile>-->
+<!--    </profiles>-->
     <properties>
         <java.version>16</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -152,7 +164,31 @@
                     <target>16</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.2.2</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <url>http://localhost:8080/manager/text</url>
+                    <server>externalTomcat10Server</server>
+                    <path>/rrs</path>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
+
+<!--    <distributionManagement>-->
+<!--        <repository>-->
+<!--            <id>internal.repo</id>-->
+<!--            <name>Internal repo</name>-->
+<!--            <url>file://D:\internalRepo\</url>-->
+<!--&lt;!&ndash;            <url>http://localhost:8080/rrs</url>&ndash;&gt;-->
+<!--        </repository>-->
+<!--    </distributionManagement>-->
 
 </project>

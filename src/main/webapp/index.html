@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table>
+    <tr>
+        <td>
+            <form th:action="@{/reserve}" th:method="GET">
+                <input type="submit" value="Управление бронями">
+            </form>
+        </td>
+        <td>
+            <form th:action="@{/guests}" th:method="GET">
+                <input type="submit" value="Управление гостями">
+            </form>
+        </td>
+        <td>
+            <form th:action="@{/rrs/rooms}" th:method="GET">
+                <input type="submit" value="Управление номерами">
+            </form>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
