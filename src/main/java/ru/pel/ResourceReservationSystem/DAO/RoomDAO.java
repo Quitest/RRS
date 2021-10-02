@@ -27,13 +27,9 @@ public class RoomDAO implements DAOInterface<Room, Integer> {
     @Override
     public void create(Room room) {
         try {
-            var statement = connection.prepareStatement("INSERT INTO rooms VALUES (?,?,?,?,?,?)");
+            var statement = connection.prepareStatement("INSERT INTO rooms VALUES (?,?)");
             statement.setInt(1, room.getId());
             statement.setString(2, room.getClassOfAccommodations());
-            statement.setTimestamp(3, Timestamp.valueOf(room.getCheckIn()));
-            statement.setTimestamp(4, Timestamp.valueOf(room.getCheckOut()));
-            statement.setInt(5, 0); // FIXME: 26.09.2021 вставлять ID реального гостя
-            statement.setBoolean(6, room.isReserved());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -62,9 +58,6 @@ public class RoomDAO implements DAOInterface<Room, Integer> {
                 Room room = new Room();
                 room.setId(resultSet.getInt("id"));
                 room.setClassOfAccommodations(resultSet.getString("class_of_accommodations"));
-                room.setCheckIn(resultSet.getTimestamp("check_in").toLocalDateTime());
-                room.setCheckOut(resultSet.getTimestamp("check_out").toLocalDateTime());
-                room.setReserved(resultSet.getBoolean("reserved"));
                 rooms.add(room);
             }
         } catch (SQLException e) {
@@ -85,9 +78,6 @@ public class RoomDAO implements DAOInterface<Room, Integer> {
             while (resultSet.next()) {
                 room.setId(resultSet.getInt("id"));
                 room.setClassOfAccommodations(resultSet.getString("class_of_accommodations"));
-                room.setCheckIn(resultSet.getTimestamp("check_in").toLocalDateTime());
-                room.setCheckOut(resultSet.getTimestamp("check_out").toLocalDateTime());
-                room.setReserved(resultSet.getBoolean("reserved"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -99,13 +89,10 @@ public class RoomDAO implements DAOInterface<Room, Integer> {
     public void update(Room editedRoom) {
         try {
             PreparedStatement statement = connection.prepareStatement(
-                    "UPDATE rooms SET class_of_accommodations=?, check_in=?, check_out=?, guest_id=?, reserved=? WHERE id=?");
+                    "UPDATE rooms SET class_of_accommodations=? WHERE id=?");
+
             statement.setString(1, editedRoom.getClassOfAccommodations());
-            statement.setTimestamp(2, Timestamp.valueOf(editedRoom.getCheckIn()));
-            statement.setTimestamp(3, Timestamp.valueOf(editedRoom.getCheckOut()));
-            statement.setInt(4, 1); // FIXME: 26.09.2021 Вводить реальный ID гостя
-            statement.setBoolean(5, editedRoom.isReserved());
-            statement.setInt(6, editedRoom.getId());
+            statement.setInt(2, editedRoom.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

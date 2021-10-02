@@ -20,20 +20,6 @@
                 th:errors="*{classOfAccommodations}"></td>
         </tr>
         <tr>
-            <td><label for="isReserved">Забронировано</label> </td>
-            <td><input id="isReserved"   type="checkbox" th:field="*{reserved}" /></td>
-        </tr>
-        <tr>
-            <td><label for="checkIn">Укажите дату и время заезда: </label></td>
-            <td><input id="checkIn" type="datetime-local" th:field="*{checkIn}"/></td>
-            <td class="error-style" th:if="${#fields.hasErrors('checkIn')}" th:errors="*{checkIn}"></td>
-        </tr>
-        <tr>
-            <td><label for="checkOut">Укажите дату и время выезда: </label></td>
-            <td><input id="checkOut" type="datetime-local" th:field="*{checkOut}"/></td>
-            <td class="error-style" th:if="${#fields.hasErrors('checkOut')}" th:errors="*{checkOut}"></td>
-        </tr>
-        <tr>
             <td><input type="submit" value="Создать"/></td>
         </tr>
     </table>
