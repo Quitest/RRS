@@ -57,7 +57,7 @@ public class RoomsController {
     public String getAllRooms(Model model) {
         model.addAttribute("roomsList", roomDAO.getAll());
 //        return "rooms/index";
-        return "rooms/indexGeneral";
+        return "rooms/index";
     }
 
     @GetMapping("/{id}")
