@@ -14,39 +14,14 @@ public class Room {
     @NotEmpty(message = "Должно быть не пустым")
     @Size(min = 2, max = 15, message = "Длинна должна быть от 2 до 15 символов")
     private String classOfAccommodations;
-    // FIXME: 29.09.2021 Поля ниже не нужны - удалить. Информация подобного рода должна храниться в Reserve
-//    @NotNull
-//    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-//    private LocalDateTime checkIn;
-//    @NotNull
-//    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-//    private LocalDateTime checkOut;
-//    private boolean reserved;
 
     public Room() {
     }
 
     public Room(int id, LocalDateTime checkIn, String classOfAccommodations) {
         this.id = id;
-//        this.checkIn = checkIn;
         this.classOfAccommodations = classOfAccommodations;
     }
-
-//    public LocalDateTime getCheckIn() {
-//        return checkIn;
-//    }
-
-//    public void setCheckIn(LocalDateTime checkIn) {
-//        this.checkIn = checkIn;
-//    }
-
-//    public LocalDateTime getCheckOut() {
-//        return checkOut;
-//    }
-
-//    public void setCheckOut(LocalDateTime checkOut) {
-//        this.checkOut = checkOut;
-//    }
 
     public String getClassOfAccommodations() {
         return classOfAccommodations;
@@ -63,12 +38,4 @@ public class Room {
     public void setId(int id) {
         this.id = id;
     }
-
-//    public boolean isReserved() {
-//        return reserved;
-//    }
-
-//    public void setReserved(boolean reserved) {
-//        this.reserved = reserved;
-//    }
 }
