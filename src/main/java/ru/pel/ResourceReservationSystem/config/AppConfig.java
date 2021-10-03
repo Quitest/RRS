@@ -92,6 +92,7 @@ public class AppConfig implements WebMvcConfigurer {
     //TODO реализовать пул соединений, что бы DAO брали connection из пула при необходимости, а потом возвращали.
 
     @Bean
+    @Description("Настроенный на локальную PostgreSQL БД источник данных")
     public DataSource dataSource(){
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.postgresql.Driver");
