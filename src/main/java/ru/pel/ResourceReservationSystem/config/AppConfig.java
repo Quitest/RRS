@@ -59,6 +59,8 @@ public class AppConfig implements WebMvcConfigurer {
 
     //TODO объединить с viewResolver()
     @Bean
+    @Description("Позволяет REST контроллерам принимать и отправлять данные в форматах JSON и XML. При необходимости, " +
+            "можно легко добавить и другие форматы")
     public ViewResolver contentNegotiatingViewResolver() {
         ContentNegotiatingViewResolver resolver =
                 new ContentNegotiatingViewResolver();
@@ -66,7 +68,6 @@ public class AppConfig implements WebMvcConfigurer {
         List<View> views = new ArrayList<>();
         views.add(new MappingJackson2XmlView());
         views.add(new MappingJackson2JsonView());
-
         resolver.setDefaultViews(views);
         return resolver;
     }

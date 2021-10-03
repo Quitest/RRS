@@ -19,9 +19,6 @@ import java.util.List;
 единственную задачу.
 */
 
-/**
- * Идя реализации универсального REST контроллера взята с сайта <a href=https://stackoverflow.com/questions/35270660/accepting-returning-xml-json-request-and-response-spring-mvc>stackoverflow.com</a>
- */
 @RestController
 @RequestMapping("/api/rooms")
 public class RoomsControllerREST implements RESTController<Room> {
