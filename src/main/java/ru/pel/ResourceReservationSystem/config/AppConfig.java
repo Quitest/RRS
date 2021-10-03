@@ -6,15 +6,20 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Description;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
+import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
+import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
+import org.springframework.web.servlet.view.xml.MappingJackson2XmlView;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
 import javax.servlet.Filter;
 import javax.sql.DataSource;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -52,11 +57,19 @@ public class AppConfig implements WebMvcConfigurer {
         return viewResolver;
     }
 
-    /* @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("index");
+    //TODO объединить с viewResolver()
+    @Bean
+    public ViewResolver contentNegotiatingViewResolver() {
+        ContentNegotiatingViewResolver resolver =
+                new ContentNegotiatingViewResolver();
+
+        List<View> views = new ArrayList<>();
+        views.add(new MappingJackson2XmlView());
+        views.add(new MappingJackson2JsonView());
+
+        resolver.setDefaultViews(views);
+        return resolver;
     }
-    */
 
     @Bean
     @Description("Registration filter for hidden http methods in forms")
@@ -71,7 +84,6 @@ public class AppConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry
                 .addResourceHandler("/resources/**")
-//                .addResourceLocations("file:/opt/files/");
 //                .addResourceLocations("file:/D:/Java Course/ResourceReservationSystem/src/main/webapp/WEB-INF/files/");
                 .addResourceLocations("/WEB-INF/resources/");
     }

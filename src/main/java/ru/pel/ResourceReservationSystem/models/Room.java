@@ -1,5 +1,6 @@
 package ru.pel.ResourceReservationSystem.models;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Digits;

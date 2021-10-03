@@ -100,6 +100,7 @@
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
             <version>6.1.6.Final</version>
+<!--            С этой версией не удалось раскачать валидацию форм.-->
 <!--            <version>7.0.1.Final</version>-->
         </dependency>
 
@@ -114,11 +115,6 @@
             <artifactId>validation-api</artifactId>
             <version>2.0.1.Final</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>javax.servlet</groupId>-->
-<!--            <artifactId>javax.servlet-api</artifactId>-->
-<!--            <version>4.0.1</version>-->
-<!--        </dependency>-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -146,6 +142,12 @@
 <!--            <version>2.5.4</version>-->
 <!--        </dependency>-->
 
+<!--        Требуется для работы REST-контроллера с запросами/ответами в формате XML-->
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-xml</artifactId>
+            <version>2.13.0-rc2</version>
+        </dependency>
     </dependencies>
 
     <build>
