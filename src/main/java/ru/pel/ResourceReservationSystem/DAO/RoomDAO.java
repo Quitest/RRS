@@ -68,13 +68,14 @@ public class RoomDAO implements DAOInterface<Room, Integer> {
 
     @Override
     public Room getById(Integer id) {
-        Room room = new Room();
+        Room room = null;
         try {
             String sql = "SELECT * FROM rooms WHERE id=?";
             var statement = connection.prepareStatement(sql);
             statement.setInt(1, id);
 
             var resultSet = statement.executeQuery();
+            room = new Room();
             while (resultSet.next()) {
                 room.setId(resultSet.getInt("id"));
                 room.setClassOfAccommodations(resultSet.getString("class_of_accommodations"));
