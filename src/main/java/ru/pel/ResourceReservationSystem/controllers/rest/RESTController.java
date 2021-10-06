@@ -2,6 +2,7 @@ package ru.pel.ResourceReservationSystem.controllers.rest;
 
 import org.springframework.http.ResponseEntity;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -22,7 +23,7 @@ public interface RESTController<T> {
 
     ResponseEntity<List<T>> getAll();
 
-    ResponseEntity<T> getById(Integer id);
+    ResponseEntity<T> getById(Integer id) throws SQLException;
 
     ResponseEntity<T> update(T entity);
 }

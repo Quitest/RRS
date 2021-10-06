@@ -10,6 +10,7 @@ import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 import org.springframework.web.servlet.view.xml.MappingJackson2XmlView;
@@ -19,9 +20,7 @@ import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
 import javax.servlet.Filter;
 import javax.sql.DataSource;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Configuration
 public class AppConfig implements WebMvcConfigurer {
@@ -100,5 +99,20 @@ public class AppConfig implements WebMvcConfigurer {
         dataSource.setPassword("toor");
 
         return dataSource;
+    }
+
+    @Bean
+    @Description("Обработчик исключений")
+    public SimpleMappingExceptionResolver createSimpleMappingExceptionResolver(){
+        Properties mapping = new Properties();
+        mapping.setProperty("NoSuchElementException", "/error"); //FIXME вместо /error надо мапить в более информативную и специфическую страницу
+
+        SimpleMappingExceptionResolver resolver = new SimpleMappingExceptionResolver();
+        resolver.setExceptionMappings(mapping);         // None by default
+        resolver.setDefaultErrorView("/error");         // No default
+        resolver.setExceptionAttribute("exception");    // Default is "exception"
+//        resolver.setWarnLogCategory();                // No default
+
+        return resolver;
     }
 }
