@@ -1,9 +1,11 @@
 package ru.pel.ResourceReservationSystem.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Description;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.View;
@@ -24,6 +26,9 @@ import java.util.*;
 
 @Configuration
 public class AppConfig implements WebMvcConfigurer {
+    @Autowired
+    private Environment env;
+
     @Bean
     @Description("Thymeleaf template resolver serving HTML 5")
     public SpringResourceTemplateResolver templateResolver() {
@@ -89,14 +94,20 @@ public class AppConfig implements WebMvcConfigurer {
     }
 
     //TODO реализовать пул соединений, что бы DAO брали connection из пула при необходимости, а потом возвращали.
-
     @Bean
     public DataSource dataSource(){
+        Properties properties = new Properties();
+        String dbType = env.getProperty("db.type");
+        String dbDriver = env.getProperty(dbType+".driver");
+        String dbUrl = env.getProperty(dbType+".url");
+        String dbUser = env.getProperty(dbType+".user");
+        String dbPass = env.getProperty(dbType+".pass");
+
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/rrs_db");
-        dataSource.setUsername("rrs_user");
-        dataSource.setPassword("toor");
+        dataSource.setDriverClassName(dbDriver);
+        dataSource.setUrl(dbUrl);
+        dataSource.setUsername(dbUser);
+        dataSource.setPassword(dbPass);
 
         return dataSource;
     }
