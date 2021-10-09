@@ -25,5 +25,5 @@ public interface RESTController<T> {
 
     ResponseEntity<T> getById(Integer id) throws SQLException;
 
-    ResponseEntity<T> update(T entity);
+    ResponseEntity<T> update(T entity) throws SQLException;
 }

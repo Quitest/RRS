@@ -11,6 +11,7 @@ import ru.pel.ResourceReservationSystem.DAO.RoomDAO;
 import ru.pel.ResourceReservationSystem.models.Room;
 
 import javax.validation.Valid;
+import java.sql.SQLException;
 import java.util.NoSuchElementException;
 
 @Controller
@@ -49,7 +50,7 @@ public class RoomsController {
     }
 
     @GetMapping("/edit/{id}")
-    public String editRoom(Model model, @PathVariable("id") int id) {
+    public String editRoom(Model model, @PathVariable("id") int id) throws SQLException {
         var room = roomDAO.getById(id);
         model.addAttribute("editedRoom", room);
         if (room == null || room.getId() == 0) {
@@ -83,7 +84,7 @@ public class RoomsController {
     }
 
     @GetMapping("/{id}")
-    public String roomInfo(@PathVariable("id") int id, Model model) {
+    public String roomInfo(@PathVariable("id") int id, Model model) throws SQLException {
         var room = roomDAO.getById(id);
         model.addAttribute("roomInfo", room);
         if (room == null || room.getId() == 0) {

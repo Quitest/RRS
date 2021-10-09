@@ -2,12 +2,14 @@ package ru.pel.ResourceReservationSystem.DAO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ru.pel.ResourceReservationSystem.exceptions.NoSuchRoomException;
 import ru.pel.ResourceReservationSystem.models.Room;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Component
 public class RoomDAO implements DAOInterface<Room, Integer> {
@@ -67,21 +69,24 @@ public class RoomDAO implements DAOInterface<Room, Integer> {
     }
 
     @Override
-    public Room getById(Integer id) {
-        Room room = null;
-        try {
+    public Room getById(Integer id) throws SQLException {
+//        Room room = null;
+//        try {
             String sql = "SELECT * FROM rooms WHERE id=?";
             var statement = connection.prepareStatement(sql);
             statement.setInt(1, id);
 
             var resultSet = statement.executeQuery();
-            room = new Room();
-            while (resultSet.next()) {
+            Room room = new Room();
+            if (resultSet.next()) {
                 room.setId(resultSet.getInt("id"));
                 room.setClassOfAccommodations(resultSet.getString("class_of_accommodations"));
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+        if (room.isEmpty()){
+            throw new NoSuchElementException("Комнаты " + id + " не существует");
         }
         return room;
     }

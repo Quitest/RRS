@@ -5,24 +5,22 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import ru.pel.ResourceReservationSystem.exceptions.ExceptionBody;
 import ru.pel.ResourceReservationSystem.exceptions.NoSuchRoomException;
+
+import java.util.NoSuchElementException;
 
 @ControllerAdvice
 public class GlobalControllerRESTExceptionHandler extends ResponseEntityExceptionHandler {
 
-//    @ResponseStatus(HttpStatus.BAD_REQUEST)
-//    @ExceptionHandler(value = NoSuchElementException.class)
-////    @ResponseBody
-//    public ErrorInfo handleSQLExceptions(HttpServletRequest request, Exception exception){
-//        return new ErrorInfo(request.getRequestURL().toString(), exception);
-//    }
-
-    @ExceptionHandler(value = {NoSuchRoomException.class})
+    @ExceptionHandler(value = {NoSuchElementException.class})
     protected ResponseEntity<Object> handleConflict(RuntimeException ex, WebRequest request) {
-        String bodyOfResponse = "This should be application specific";
         HttpHeaders headers = new HttpHeaders();
-        return handleExceptionInternal(ex, ex.getLocalizedMessage(), headers, HttpStatus.NOT_FOUND, request);
+        String url = ((ServletWebRequest)request).getRequest().getRequestURL().toString();
+        ExceptionBody body = new ExceptionBody(url,ex);
+        return handleExceptionInternal(ex, body, headers, HttpStatus.NOT_FOUND, request);
     }
 }

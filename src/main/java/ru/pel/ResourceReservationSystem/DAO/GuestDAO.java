@@ -5,10 +5,10 @@ import ru.pel.ResourceReservationSystem.models.Guest;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Component
 public class GuestDAO implements DAOInterface<Guest, Integer> {
@@ -70,21 +70,25 @@ public class GuestDAO implements DAOInterface<Guest, Integer> {
     }
 
     @Override
-    public Guest getById(Integer id) {
-        Guest guest = null;
-        try {
-            var statement = connection.prepareStatement("SELECT * from guests WHERE id=?");
-            statement.setInt(1, id);
-            var rs = statement.executeQuery();
-            rs.next();
-            guest = new Guest();
+    public Guest getById(Integer id) throws SQLException {
+//        Guest guest = null;
+//        try {
+        var statement = connection.prepareStatement("SELECT * from guests WHERE id=?");
+        statement.setInt(1, id);
+        Guest guest = new Guest();
+        var rs = statement.executeQuery();
+        if(rs.next()) {
             guest.setId(rs.getInt("id"));
             guest.setLastname(rs.getString("lastname"));
             guest.setName(rs.getString("name"));
             guest.setMiddleName(rs.getString("middle_name"));
             guest.setAge(rs.getInt("age"));
-        } catch (SQLException e) {
-            e.printStackTrace();
+        }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+        if (guest.isEmpty()) {
+            throw new NoSuchElementException("Гость " + id + " не существует");
         }
         return guest;
     }
@@ -97,8 +101,8 @@ public class GuestDAO implements DAOInterface<Guest, Integer> {
             statement.setString(1, entry.getLastname());
             statement.setString(2, entry.getName());
             statement.setString(3, entry.getMiddleName());
-            statement.setInt(4,entry.getAge());
-            statement.setInt(5,entry.getId());
+            statement.setInt(4, entry.getAge());
+            statement.setInt(5, entry.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.pel.ResourceReservationSystem.DAO.GuestDAO;
 import ru.pel.ResourceReservationSystem.models.Guest;
 
+import java.sql.SQLException;
+
 @Controller
 @RequestMapping("/guests")
 public class GuestsController {
@@ -26,7 +28,7 @@ public class GuestsController {
     }
 
     @GetMapping("/edit/{id}")
-    public String editGuest(@PathVariable("id") int id, Model model) {
+    public String editGuest(@PathVariable("id") int id, Model model) throws SQLException {
         model.addAttribute("editableGuest", guestDAO.getById(id));
         return "/guests/edit-guest";
     }

@@ -1,9 +1,12 @@
 package ru.pel.ResourceReservationSystem.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
+@JsonIgnoreProperties({"empty"} //Игнор результата работы isEmpty(), если не будет, то в ответах будет boolean поле empty
+)
 public class Reserve {
     private int id;
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
@@ -54,5 +57,18 @@ public class Reserve {
 
     public void setRoomId(int roomId) {
         this.roomId = roomId;
+    }
+
+    /**
+     * Проверка на пустоту, т.е. если все поля нулевые.
+     *
+     * @return true если все поля равны 0 и/или null, иначе false.
+     */
+    public boolean isEmpty() {
+        return id == 0 &
+                checkIn == null &
+                checkOut == null &
+                guestId == 0 &
+                roomId == 0;
     }
 }

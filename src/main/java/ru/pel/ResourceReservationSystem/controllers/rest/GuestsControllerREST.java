@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.pel.ResourceReservationSystem.DAO.GuestDAO;
 import ru.pel.ResourceReservationSystem.models.Guest;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @RestController
@@ -26,7 +27,7 @@ public class GuestsControllerREST implements RESTController<Guest> {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Guest> getById(@PathVariable Integer id) {
+    public ResponseEntity<Guest> getById(@PathVariable Integer id) throws SQLException {
         return ResponseEntity.ok(guestDAO.getById(id));
     }
 
@@ -37,7 +38,7 @@ public class GuestsControllerREST implements RESTController<Guest> {
     }
 
     @PutMapping
-    public ResponseEntity<Guest> update(@RequestBody Guest guest) {
+    public ResponseEntity<Guest> update(@RequestBody Guest guest) throws SQLException {
         guestDAO.update(guest);
         return ResponseEntity.ok(guestDAO.getById(guest.getId()));
         //WTF стоит ли делать запрос к БД для проверки?

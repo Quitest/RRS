@@ -47,10 +47,10 @@ public class RoomsControllerREST implements RESTController<Room> {
     @GetMapping("{id}")
     public ResponseEntity<Room> getById(@PathVariable Integer id) throws SQLException {
         Room room = roomDAO.getById(id);
-        if (room == null || room.getId() == 0) {
-            String msg = "Комнаты с ID=" + id + " не существует";
-            throw new NoSuchRoomException(msg);
-        }
+//        if (room == null || room.getId() == 0) {
+//            String msg = "Комнаты с ID=" + id + " не существует";
+//            throw new NoSuchRoomException(msg);
+//        }
         return ResponseEntity.ok(room);
     }
 
@@ -63,8 +63,8 @@ public class RoomsControllerREST implements RESTController<Room> {
 //    @ResponseStatus(HttpStatus.BAD_REQUEST)
 //    @ExceptionHandler(value = NoSuchElementException.class)
 //    @ResponseBody
-//    public ErrorInfo handleSQLExceptions(HttpServletRequest request, Exception exception){
-//        return new ErrorInfo(request.getRequestURL().toString(), exception);
+//    public ExceptionBody handleSQLExceptions(HttpServletRequest request, Exception exception){
+//        return new ExceptionBody(request.getRequestURL().toString(), exception);
 //    }
 
 }

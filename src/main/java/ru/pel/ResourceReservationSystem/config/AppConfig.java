@@ -22,43 +22,22 @@ import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
 import javax.servlet.Filter;
 import javax.sql.DataSource;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
 
 @Configuration
 public class AppConfig implements WebMvcConfigurer {
     @Autowired
     private Environment env;
 
-    @Bean
-    @Description("Thymeleaf template resolver serving HTML 5")
-    public SpringResourceTemplateResolver templateResolver() {
-//        ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
-        SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
-//        templateResolver.setPrefix("/templates/");
-        templateResolver.setPrefix("/WEB-INF/views/");
-        templateResolver.setCacheable(false);
-        templateResolver.setSuffix(".html");
-        templateResolver.setTemplateMode("HTML");
-//        templateResolver.setOrder(0);
-        templateResolver.setCharacterEncoding("UTF-8");
-        return templateResolver;
-    }
-
-    @Bean
-    @Description("Thymeleaf template engine with Spring integration")
-    public SpringTemplateEngine templateEngine() {
-        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
-        templateEngine.setTemplateResolver(templateResolver());
-        return templateEngine;
-    }
-
-    @Bean
-    @Description("Thymeleaf view resolver")
-    public ViewResolver viewResolver() {
-        ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
-        viewResolver.setTemplateEngine(templateEngine());
-        viewResolver.setCharacterEncoding("UTF-8");
-        return viewResolver;
+    @Override
+    @Description("Подключение путей с необходимыми ресурсами для front end")
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry
+                .addResourceHandler("/resources/**")
+//                .addResourceLocations("file:/D:/Java Course/ResourceReservationSystem/src/main/webapp/WEB-INF/files/");
+                .addResourceLocations("/WEB-INF/resources/");
     }
 
     //TODO объединить с viewResolver()
@@ -77,31 +56,28 @@ public class AppConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    @Description("Registration filter for hidden http methods in forms")
-    public FilterRegistrationBean<Filter> hiddenHttpMethodFilter(){
-        FilterRegistrationBean<Filter> filter = new FilterRegistrationBean<>(new HiddenHttpMethodFilter());
-        filter.setUrlPatterns(List.of("/*"));
-        return filter;
-    }
+    @Description("Обработчик исключений")
+    public SimpleMappingExceptionResolver createSimpleMappingExceptionResolver() {
+        Properties mapping = new Properties();
+        mapping.setProperty("NoSuchRoomException", "/error"); //FIXME вместо /error надо мапить в более информативную и специфическую страницу
 
-    @Override
-    @Description("Подключение путей с необходимыми ресурсами для front end")
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry
-                .addResourceHandler("/resources/**")
-//                .addResourceLocations("file:/D:/Java Course/ResourceReservationSystem/src/main/webapp/WEB-INF/files/");
-                .addResourceLocations("/WEB-INF/resources/");
+        SimpleMappingExceptionResolver resolver = new SimpleMappingExceptionResolver();
+        resolver.setExceptionMappings(mapping);         // None by default
+        resolver.setDefaultErrorView("/error");         // No default
+        resolver.setExceptionAttribute("exception");    // Default is "exception"
+//        resolver.setWarnLogCategory();                // No default
+
+        return resolver;
     }
 
     //TODO реализовать пул соединений, что бы DAO брали connection из пула при необходимости, а потом возвращали.
     @Bean
-    public DataSource dataSource(){
-        Properties properties = new Properties();
+    public DataSource dataSource() {
         String dbType = env.getProperty("db.type");
-        String dbDriver = env.getProperty(dbType+".driver");
-        String dbUrl = env.getProperty(dbType+".url");
-        String dbUser = env.getProperty(dbType+".user");
-        String dbPass = env.getProperty(dbType+".pass");
+        String dbDriver = env.getProperty(dbType + ".driver");
+        String dbUrl = env.getProperty(dbType + ".url");
+        String dbUser = env.getProperty(dbType + ".user");
+        String dbPass = env.getProperty(dbType + ".pass");
 
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(dbDriver);
@@ -113,17 +89,42 @@ public class AppConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    @Description("Обработчик исключений")
-    public SimpleMappingExceptionResolver createSimpleMappingExceptionResolver(){
-        Properties mapping = new Properties();
-        mapping.setProperty("NoSuchElementException", "/error"); //FIXME вместо /error надо мапить в более информативную и специфическую страницу
+    @Description("Registration filter for hidden http methods in forms")
+    public FilterRegistrationBean<Filter> hiddenHttpMethodFilter() {
+        FilterRegistrationBean<Filter> filter = new FilterRegistrationBean<>(new HiddenHttpMethodFilter());
+        filter.setUrlPatterns(List.of("/*"));
+        return filter;
+    }
 
-        SimpleMappingExceptionResolver resolver = new SimpleMappingExceptionResolver();
-        resolver.setExceptionMappings(mapping);         // None by default
-        resolver.setDefaultErrorView("/error");         // No default
-        resolver.setExceptionAttribute("exception");    // Default is "exception"
-//        resolver.setWarnLogCategory();                // No default
+    @Bean
+    @Description("Thymeleaf template engine with Spring integration")
+    public SpringTemplateEngine templateEngine() {
+        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+        templateEngine.setTemplateResolver(templateResolver());
+        return templateEngine;
+    }
 
-        return resolver;
+    @Bean
+    @Description("Thymeleaf template resolver serving HTML 5")
+    public SpringResourceTemplateResolver templateResolver() {
+//        ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
+        SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
+//        templateResolver.setPrefix("/templates/");
+        templateResolver.setPrefix("/WEB-INF/views/");
+        templateResolver.setCacheable(false);
+        templateResolver.setSuffix(".html");
+        templateResolver.setTemplateMode("HTML");
+//        templateResolver.setOrder(0);
+        templateResolver.setCharacterEncoding("UTF-8");
+        return templateResolver;
+    }
+
+    @Bean
+    @Description("Thymeleaf view resolver")
+    public ViewResolver viewResolver() {
+        ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
+        viewResolver.setTemplateEngine(templateEngine());
+        viewResolver.setCharacterEncoding("UTF-8");
+        return viewResolver;
     }
 }

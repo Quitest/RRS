@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.pel.ResourceReservationSystem.DAO.ReserveDAO;
 import ru.pel.ResourceReservationSystem.models.Reserve;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @RestController
@@ -32,7 +33,7 @@ public class ReservesControllerREST implements RESTController<Reserve> {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Reserve> getById(@PathVariable Integer id) {
+    public ResponseEntity<Reserve> getById(@PathVariable Integer id) throws SQLException {
         return ResponseEntity.ok(reserveDAO.getById(id));
     }
 
