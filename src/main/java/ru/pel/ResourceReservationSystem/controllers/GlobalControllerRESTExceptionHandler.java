@@ -9,18 +9,17 @@ import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import ru.pel.ResourceReservationSystem.exceptions.ExceptionBody;
-import ru.pel.ResourceReservationSystem.exceptions.NoSuchRoomException;
 
 import java.util.NoSuchElementException;
 
 @ControllerAdvice
 public class GlobalControllerRESTExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(value = {NoSuchElementException.class})
+    @ExceptionHandler({NoSuchElementException.class, IllegalArgumentException.class})
     protected ResponseEntity<Object> handleConflict(RuntimeException ex, WebRequest request) {
         HttpHeaders headers = new HttpHeaders();
-        String url = ((ServletWebRequest)request).getRequest().getRequestURL().toString();
-        ExceptionBody body = new ExceptionBody(url,ex);
+        String url = ((ServletWebRequest) request).getRequest().getRequestURL().toString();
+        ExceptionBody body = new ExceptionBody(url, ex);
         return handleExceptionInternal(ex, body, headers, HttpStatus.NOT_FOUND, request);
     }
 }
