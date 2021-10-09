@@ -11,6 +11,8 @@ import ru.pel.ResourceReservationSystem.DAO.RoomDAO;
 import ru.pel.ResourceReservationSystem.models.Room;
 
 import javax.validation.Valid;
+import java.sql.SQLException;
+import java.util.NoSuchElementException;
 
 @Controller
 @RequestMapping("/rooms")
@@ -48,8 +50,13 @@ public class RoomsController {
     }
 
     @GetMapping("/edit/{id}")
-    public String editRoom(Model model, @PathVariable("id") int id) {
-        model.addAttribute("editedRoom", roomDAO.getById(id));
+    public String editRoom(Model model, @PathVariable("id") int id) throws SQLException {
+        var room = roomDAO.getById(id);
+        model.addAttribute("editedRoom", room);
+        if (room == null || room.getId() == 0) {
+            String msg = "Комнаты с ID=" + id + " не существует";
+            throw new NoSuchElementException(msg);
+        }
         return "/rooms/edit-room";
     }
 
@@ -58,12 +65,6 @@ public class RoomsController {
         model.addAttribute("roomsList", roomDAO.getAll());
 //        return "rooms/index";
         return "rooms/index";
-    }
-
-    @GetMapping("/{id}")
-    public String roomInfo(@PathVariable("id") int id, Model model) {
-        model.addAttribute("roomInfo", roomDAO.getById(id));
-        return "rooms/room-info";
     }
 
     //Вариант 1: реализации через внедрение модели.
@@ -82,6 +83,16 @@ public class RoomsController {
         return "rooms/new-room";
     }
 
+    @GetMapping("/{id}")
+    public String roomInfo(@PathVariable("id") int id, Model model) throws SQLException {
+        var room = roomDAO.getById(id);
+        model.addAttribute("roomInfo", room);
+        if (room == null || room.getId() == 0) {
+            throw new NoSuchElementException("Комнаты с таким ID не найдено");
+        }
+        return "rooms/room-info";
+    }
+
     @PatchMapping("/{id}")
 //    @PatchMapping("update/")
     //WTF @ModelAttribute в данном случае не очень-то и нужен.
@@ -92,6 +103,6 @@ public class RoomsController {
         roomDAO.update(room);
 //        roomDAO.update(room.getId(), room);
 //        return "redirect:/rooms/" + room.getId();
-        return  "redirect:/rooms";
+        return "redirect:/rooms";
     }
 }

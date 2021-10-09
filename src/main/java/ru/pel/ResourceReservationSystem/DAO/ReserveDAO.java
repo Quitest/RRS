@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Component
 public class ReserveDAO implements DAOInterface<Reserve, Integer> {
@@ -73,21 +74,25 @@ public class ReserveDAO implements DAOInterface<Reserve, Integer> {
     }
 
     @Override
-    public Reserve getById(Integer id) {
-        Reserve reserve = null;
-        try {
-            var statement = connection.prepareStatement("SELECT * FROM reserves WHERE id=?");
-            statement.setInt(1, id);
-            var rs = statement.executeQuery();
-            rs.next();
-            reserve = new Reserve();
+    public Reserve getById(Integer id) throws SQLException {
+        Reserve reserveListrve = null;
+//        try {
+        var statement = connection.prepareStatement("SELECT * FROM reserves WHERE id=?");
+        statement.setInt(1, id);
+        var rs = statement.executeQuery();
+        Reserve reserve = new Reserve();
+        if (rs.next()) {
             reserve.setId(rs.getInt("id"));
             reserve.setGuestId(rs.getInt("guest_id"));
             reserve.setRoomId(rs.getInt("room_id"));
             reserve.setCheckIn(rs.getTimestamp("check_in").toLocalDateTime());
             reserve.setCheckOut(rs.getTimestamp("check_out").toLocalDateTime());
-        } catch (SQLException e) {
-            e.printStackTrace();
+        }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+        if (reserve.isEmpty()) {
+            throw new NoSuchElementException("Бронь № " + id + " не существует");
         }
         return reserve;
     }

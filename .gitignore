@@ -37,3 +37,4 @@ build/
 
 /.PVS-Studio
 /.PVS-Studio/**/
+/rrs_db.trace.db

@@ -1,5 +1,6 @@
 package ru.pel.ResourceReservationSystem.DAO;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface DAOInterface<E, K> {
@@ -10,7 +11,7 @@ public interface DAOInterface<E, K> {
 
     List<E> getAll();
 
-    E getById(K id);
+    E getById(K id) throws SQLException;
 
     void update(E entry);
 }

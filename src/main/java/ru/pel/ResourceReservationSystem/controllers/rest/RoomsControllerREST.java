@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.pel.ResourceReservationSystem.DAO.RoomDAO;
+import ru.pel.ResourceReservationSystem.exceptions.NoSuchRoomException;
 import ru.pel.ResourceReservationSystem.models.Room;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /*
@@ -43,8 +45,13 @@ public class RoomsControllerREST implements RESTController<Room> {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Room> getById(@PathVariable Integer id) {
-        return ResponseEntity.ok(roomDAO.getById(id));
+    public ResponseEntity<Room> getById(@PathVariable Integer id) throws SQLException {
+        Room room = roomDAO.getById(id);
+//        if (room == null || room.getId() == 0) {
+//            String msg = "Комнаты с ID=" + id + " не существует";
+//            throw new NoSuchRoomException(msg);
+//        }
+        return ResponseEntity.ok(room);
     }
 
     @PutMapping
@@ -53,4 +60,12 @@ public class RoomsControllerREST implements RESTController<Room> {
         return ResponseEntity.ok(room);
     }
 
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)
+//    @ExceptionHandler(value = NoSuchElementException.class)
+//    @ResponseBody
+//    public ExceptionBody handleSQLExceptions(HttpServletRequest request, Exception exception){
+//        return new ExceptionBody(request.getRequestURL().toString(), exception);
+//    }
+
 }
+

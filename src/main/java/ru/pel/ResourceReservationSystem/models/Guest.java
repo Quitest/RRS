@@ -2,6 +2,11 @@
 // PVS-Studio Static Code Analyzer for C, C++, C#, and Java: http://www.viva64.com
 package ru.pel.ResourceReservationSystem.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties({"empty"} //Игнор результата работы isEmpty(), если не будет, то в ответах будет boolean поле empty
+)
+
 public class Guest {
     private int id;
     private String name;
@@ -50,5 +55,13 @@ public class Guest {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isEmpty() {
+        return id == 0 &
+                name == null &
+                middleName == null &
+                lastname == null &
+                age == 0;
     }
 }

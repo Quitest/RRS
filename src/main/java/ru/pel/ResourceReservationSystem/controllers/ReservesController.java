@@ -10,6 +10,7 @@ import ru.pel.ResourceReservationSystem.DAO.RoomDAO;
 import ru.pel.ResourceReservationSystem.models.Reserve;
 
 import javax.websocket.server.PathParam;
+import java.sql.SQLException;
 
 @Controller
 @RequestMapping("/reserve")
@@ -47,7 +48,7 @@ public class ReservesController {
     }
 
     @GetMapping("edit/{id}")
-    public String editReserve(@PathVariable("id") int reserveId, Model model){
+    public String editReserve(@PathVariable("id") int reserveId, Model model) throws SQLException {
         model.addAttribute("editableReserve", reserveDAO.getById(reserveId));
         model.addAttribute("roomList", roomDAO.getAll());
         model.addAttribute("guestList", guestDAO.getAll());
