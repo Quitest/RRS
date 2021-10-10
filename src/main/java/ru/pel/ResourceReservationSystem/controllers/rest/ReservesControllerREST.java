@@ -16,7 +16,7 @@ public class ReservesControllerREST implements RESTController<Reserve> {
     ReserveDAO reserveDAO;
 
     @PostMapping
-    public ResponseEntity<Reserve> create(@RequestBody Reserve reserve) {
+    public ResponseEntity<Reserve> create(@RequestBody Reserve reserve) throws SQLException {
         reserveDAO.create(reserve);
         return ResponseEntity.ok(reserve);
     }
@@ -38,7 +38,7 @@ public class ReservesControllerREST implements RESTController<Reserve> {
     }
 
     @PutMapping
-    public ResponseEntity<Reserve> update(@RequestBody Reserve reserve) {
+    public ResponseEntity<Reserve> update(@RequestBody Reserve reserve) throws SQLException {
         reserveDAO.update(reserve);
         return ResponseEntity.ok(reserve);
     }

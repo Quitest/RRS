@@ -2,7 +2,6 @@ package ru.pel.ResourceReservationSystem.DAO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.pel.ResourceReservationSystem.exceptions.NoSuchRoomException;
 import ru.pel.ResourceReservationSystem.models.Room;
 
 import javax.sql.DataSource;
@@ -27,15 +26,24 @@ public class RoomDAO implements DAOInterface<Room, Integer> {
     }
 
     @Override
-    public void create(Room room) {
+    public long create(Room room) {
         try {
-            var statement = connection.prepareStatement("INSERT INTO rooms VALUES (?,?)");
+            var statement = connection.prepareStatement("INSERT INTO rooms VALUES (?,?)", Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, room.getId());
             statement.setString(2, room.getClassOfAccommodations());
-            statement.executeUpdate();
+            var newRows = statement.executeUpdate();
+            if (newRows == 0) {
+                throw new SQLException("Создать комнату не удалось, в БД строки не изменялись");
+            }
+            try (var generatedKeys = statement.getGeneratedKeys()) {
+                if (!generatedKeys.next()) {
+                    throw new SQLException("Создать комнату не удалось");
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return room.getId();
     }
 
     @Override
@@ -70,38 +78,30 @@ public class RoomDAO implements DAOInterface<Room, Integer> {
 
     @Override
     public Room getById(Integer id) throws SQLException {
-//        Room room = null;
-//        try {
-            String sql = "SELECT * FROM rooms WHERE id=?";
-            var statement = connection.prepareStatement(sql);
-            statement.setInt(1, id);
+        String sql = "SELECT * FROM rooms WHERE id=?";
+        var statement = connection.prepareStatement(sql);
+        statement.setInt(1, id);
 
-            var resultSet = statement.executeQuery();
-            Room room = new Room();
-            if (resultSet.next()) {
-                room.setId(resultSet.getInt("id"));
-                room.setClassOfAccommodations(resultSet.getString("class_of_accommodations"));
-            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-        if (room.isEmpty()){
+        var resultSet = statement.executeQuery();
+        Room room = new Room();
+        if (resultSet.next()) {
+            room.setId(resultSet.getInt("id"));
+            room.setClassOfAccommodations(resultSet.getString("class_of_accommodations"));
+        }
+        if (room.isEmpty()) {
             throw new NoSuchElementException("Комнаты " + id + " не существует");
         }
         return room;
     }
 
     @Override
-    public void update(Room editedRoom) {
-        try {
-            PreparedStatement statement = connection.prepareStatement(
-                    "UPDATE rooms SET class_of_accommodations=? WHERE id=?");
+    public long update(Room room) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement(
+                "UPDATE rooms SET class_of_accommodations=? WHERE id=?");
 
-            statement.setString(1, editedRoom.getClassOfAccommodations());
-            statement.setInt(2, editedRoom.getId());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        statement.setString(1, room.getClassOfAccommodations());
+        statement.setInt(2, room.getId());
+        statement.executeUpdate();
+        return room.getId();
     }
 }

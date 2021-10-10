@@ -20,7 +20,9 @@ CREATE TABLE IF NOT EXISTS reserves(
     check_in TIMESTAMP WITH TIME ZONE,
     check_out TIMESTAMP WITH TIME ZONE,
     guest_id INT,
-    room_id INT
+    room_id INT,
+    foreign key (guest_id) references guests(id),
+    foreign key (room_id) references rooms(id)
 );
 
 insert into rooms values

@@ -63,7 +63,6 @@ public class RoomsController {
     @GetMapping
     public String getAllRooms(Model model) {
         model.addAttribute("roomsList", roomDAO.getAll());
-//        return "rooms/index";
         return "rooms/index";
     }
 
@@ -94,15 +93,12 @@ public class RoomsController {
     }
 
     @PatchMapping("/{id}")
-//    @PatchMapping("update/")
     //WTF @ModelAttribute в данном случае не очень-то и нужен.
-    public String updateRoom(@Valid @ModelAttribute("editedRoom") Room room, BindingResult bindingResult) {
+    public String updateRoom(@Valid @ModelAttribute("editedRoom") Room room, BindingResult bindingResult) throws SQLException {
         if (bindingResult.hasErrors()) {
             return "/rooms/edit-room";
         }
         roomDAO.update(room);
-//        roomDAO.update(room.getId(), room);
-//        return "redirect:/rooms/" + room.getId();
         return "redirect:/rooms";
     }
 }

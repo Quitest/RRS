@@ -17,7 +17,7 @@ import java.util.List;
  * @param <T> тип возвращаемого объекта
  */
 public interface RESTController<T> {
-    ResponseEntity<T> create(T entity);
+    ResponseEntity<T> create(T entity) throws SQLException;
 
     ResponseEntity<T> delete(Integer id);
 

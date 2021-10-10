@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface DAOInterface<E, K> {
 
-    void create(E entry);
+    long create(E entry) throws SQLException;
 
     void delete(K id);
 
@@ -13,5 +13,5 @@ public interface DAOInterface<E, K> {
 
     E getById(K id) throws SQLException;
 
-    void update(E entry);
+    long update(E entry) throws SQLException;
 }

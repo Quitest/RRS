@@ -45,7 +45,7 @@ public class GuestsController {
     }
 
     @PatchMapping("/edit/{id}")
-    public String updateGuest(Guest guest) {
+    public String updateGuest(Guest guest) throws SQLException {
         guestDAO.update(guest);
         return "redirect:/guests";
     }

@@ -9,7 +9,6 @@ import ru.pel.ResourceReservationSystem.DAO.ReserveDAO;
 import ru.pel.ResourceReservationSystem.DAO.RoomDAO;
 import ru.pel.ResourceReservationSystem.models.Reserve;
 
-import javax.websocket.server.PathParam;
 import java.sql.SQLException;
 
 @Controller
@@ -22,27 +21,14 @@ public class ReservesController {
     @Autowired
     private GuestDAO guestDAO;
 
-    @GetMapping("/create")
-    public String newReserve(@ModelAttribute("newReserve") Reserve newReserve, Model model){
-        model.addAttribute("roomList", roomDAO.getAll());
-        model.addAttribute("guestList", guestDAO.getAll());
-        return "reserves/create-reserve";
-    }
-
     @PostMapping("/create")
-    public String createReserve(@ModelAttribute("newReserve") Reserve createdReserve){
+    public String createReserve(@ModelAttribute("newReserve") Reserve createdReserve) throws SQLException {
         reserveDAO.create(createdReserve);
         return "redirect:/reserve";
     }
 
-    @GetMapping
-    public String reserveList(Model model){
-        model.addAttribute("reserveList", reserveDAO.getAll());
-        return "reserves/index";
-    }
-
     @DeleteMapping
-    public String deleteReserve(@RequestParam(value = "roomIdForDelete") int idForDelete){
+    public String deleteReserve(@RequestParam(value = "roomIdForDelete") int idForDelete) {
         reserveDAO.delete(idForDelete);
         return "redirect:reserve/";
     }
@@ -55,8 +41,21 @@ public class ReservesController {
         return "reserves/edit-reserve";
     }
 
+    @GetMapping("/create")
+    public String newReserve(@ModelAttribute("newReserve") Reserve newReserve, Model model) {
+        model.addAttribute("roomList", roomDAO.getAll());
+        model.addAttribute("guestList", guestDAO.getAll());
+        return "reserves/create-reserve";
+    }
+
+    @GetMapping
+    public String reserveList(Model model) {
+        model.addAttribute("reserveList", reserveDAO.getAll());
+        return "reserves/index";
+    }
+
     @PatchMapping("edit/{id}")
-    public String updateReserve(@ModelAttribute("editableReserve") Reserve editedReserve){
+    public String updateReserve(@ModelAttribute("editableReserve") Reserve editedReserve) throws SQLException {
         reserveDAO.update(editedReserve);
         return "redirect:/reserve";
     }

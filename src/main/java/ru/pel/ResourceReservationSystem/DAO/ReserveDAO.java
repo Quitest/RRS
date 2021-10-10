@@ -6,7 +6,10 @@ import org.springframework.stereotype.Component;
 import ru.pel.ResourceReservationSystem.models.Reserve;
 
 import javax.sql.DataSource;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,50 +28,20 @@ public class ReserveDAO implements DAOInterface<Reserve, Integer> {
     }
 
     @Override
-    public void create(Reserve reserve) {
-        try {
-            if(isReserved(reserve.getRoomId(), reserve.getCheckIn(),reserve.getCheckOut())){
-                String msg = "Не возможно забронировать комнату " +
-                        reserve.getRoomId() +
-                        " на период с " +
-                        reserve.getCheckIn() +
-                        " по " +
-                        reserve.getCheckOut();
-                throw new IllegalArgumentException(msg);
-            }
-            var statement = connection.prepareStatement("INSERT INTO reserves " +
-                    "(check_in,check_out,room_id,guest_id) VALUES (?, ?, ?, ?)");
-            statement.setTimestamp(1, Timestamp.valueOf(reserve.getCheckIn()));
-            statement.setTimestamp(2, Timestamp.valueOf(reserve.getCheckOut()));
-            statement.setInt(3, reserve.getRoomId());
-            statement.setInt(4, reserve.getGuestId());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public long create(Reserve reserve) throws SQLException {
+        isReserved(reserve.getRoomId(), reserve.getCheckIn(), reserve.getCheckOut());
+        var statement = connection.prepareStatement("INSERT INTO reserves " +
+                "(check_in,check_out,room_id,guest_id) VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+        statement.setTimestamp(1, Timestamp.valueOf(reserve.getCheckIn()));
+        statement.setTimestamp(2, Timestamp.valueOf(reserve.getCheckOut()));
+        statement.setInt(3, reserve.getRoomId());
+        statement.setInt(4, reserve.getGuestId());
+        var affectedRows = statement.executeUpdate();
+        if (affectedRows == 0) {
+            throw new SQLException("Создать бронь не удалось, нет измененных строк");
         }
-    }
-
-    /**
-     * Проверка номера на занятость номера в указанный период.
-     * @param roomId
-     * @param checkIn
-     * @param checkOut
-     * @return true - если временной период запрашиваемой брони пересекается с временным периодом существующей брони.
-     * false - в противном случае.
-     */
-    public boolean isReserved(long roomId, LocalDateTime checkIn, LocalDateTime checkOut) throws SQLException {
-        var statement = connection.prepareStatement("SELECT check_in, check_out FROM reserves WHERE room_id=?");
-        statement.setLong(1,roomId);
-        var resultSet = statement.executeQuery();
-        while (resultSet.next()){
-            LocalDateTime reservedCheckIn = resultSet.getTimestamp("check_in").toLocalDateTime();
-            LocalDateTime reservedCheckOut = resultSet.getTimestamp("check_out").toLocalDateTime();
-            if (checkIn.isBefore(reservedCheckOut) && checkOut.isAfter(reservedCheckIn)){
-                return true;
-            }
-        }
-
-        return false;
+        reserve.setId((int) getGeneratedId(statement));
+        return reserve.getRoomId();
     }
 
     @Override
@@ -107,7 +80,6 @@ public class ReserveDAO implements DAOInterface<Reserve, Integer> {
     @Override
     public Reserve getById(Integer id) throws SQLException {
         Reserve reserveListrve = null;
-//        try {
         var statement = connection.prepareStatement("SELECT * FROM reserves WHERE id=?");
         statement.setInt(1, id);
         var rs = statement.executeQuery();
@@ -119,39 +91,64 @@ public class ReserveDAO implements DAOInterface<Reserve, Integer> {
             reserve.setCheckIn(rs.getTimestamp("check_in").toLocalDateTime());
             reserve.setCheckOut(rs.getTimestamp("check_out").toLocalDateTime());
         }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
         if (reserve.isEmpty()) {
             throw new NoSuchElementException("Бронь № " + id + " не существует");
         }
         return reserve;
     }
 
-    @Override
-    public void update(Reserve reserve) {
-//        throw new UnsupportedOperationException("Операция update не реализована");
-        try {
-            if(isReserved(reserve.getRoomId(), reserve.getCheckIn(),reserve.getCheckOut())){
+    private long getGeneratedId(Statement statement) throws SQLException {
+        try (var generatedKeys = statement.getGeneratedKeys()) {
+            if (generatedKeys.next()) {
+                return generatedKeys.getLong("id");
+            } else {
+                throw new SQLException("Создать бронь не удалось, ID брони не удалось получить.");
+            }
+        }
+    }
+
+    /**
+     * Проверка номера на занятость номера в указанный период.
+     *
+     * @param roomId   номер бронируемой комнаты
+     * @param checkIn  дата и время начала брони
+     * @param checkOut дата и время окончания брони
+     * @return ID комнаты, если временной период запрашиваемой брони не пересекается с временным периодом существующей брони.
+     * @throws IllegalArgumentException если комната занята в запрашиваемый период.
+     * @throws SQLException             при ошибках работы SQL.
+     */
+    public long isReserved(long roomId, LocalDateTime checkIn, LocalDateTime checkOut) throws SQLException {
+        var statement = connection.prepareStatement("SELECT check_in, check_out FROM reserves WHERE room_id=?");
+        statement.setLong(1, roomId);
+        var resultSet = statement.executeQuery();
+        while (resultSet.next()) {
+            LocalDateTime reservedCheckIn = resultSet.getTimestamp("check_in").toLocalDateTime();
+            LocalDateTime reservedCheckOut = resultSet.getTimestamp("check_out").toLocalDateTime();
+            if (checkIn.isBefore(reservedCheckOut) && checkOut.isAfter(reservedCheckIn)) {
                 String msg = "Не возможно забронировать комнату " +
-                        reserve.getRoomId() +
+                        roomId +
                         " на период с " +
-                        reserve.getCheckIn() +
+                        checkIn +
                         " по " +
-                        reserve.getCheckOut();
+                        checkOut;
                 throw new IllegalArgumentException(msg);
             }
-
-            var statement = connection
-                    .prepareStatement("UPDATE reserves SET check_in=?, check_out=?, room_id=?, guest_id=? WHERE id=?");
-            statement.setTimestamp(1, Timestamp.valueOf(reserve.getCheckIn()));
-            statement.setTimestamp(2, Timestamp.valueOf(reserve.getCheckOut()));
-            statement.setInt(3, reserve.getRoomId());
-            statement.setInt(4, reserve.getGuestId());
-            statement.setInt(5, reserve.getId());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
+        return roomId;
+    }
+
+    @Override
+    public long update(Reserve reserve) throws SQLException {
+        isReserved(reserve.getRoomId(), reserve.getCheckIn(), reserve.getCheckOut());
+
+        var statement = connection
+                .prepareStatement("UPDATE reserves SET check_in=?, check_out=?, room_id=?, guest_id=? WHERE id=?");
+        statement.setTimestamp(1, Timestamp.valueOf(reserve.getCheckIn()));
+        statement.setTimestamp(2, Timestamp.valueOf(reserve.getCheckOut()));
+        statement.setInt(3, reserve.getRoomId());
+        statement.setInt(4, reserve.getGuestId());
+        statement.setInt(5, reserve.getId());
+        statement.executeUpdate();
+        return reserve.getRoomId();
     }
 }
