@@ -3,6 +3,9 @@ package ru.pel.ResourceReservationSystem.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.Future;
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @JsonIgnoreProperties({"empty"} //Игнор результата работы isEmpty(), если не будет, то в ответах будет boolean поле empty
@@ -10,8 +13,10 @@ import java.time.LocalDateTime;
 public class Reserve {
     private int id;
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    @Future(message = "Дата должна быть в будущем")
     private LocalDateTime checkIn;
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    @Future(message = "Дата должна быть в будущем")
     private LocalDateTime checkOut;
     private int guestId;
     private int roomId;

@@ -3,12 +3,14 @@ package ru.pel.ResourceReservationSystem.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.pel.ResourceReservationSystem.DAO.GuestDAO;
 import ru.pel.ResourceReservationSystem.DAO.ReserveDAO;
 import ru.pel.ResourceReservationSystem.DAO.RoomDAO;
 import ru.pel.ResourceReservationSystem.models.Reserve;
 
+import javax.validation.Valid;
 import java.sql.SQLException;
 
 @Controller
@@ -22,7 +24,14 @@ public class ReservesController {
     private GuestDAO guestDAO;
 
     @PostMapping("/create")
-    public String createReserve(@ModelAttribute("newReserve") Reserve createdReserve) throws SQLException {
+    public String createReserve(@Valid @ModelAttribute("newReserve")  Reserve createdReserve, BindingResult bindingResult,
+                                Model model) throws SQLException {
+        if (bindingResult.hasErrors()){
+            model.addAttribute("editableReserve", createdReserve);
+            model.addAttribute("roomList", roomDAO.getAll());
+            model.addAttribute("guestList", guestDAO.getAll());
+            return "/reserves/create-reserve";
+        }
         reserveDAO.create(createdReserve);
         return "redirect:/reserve";
     }
