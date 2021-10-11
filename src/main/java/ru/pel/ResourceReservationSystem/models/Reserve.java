@@ -2,6 +2,7 @@ package ru.pel.ResourceReservationSystem.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.format.annotation.DateTimeFormat;
+import ru.pel.ResourceReservationSystem.annotations.ConsistentDateParameters;
 
 import javax.validation.constraints.Future;
 import javax.validation.constraints.FutureOrPresent;
@@ -17,6 +18,7 @@ public class Reserve {
     private LocalDateTime checkIn;
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @Future(message = "Дата должна быть в будущем")
+//    @ConsistentDateParameters
     private LocalDateTime checkOut;
     private int guestId;
     private int roomId;

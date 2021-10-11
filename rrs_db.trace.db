@@ -1,0 +1,574 @@
+2021-10-08 15:14:02 jdbc[8]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "CREATE TABLE IF NOT EXISTS ROOMS(
+	ID INTEGER,
+	CLASS_OF_ACCOMMODATIONS VARCHAR(15),
+                      
+                       
+                   
+)[*]"; ожидалось "identifier"
+Syntax error in SQL statement "CREATE TABLE IF NOT EXISTS ROOMS(
+	ID INTEGER,
+	CLASS_OF_ACCOMMODATIONS VARCHAR(15),
+                      
+                       
+                   
+)[*]"; expected "identifier"; SQL statement:
+create table if not exists rooms(
+	id integer,
+	class_of_accommodations VARCHAR(15),
+--	check_in timestamp,
+--	check_out timestamp,
+--	guest_id integer
+) [42001-200]
+2021-10-08 15:14:02 jdbc[8]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "ROOMS" не найдена
+Table "ROOMS" not found; SQL statement:
+insert into rooms values
+	(101, 'standart',null,null,null),
+	(102, 'standart',null,null,null),
+	(201, 'comfort',null,null,null),
+	(202, 'comfort',null,null,null),
+	(301, 'suite',null,null,null),
+	(302, 'suite',null,null,null) [42102-200]
+2021-10-08 15:14:26 jdbc[8]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "CREATE TABLE IF NOT EXISTS ROOMS(
+	ID INTEGER,
+	CLASS_OF_ACCOMMODATIONS VARCHAR(15),
+)[*]"; ожидалось "identifier"
+Syntax error in SQL statement "CREATE TABLE IF NOT EXISTS ROOMS(
+	ID INTEGER,
+	CLASS_OF_ACCOMMODATIONS VARCHAR(15),
+)[*]"; expected "identifier"; SQL statement:
+create table if not exists rooms(
+	id integer,
+	class_of_accommodations VARCHAR(15),
+) [42001-200]
+2021-10-08 15:14:26 jdbc[8]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "ROOMS" не найдена
+Table "ROOMS" not found; SQL statement:
+insert into rooms values
+	(101, 'standart',null,null,null),
+	(102, 'standart',null,null,null),
+	(201, 'comfort',null,null,null),
+	(202, 'comfort',null,null,null),
+	(301, 'suite',null,null,null),
+	(302, 'suite',null,null,null) [42102-200]
+2021-10-08 15:14:58 jdbc[8]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: Неизвестный тип данных: "IDENTIFIER"
+Unknown data type: "IDENTIFIER"; SQL statement:
+create table if not exists rooms(
+	id identifier,
+	class_of_accommodations VARCHAR(15),
+) [50004-200]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:505)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:429)
+	at org.h2.message.DbException.get(DbException.java:205)
+	at org.h2.message.DbException.get(DbException.java:181)
+	at org.h2.command.Parser.parseColumnWithType(Parser.java:5971)
+	at org.h2.command.Parser.parseColumnForTable(Parser.java:5697)
+	at org.h2.command.Parser.parseTableColumnDefinition(Parser.java:8442)
+	at org.h2.command.Parser.parseCreateTable(Parser.java:8379)
+	at org.h2.command.Parser.parseCreate(Parser.java:6276)
+	at org.h2.command.Parser.parsePrepared(Parser.java:903)
+	at org.h2.command.Parser.parse(Parser.java:843)
+	at org.h2.command.Parser.parse(Parser.java:815)
+	at org.h2.command.Parser.prepareCommand(Parser.java:738)
+	at org.h2.engine.Session.prepareLocal(Session.java:657)
+	at org.h2.engine.Session.prepareCommand(Session.java:595)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1235)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:212)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:201)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1459)
+	at org.h2.server.web.WebApp.query(WebApp.java:1116)
+	at org.h2.server.web.WebApp.query(WebApp.java:1092)
+	at org.h2.server.web.WebApp.process(WebApp.java:241)
+	at org.h2.server.web.WebApp.processRequest(WebApp.java:173)
+	at org.h2.server.web.WebServlet.doGet(WebServlet.java:129)
+	at org.h2.server.web.WebServlet.doPost(WebServlet.java:166)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:681)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:94)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:382)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:893)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1726)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:831)
+2021-10-08 15:14:58 jdbc[8]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "ROOMS" не найдена
+Table "ROOMS" not found; SQL statement:
+insert into rooms values
+	(101, 'standart',null,null,null),
+	(102, 'standart',null,null,null),
+	(201, 'comfort',null,null,null),
+	(202, 'comfort',null,null,null),
+	(301, 'suite',null,null,null),
+	(302, 'suite',null,null,null) [42102-200]
+2021-10-08 15:15:26 jdbc[8]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "CREATE TABLE IF NOT EXISTS ROOMS(
+	ID INT,
+	CLASS_OF_ACCOMMODATIONS VARCHAR(15),
+)[*]"; ожидалось "identifier"
+Syntax error in SQL statement "CREATE TABLE IF NOT EXISTS ROOMS(
+	ID INT,
+	CLASS_OF_ACCOMMODATIONS VARCHAR(15),
+)[*]"; expected "identifier"; SQL statement:
+create table if not exists rooms(
+	id int,
+	class_of_accommodations VARCHAR(15),
+) [42001-200]
+2021-10-08 15:15:26 jdbc[8]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "ROOMS" не найдена
+Table "ROOMS" not found; SQL statement:
+insert into rooms values
+	(101, 'standart',null,null,null),
+	(102, 'standart',null,null,null),
+	(201, 'comfort',null,null,null),
+	(202, 'comfort',null,null,null),
+	(301, 'suite',null,null,null),
+	(302, 'suite',null,null,null) [42102-200]
+2021-10-08 15:16:03 jdbc[8]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "CREATE TABLE ROOMS(
+	ID INT,
+	CLASS_OF_ACCOMMODATIONS VARCHAR(15),
+)[*]"; ожидалось "identifier"
+Syntax error in SQL statement "CREATE TABLE ROOMS(
+	ID INT,
+	CLASS_OF_ACCOMMODATIONS VARCHAR(15),
+)[*]"; expected "identifier"; SQL statement:
+create table rooms(
+	id int,
+	class_of_accommodations VARCHAR(15),
+) [42001-200]
+2021-10-08 15:16:03 jdbc[8]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "ROOMS" не найдена
+Table "ROOMS" not found; SQL statement:
+insert into rooms values
+	(101, 'standart',null,null,null),
+	(102, 'standart',null,null,null),
+	(201, 'comfort',null,null,null),
+	(202, 'comfort',null,null,null),
+	(301, 'suite',null,null,null),
+	(302, 'suite',null,null,null) [42102-200]
+2021-10-08 15:16:13 jdbc[8]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "CREATE TABLE ROOMS(
+	ID INTEGER,
+	CLASS_OF_ACCOMMODATIONS VARCHAR(15),
+)[*]"; ожидалось "identifier"
+Syntax error in SQL statement "CREATE TABLE ROOMS(
+	ID INTEGER,
+	CLASS_OF_ACCOMMODATIONS VARCHAR(15),
+)[*]"; expected "identifier"; SQL statement:
+create table rooms(
+	id integer,
+	class_of_accommodations VARCHAR(15),
+) [42001-200]
+2021-10-08 15:16:13 jdbc[8]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "ROOMS" не найдена
+Table "ROOMS" not found; SQL statement:
+insert into rooms values
+	(101, 'standart',null,null,null),
+	(102, 'standart',null,null,null),
+	(201, 'comfort',null,null,null),
+	(202, 'comfort',null,null,null),
+	(301, 'suite',null,null,null),
+	(302, 'suite',null,null,null) [42102-200]
+2021-10-08 15:16:43 jdbc[8]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "CREATE TABLE ROOMS(
+	ID INTEGER,
+	CLASS_OF_ACCOMMODATIONS VARCHAR(15),
+)[*]"; ожидалось "identifier"
+Syntax error in SQL statement "CREATE TABLE ROOMS(
+	ID INTEGER,
+	CLASS_OF_ACCOMMODATIONS VARCHAR(15),
+)[*]"; expected "identifier"; SQL statement:
+create table rooms(
+	id integer,
+	class_of_accommodations VARCHAR(15),
+) [42001-200]
+2021-10-08 15:16:43 jdbc[8]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "ROOMS" не найдена
+Table "ROOMS" not found; SQL statement:
+insert into rooms values
+	(101, 'standart',null,null,null),
+	(102, 'standart',null,null,null),
+	(201, 'comfort',null,null,null),
+	(202, 'comfort',null,null,null),
+	(301, 'suite',null,null,null),
+	(302, 'suite',null,null,null) [42102-200]
+2021-10-08 15:16:59 jdbc[8]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "CREATE TABLE ROOMS(
+	ID INT,
+	CLASS_OF_ACCOMMODATIONS VARCHAR(15),
+)[*]"; ожидалось "identifier"
+Syntax error in SQL statement "CREATE TABLE ROOMS(
+	ID INT,
+	CLASS_OF_ACCOMMODATIONS VARCHAR(15),
+)[*]"; expected "identifier"; SQL statement:
+create table rooms(
+	id int,
+	class_of_accommodations VARCHAR(15),
+) [42001-200]
+2021-10-08 15:16:59 jdbc[8]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "ROOMS" не найдена
+Table "ROOMS" not found; SQL statement:
+insert into rooms values
+	(101, 'standart',null,null,null),
+	(102, 'standart',null,null,null),
+	(201, 'comfort',null,null,null),
+	(202, 'comfort',null,null,null),
+	(301, 'suite',null,null,null),
+	(302, 'suite',null,null,null) [42102-200]
+2021-10-08 15:17:23 jdbc[8]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "CREATE TABLE ROOMS(
+	ID INT AUTO_INCREMENT  PRIMARY KEY,
+	CLASS_OF_ACCOMMODATIONS VARCHAR(15),
+)[*]"; ожидалось "identifier"
+Syntax error in SQL statement "CREATE TABLE ROOMS(
+	ID INT AUTO_INCREMENT  PRIMARY KEY,
+	CLASS_OF_ACCOMMODATIONS VARCHAR(15),
+)[*]"; expected "identifier"; SQL statement:
+create table rooms(
+	id INT AUTO_INCREMENT  PRIMARY KEY,
+	class_of_accommodations VARCHAR(15),
+) [42001-200]
+2021-10-08 15:17:23 jdbc[8]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "ROOMS" не найдена
+Table "ROOMS" not found; SQL statement:
+insert into rooms values
+	(101, 'standart',null,null,null),
+	(102, 'standart',null,null,null),
+	(201, 'comfort',null,null,null),
+	(202, 'comfort',null,null,null),
+	(301, 'suite',null,null,null),
+	(302, 'suite',null,null,null) [42102-200]
+2021-10-08 15:17:59 jdbc[8]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "CREATE TABLE IF NOT EXISTS ROOMS(
+	ID INT AUTO_INCREMENT  PRIMARY KEY,
+	CLASS_OF_ACCOMMODATIONS VARCHAR(15),
+)[*]"; ожидалось "identifier"
+Syntax error in SQL statement "CREATE TABLE IF NOT EXISTS ROOMS(
+	ID INT AUTO_INCREMENT  PRIMARY KEY,
+	CLASS_OF_ACCOMMODATIONS VARCHAR(15),
+)[*]"; expected "identifier"; SQL statement:
+create table if not exists rooms(
+	id INT AUTO_INCREMENT  PRIMARY KEY,
+	class_of_accommodations VARCHAR(15),
+) [42001-200]
+2021-10-08 15:17:59 jdbc[8]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "ROOMS" не найдена
+Table "ROOMS" not found; SQL statement:
+insert into rooms values
+	(101, 'standart',null,null,null),
+	(102, 'standart',null,null,null),
+	(201, 'comfort',null,null,null),
+	(202, 'comfort',null,null,null),
+	(301, 'suite',null,null,null),
+	(302, 'suite',null,null,null) [42102-200]
+2021-10-08 15:18:49 jdbc[8]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "CREATE TABLE IF NOT EXISTS ROOMS(
+	ID INT AUTO_INCREMENT  PRIMARY KEY,
+	CLASS_OF_ACCOMMODATIONS VARCHAR(15),
+)[*]"; ожидалось "identifier"
+Syntax error in SQL statement "CREATE TABLE IF NOT EXISTS ROOMS(
+	ID INT AUTO_INCREMENT  PRIMARY KEY,
+	CLASS_OF_ACCOMMODATIONS VARCHAR(15),
+)[*]"; expected "identifier"; SQL statement:
+create table if not exists rooms(
+	id INT AUTO_INCREMENT  PRIMARY KEY,
+	class_of_accommodations VARCHAR(15),
+) [42001-200]
+2021-10-08 15:18:49 jdbc[8]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "ROOMS" не найдена
+Table "ROOMS" not found; SQL statement:
+insert into rooms values
+	(101, 'standart',null,null,null),
+	(102, 'standart',null,null,null),
+	(201, 'comfort',null,null,null),
+	(202, 'comfort',null,null,null),
+	(301, 'suite',null,null,null),
+	(302, 'suite',null,null,null) [42102-200]
+2021-10-08 15:18:52 jdbc[8]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "CREATE TABLE IF NOT EXISTS ROOMS(
+	ID INT AUTO_INCREMENT  PRIMARY KEY,
+	CLASS_OF_ACCOMMODATIONS VARCHAR(15),
+)[*]"; ожидалось "identifier"
+Syntax error in SQL statement "CREATE TABLE IF NOT EXISTS ROOMS(
+	ID INT AUTO_INCREMENT  PRIMARY KEY,
+	CLASS_OF_ACCOMMODATIONS VARCHAR(15),
+)[*]"; expected "identifier"; SQL statement:
+create table if not exists rooms(
+	id INT AUTO_INCREMENT  PRIMARY KEY,
+	class_of_accommodations VARCHAR(15),
+) [42001-200]
+2021-10-08 15:18:55 jdbc[8]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "CREATE TABLE IF NOT EXISTS ROOMS(
+	ID INT AUTO_INCREMENT  PRIMARY KEY,
+	CLASS_OF_ACCOMMODATIONS VARCHAR(15),
+)[*]"; ожидалось "identifier"
+Syntax error in SQL statement "CREATE TABLE IF NOT EXISTS ROOMS(
+	ID INT AUTO_INCREMENT  PRIMARY KEY,
+	CLASS_OF_ACCOMMODATIONS VARCHAR(15),
+)[*]"; expected "identifier"; SQL statement:
+create table if not exists rooms(
+	id INT AUTO_INCREMENT  PRIMARY KEY,
+	class_of_accommodations VARCHAR(15),
+) [42001-200]
+2021-10-08 15:18:55 jdbc[8]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "ROOMS" не найдена
+Table "ROOMS" not found; SQL statement:
+insert into rooms values
+	(101, 'standart',null,null,null),
+	(102, 'standart',null,null,null),
+	(201, 'comfort',null,null,null),
+	(202, 'comfort',null,null,null),
+	(301, 'suite',null,null,null),
+	(302, 'suite',null,null,null) [42102-200]
+2021-10-08 15:19:30 jdbc[8]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Неверное количество столбцов
+Column count does not match; SQL statement:
+insert into rooms values
+	(101, 'standart',null,null,null),
+	(102, 'standart',null,null,null),
+	(201, 'comfort',null,null,null),
+	(202, 'comfort',null,null,null),
+	(301, 'suite',null,null,null),
+	(302, 'suite',null,null,null) [21002-200]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:453)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:429)
+	at org.h2.message.DbException.get(DbException.java:205)
+	at org.h2.message.DbException.get(DbException.java:181)
+	at org.h2.message.DbException.get(DbException.java:170)
+	at org.h2.command.dml.Insert.prepare(Insert.java:319)
+	at org.h2.command.Parser.prepareCommand(Parser.java:744)
+	at org.h2.engine.Session.prepareLocal(Session.java:657)
+	at org.h2.engine.Session.prepareCommand(Session.java:595)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1235)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:212)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:201)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1459)
+	at org.h2.server.web.WebApp.query(WebApp.java:1116)
+	at org.h2.server.web.WebApp.query(WebApp.java:1092)
+	at org.h2.server.web.WebApp.process(WebApp.java:241)
+	at org.h2.server.web.WebApp.processRequest(WebApp.java:173)
+	at org.h2.server.web.WebServlet.doGet(WebServlet.java:129)
+	at org.h2.server.web.WebServlet.doPost(WebServlet.java:166)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:681)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:94)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:382)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:893)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1726)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:831)
+2021-10-08 15:20:00 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "RESERVES" не найдена
+Table "RESERVES" not found; SQL statement:
+SELECT * FROM reserves [42102-200]
+2021-10-08 15:28:39 jdbc[7]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Неверное количество столбцов
+Column count does not match; SQL statement:
+insert into rooms values
+	(101, 'standart',null,null,null),
+	(102, 'standart',null,null,null),
+	(201, 'comfort',null,null,null),
+	(202, 'comfort',null,null,null),
+	(301, 'suite',null,null,null),
+	(302, 'suite',null,null,null) [21002-200]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:453)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:429)
+	at org.h2.message.DbException.get(DbException.java:205)
+	at org.h2.message.DbException.get(DbException.java:181)
+	at org.h2.message.DbException.get(DbException.java:170)
+	at org.h2.command.dml.Insert.prepare(Insert.java:319)
+	at org.h2.command.Parser.prepareCommand(Parser.java:744)
+	at org.h2.engine.Session.prepareLocal(Session.java:657)
+	at org.h2.engine.Session.prepareCommand(Session.java:595)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1235)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:212)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:201)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1459)
+	at org.h2.server.web.WebApp.query(WebApp.java:1116)
+	at org.h2.server.web.WebApp.query(WebApp.java:1092)
+	at org.h2.server.web.WebApp.process(WebApp.java:241)
+	at org.h2.server.web.WebApp.processRequest(WebApp.java:173)
+	at org.h2.server.web.WebServlet.doGet(WebServlet.java:129)
+	at org.h2.server.web.WebServlet.doPost(WebServlet.java:166)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:681)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:94)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:382)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:893)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1726)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:831)
+2021-10-08 15:46:55 jdbc[7]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: Неизвестный тип данных: "WITH"
+Unknown data type: "WITH"; SQL statement:
+CREATE TABLE IF NOT EXISTS reserves(
+    id INT AUTO_INCREMENT  PRIMARY KEY,
+    check_in WITH TIME ZONE,
+    check_out WITH TIME ZONE,
+    guest_id INT,
+    room_id INT
+) [50004-200]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:505)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:429)
+	at org.h2.message.DbException.get(DbException.java:205)
+	at org.h2.message.DbException.get(DbException.java:181)
+	at org.h2.command.Parser.parseColumnWithType(Parser.java:5971)
+	at org.h2.command.Parser.parseColumnForTable(Parser.java:5697)
+	at org.h2.command.Parser.parseTableColumnDefinition(Parser.java:8442)
+	at org.h2.command.Parser.parseCreateTable(Parser.java:8379)
+	at org.h2.command.Parser.parseCreate(Parser.java:6276)
+	at org.h2.command.Parser.parsePrepared(Parser.java:903)
+	at org.h2.command.Parser.parse(Parser.java:843)
+	at org.h2.command.Parser.parse(Parser.java:815)
+	at org.h2.command.Parser.prepareCommand(Parser.java:738)
+	at org.h2.engine.Session.prepareLocal(Session.java:657)
+	at org.h2.engine.Session.prepareCommand(Session.java:595)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1235)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:212)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:201)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1459)
+	at org.h2.server.web.WebApp.query(WebApp.java:1116)
+	at org.h2.server.web.WebApp.query(WebApp.java:1092)
+	at org.h2.server.web.WebApp.process(WebApp.java:241)
+	at org.h2.server.web.WebApp.processRequest(WebApp.java:173)
+	at org.h2.server.web.WebServlet.doGet(WebServlet.java:129)
+	at org.h2.server.web.WebServlet.doPost(WebServlet.java:166)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:681)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:94)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:382)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:893)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1726)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:831)
+2021-10-08 15:48:03 jdbc[7]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "CHECK_OUT[*]"; ожидалось "COMMIT, CREATE, CALL, CHECKPOINT, COMMENT"
+Syntax error in SQL statement "CHECK_OUT[*]"; expected "COMMIT, CREATE, CALL, CHECKPOINT, COMMENT"; SQL statement:
+CHECK_OUT [42001-200]
