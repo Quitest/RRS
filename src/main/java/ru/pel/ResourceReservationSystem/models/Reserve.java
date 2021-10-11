@@ -2,15 +2,14 @@ package ru.pel.ResourceReservationSystem.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.format.annotation.DateTimeFormat;
-import ru.pel.ResourceReservationSystem.annotations.ConsistentDateParameters;
+import ru.pel.ResourceReservationSystem.annotations.ConsistentDates;
 
 import javax.validation.constraints.Future;
-import javax.validation.constraints.FutureOrPresent;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @JsonIgnoreProperties({"empty"} //Игнор результата работы isEmpty(), если не будет, то в ответах будет boolean поле empty
 )
+@ConsistentDates(firstField = "checkIn", secondField = "checkOut")
 public class Reserve {
     private int id;
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
