@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @JsonIgnoreProperties({"empty"} //Игнор результата работы isEmpty(), если не будет, то в ответах будет boolean поле empty
 )
-@ConsistentDates(firstField = "checkIn", secondField = "checkOut", message = "Не верная последовательность дат")
+@ConsistentDates(firstField = "checkIn", secondField = "checkOut", message = "Дата выезда должна быть позже даты заезда")
 public class Reserve {
     private int id;
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
@@ -22,6 +22,7 @@ public class Reserve {
     private int roomId;
 
     public Reserve() {
+        // Конструктор по-умолчанию используется аннотацией @ModelAttribute в RoomsController
     }
 
     public LocalDateTime getCheckIn() {

@@ -1,17 +1,13 @@
 package ru.pel.ResourceReservationSystem.controllers;
 
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -22,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-//@Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
 public class GlobalControllerRESTExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -42,25 +37,13 @@ public class GlobalControllerRESTExceptionHandler extends ResponseEntityExceptio
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-//        return super.handleMethodArgumentNotValid(ex, headers, status, request);
-        // FIXME: 12.10.2021 ex.getBindingResult().getFieldErrors() возвращает 0. Почему?
-        Error errorBody = processFieldErrors(ex.getObjectName(),ex.getBindingResult().getFieldErrors());
+        Error errorBody = processFieldErrors(ex.getBindingResult().getAllErrors());
         return handleExceptionInternal(ex,
                 errorBody,
                 headers,
                 HttpStatus.BAD_REQUEST,
                 request);
     }
-
-//    @ExceptionHandler(MethodArgumentNotValidException.class)
-//    @ResponseStatus(HttpStatus.BAD_REQUEST)
-//    @ResponseBody
-//    public Error handleMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
-//        BindingResult bindingResult = exception.getBindingResult();
-//        List<FieldError> fieldErrors = bindingResult.getFieldErrors();
-//
-//        return processFieldErrors(bindingResult.getObjectName(), fieldErrors);
-//    }
 
     @ExceptionHandler({SQLException.class})
     protected ResponseEntity<Object> handleSQLExceptions(SQLException ex, WebRequest request) {
@@ -71,11 +54,10 @@ public class GlobalControllerRESTExceptionHandler extends ResponseEntityExceptio
                 request);
     }
 
-    private Error processFieldErrors(String objectName, List<FieldError> fieldErrors) {
+    private Error processFieldErrors(List<ObjectError> objectErrors) {
         Error error = new Error(HttpStatus.BAD_REQUEST.value(), "validation error");
-        for (var fieldError : fieldErrors) {
-            error.addFieldError(objectName, fieldError.getField(), fieldError.getDefaultMessage());
-            fieldError.getDefaultMessage();
+        for (var objectError : objectErrors) {
+            error.addErrorMessage(objectError);
         }
         return error;
     }
@@ -83,20 +65,23 @@ public class GlobalControllerRESTExceptionHandler extends ResponseEntityExceptio
     static class Error {
         private final int status;
         private final String message;
-        private final List<FieldError> fieldErrors = new ArrayList<>();
+        private final List<String> errorMessagesList = new ArrayList<>();
 
         public Error(int status, String message) {
             this.status = status;
             this.message = message;
         }
 
-        public void addFieldError(String objectName, String path, String message) {
-            FieldError fieldError = new FieldError(objectName, path, message);
-            fieldErrors.add(fieldError);
+        public void addErrorMessage(ObjectError objectError) {
+            if (objectError instanceof FieldError fieldError) {
+                errorMessagesList.add(fieldError.getField() + ": " + fieldError.getDefaultMessage());
+            } else {
+                errorMessagesList.add(objectError.getObjectName() + ": " + objectError.getDefaultMessage());
+            }
         }
 
-        public List<FieldError> getFieldErrors() {
-            return fieldErrors;
+        public List<String> getErrorMessagesList() {
+            return errorMessagesList;
         }
 
         public String getMessage() {
@@ -107,13 +92,4 @@ public class GlobalControllerRESTExceptionHandler extends ResponseEntityExceptio
             return status;
         }
     }
-
-
-//    @ExceptionHandler({Exception.class})
-//    protected ResponseEntity<Object> handleExceptions(RuntimeException ex, WebRequest request) {
-//        HttpHeaders headers = new HttpHeaders();
-//        String url = ((ServletWebRequest) request).getRequest().getRequestURL().toString();
-//        ExceptionBody body = new ExceptionBody(url, ex);
-//        return handleExceptionInternal(ex, body, headers, HttpStatus.NOT_FOUND, request);
-//    }
 }
