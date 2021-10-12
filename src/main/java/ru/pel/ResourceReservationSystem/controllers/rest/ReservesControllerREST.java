@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.pel.ResourceReservationSystem.DAO.ReserveDAO;
 import ru.pel.ResourceReservationSystem.models.Reserve;
 
+import javax.validation.Valid;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class ReservesControllerREST implements RESTController<Reserve> {
     ReserveDAO reserveDAO;
 
     @PostMapping
-    public ResponseEntity<Reserve> create(@RequestBody Reserve reserve) throws SQLException {
+    public ResponseEntity<Reserve> create(@Valid @RequestBody Reserve reserve) throws SQLException {
         reserveDAO.create(reserve);
         return ResponseEntity.ok(reserve);
     }
