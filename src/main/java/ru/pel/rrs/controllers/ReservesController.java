@@ -14,7 +14,7 @@ import javax.validation.Valid;
 import java.sql.SQLException;
 
 @Controller
-@RequestMapping("/reserve")
+@RequestMapping("/reserves")
 public class ReservesController {
     @Autowired
     private ReserveDAO reserveDAO;
@@ -33,13 +33,13 @@ public class ReservesController {
             return "/reserves/create-reserve";
         }
         reserveDAO.create(createdReserve);
-        return "redirect:/reserve";
+        return "redirect:/reserves";
     }
 
     @DeleteMapping
     public String deleteReserve(@RequestParam(value = "roomIdForDelete") int idForDelete) {
         reserveDAO.delete(idForDelete);
-        return "redirect:reserve/";
+        return "redirect:reserves/";
     }
 
     @GetMapping("edit/{id}")
@@ -66,6 +66,6 @@ public class ReservesController {
     @PatchMapping("edit/{id}")
     public String updateReserve(@ModelAttribute("editableReserve") Reserve editedReserve) throws SQLException {
         reserveDAO.update(editedReserve);
-        return "redirect:/reserve";
+        return "redirect:/reserves";
     }
 }

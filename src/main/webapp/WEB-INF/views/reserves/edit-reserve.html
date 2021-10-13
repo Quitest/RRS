@@ -6,7 +6,7 @@
     <title>Редактирование брони</title>
 </head>
 <body>
-<form th:action="@{/reserve/edit/{id}(id=${editableReserve.getId()})}" th:method="PATCH" th:object="${editableReserve}">
+<form th:action="@{/reserves/edit/{id}(id=${editableReserve.getId()})}" th:method="PATCH" th:object="${editableReserve}">
     <table>
         <tr>
             <td><label for="reserveId">Номер брони:</label> </td>

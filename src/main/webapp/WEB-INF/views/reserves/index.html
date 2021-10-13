@@ -12,7 +12,7 @@
 <table>
     <tr>
         <td>
-            <form th:action="@{/reserve}" th:method="GET">
+            <form th:action="@{/reserves}" th:method="GET">
                 <input type="submit" value="Управление бронями">
             </form>
         </td>
@@ -38,7 +38,7 @@
         <td>Заезд</td>
         <td>Выезд</td>
         <td colspan="2">
-            <form th:action="@{/reserve/create}" th:method="GET">
+            <form th:action="@{/reserves/create}" th:method="GET">
 <!--                <input type="submit" value="Новая">-->
                 <button title="Новая бронь"><i class="fas fa-plus-square"></i></button>
             </form>
@@ -52,13 +52,13 @@
         <td th:text="${reserve.getCheckIn()}">заезд</td>
         <td th:text="${reserve.getCheckOut()}">выезд</td>
         <td>
-            <form th:action="@{/reserve/edit/{id}(id=${reserve.getId()})}" th:method="GET">
+            <form th:action="@{/reserves/edit/{id}(id=${reserve.getId()})}" th:method="GET">
                 <!--                <button>Изменить</button>-->
                 <button title="Изменить"><i class="fas fa-user-edit"></i></button>
             </form>
         </td>
         <td>
-            <form th:action="@{/reserve}" th:method="DELETE">
+            <form th:action="@{/reserves}" th:method="DELETE">
                 <!--                <button type="submit" th:name="roomIdForDelete" th:value="${reserve.getId()}">Удалить</button>-->
                 <button type="submit" th:name="roomIdForDelete" th:value="${reserve.getId()}" title="Удалить"><i
                         class="fas fa-trash"></i></button>
