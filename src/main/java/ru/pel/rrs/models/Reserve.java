@@ -13,10 +13,10 @@ import java.time.LocalDateTime;
 public class Reserve {
     private int id;
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-    @Future(message = "Дата должна быть в будущем")
+    @Future(message = "Дата заезда должна быть в будущем")
     private LocalDateTime checkIn;
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-    @Future(message = "Дата должна быть в будущем")
+    @Future(message = "Дата выезда должна быть в будущем")
     private LocalDateTime checkOut;
     private int guestId;
     private int roomId;

@@ -64,7 +64,13 @@ public class ReservesController {
     }
 
     @PatchMapping("edit/{id}")
-    public String updateReserve(@ModelAttribute("editableReserve") Reserve editedReserve) throws SQLException {
+    public String updateReserve(@Valid @ModelAttribute("editableReserve") Reserve editedReserve, BindingResult bindingResult, Model model) throws SQLException {
+        if (bindingResult.hasErrors()){
+            model.addAttribute("editableReserve", editedReserve);
+            model.addAttribute("roomList", roomDAO.getAll());
+            model.addAttribute("guestList", guestDAO.getAll());
+            return "/reserves/edit-reserve";
+        }
         reserveDAO.update(editedReserve);
         return "redirect:/reserves";
     }

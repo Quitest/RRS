@@ -40,15 +40,23 @@
         <tr>
             <td><label for="checkIn">Укажите дату и время заезда: </label></td>
             <td><input id="checkIn" type="datetime-local" th:field="*{checkIn}"/></td>
+<!--            <td class="error-style" th:if="${#fields.hasErrors('checkIn')}" th:errors="*{checkIn}"></td>-->
         </tr>
         <tr>
             <td><label for="checkOut">Укажите дату и время выезда: </label></td>
             <td><input id="checkOut" type="datetime-local" th:field="*{checkOut}"/></td>
+<!--            <td >-->
+<!--                <ul>-->
+<!--                    <li class="error-style" th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>-->
+<!--                </ul>-->
+<!--            </td>-->
         </tr>
         <tr>
             <td><input type="submit" value="Обновить бронь"/></td>
         </tr>
     </table>
+
+    <p class="error-style" th:if="${#fields.hasErrors('all')}" th:errors="*{all}"></p>
 
 </form>
 </body>

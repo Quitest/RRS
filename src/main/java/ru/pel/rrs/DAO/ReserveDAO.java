@@ -29,7 +29,7 @@ public class ReserveDAO implements DAOInterface<Reserve, Integer> {
 
     @Override
     public long create(Reserve reserve) throws SQLException {
-        isReserved(reserve.getRoomId(), reserve.getCheckIn(), reserve.getCheckOut());
+        isReserved(reserve.getGuestId(), reserve.getRoomId(), reserve.getCheckIn(), reserve.getCheckOut());
         var statement = connection.prepareStatement("INSERT INTO reserves " +
                 "(check_in,check_out,room_id,guest_id) VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
         statement.setTimestamp(1, Timestamp.valueOf(reserve.getCheckIn()));
@@ -115,23 +115,28 @@ public class ReserveDAO implements DAOInterface<Reserve, Integer> {
      * @param checkOut дата и время окончания брони
      * @return ID комнаты, если временной период запрашиваемой брони не пересекается с временным периодом существующей брони.
      * @throws IllegalArgumentException если комната занята в запрашиваемый период.
-     * @throws SQLException             при ошибках работы SQL.
+     * @throws SQLException при ошибках работы SQL.
      */
-    public long isReserved(long roomId, LocalDateTime checkIn, LocalDateTime checkOut) throws SQLException {
-        var statement = connection.prepareStatement("SELECT check_in, check_out FROM reserves WHERE room_id=?");
+    public long isReserved(long guestId, long roomId, LocalDateTime checkIn, LocalDateTime checkOut) throws SQLException {
+        var statement = connection.prepareStatement("SELECT guest_id, check_in, check_out FROM reserves WHERE room_id=?");
         statement.setLong(1, roomId);
         var resultSet = statement.executeQuery();
         while (resultSet.next()) {
+            long reservedById = resultSet.getInt("guest_id");
             LocalDateTime reservedCheckIn = resultSet.getTimestamp("check_in").toLocalDateTime();
             LocalDateTime reservedCheckOut = resultSet.getTimestamp("check_out").toLocalDateTime();
-            if (checkIn.isBefore(reservedCheckOut) && checkOut.isAfter(reservedCheckIn)) {
-                String msg = "Не возможно забронировать комнату " +
-                        roomId +
-                        " на период с " +
-                        checkIn +
-                        " по " +
-                        checkOut;
-                throw new IllegalArgumentException(msg);
+//            if (checkIn.isBefore(reservedCheckOut) && checkOut.isAfter(reservedCheckIn)) {
+//                String msg = "Не возможно забронировать комнату " +
+//                        roomId +
+//                        " на период с " +
+//                        checkIn +
+//                        " по " +
+//                        checkOut +
+//                        ". Она занята другим гостем";
+//                throw new IllegalArgumentException(msg);
+//            }
+            if (reservedById != guestId){
+                throw new IllegalArgumentException("Невозможно забронировать. Номер занят другим гостем");
             }
         }
         return roomId;
@@ -139,7 +144,7 @@ public class ReserveDAO implements DAOInterface<Reserve, Integer> {
 
     @Override
     public long update(Reserve reserve) throws SQLException {
-        isReserved(reserve.getRoomId(), reserve.getCheckIn(), reserve.getCheckOut());
+        isReserved(reserve.getGuestId(), reserve.getRoomId(), reserve.getCheckIn(), reserve.getCheckOut());
 
         var statement = connection
                 .prepareStatement("UPDATE reserves SET check_in=?, check_out=?, room_id=?, guest_id=? WHERE id=?");
