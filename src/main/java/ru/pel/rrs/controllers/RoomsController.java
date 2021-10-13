@@ -3,6 +3,7 @@
 package ru.pel.rrs.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,6 +13,7 @@ import ru.pel.rrs.models.Room;
 
 import javax.validation.Valid;
 import java.sql.SQLException;
+import java.util.Locale;
 import java.util.NoSuchElementException;
 
 @Controller
@@ -20,6 +22,9 @@ public class RoomsController {
 
     @Autowired
     private RoomDAO roomDAO;
+
+    @Autowired
+    private MessageSource messageSource;
 
     @PostMapping
 //Вариант 1: реализация через @ModelAttribute. Для автоматического перевода даты и времени необходимо наличие аннотации
