@@ -1,8 +1,9 @@
 package ru.pel.rrs.DAO;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.stereotype.Component;
 import ru.pel.rrs.models.Room;
 
@@ -10,7 +11,6 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.NoSuchElementException;
 
 @Component
@@ -18,8 +18,13 @@ public class RoomDAO implements DAOInterface<Room, Long> {
     //WTF по идее соединение надо закрывать или возвращать в пул, если он есть.
     private static Connection connection;
 
-//    @Autowired
-//    private ResourceBundleMessageSource messageSource;
+    @Autowired
+    @Qualifier("messageSource")
+    private ReloadableResourceBundleMessageSource messageSource;
+
+    @Autowired
+    @Qualifier("exceptionsMessageSource")
+    private ReloadableResourceBundleMessageSource exceptionMessageSource;
 
     @Autowired
     public RoomDAO(DataSource dataSource) {
@@ -39,11 +44,15 @@ public class RoomDAO implements DAOInterface<Room, Long> {
             statement.setString(2, room.getClassOfAccommodations());
             var newRows = statement.executeUpdate();
             if (newRows == 0) {
-                throw new SQLException("Создать комнату не удалось, в БД строки не изменялись");
+                throw new SQLException(
+                        exceptionMessageSource.getMessage("creating.room.is.failed.database.rows.was.not.modifed", null, LocaleContextHolder.getLocale()));
+
             }
             try (var generatedKeys = statement.getGeneratedKeys()) {
                 if (!generatedKeys.next()) {
-                    throw new SQLException("Создать комнату не удалось");
+                    throw new SQLException(
+                            exceptionMessageSource.getMessage("room.creating.failed", null, LocaleContextHolder.getLocale()));
+
                 }
             }
         } catch (SQLException e) {
@@ -95,9 +104,8 @@ public class RoomDAO implements DAOInterface<Room, Long> {
             room.setClassOfAccommodations(resultSet.getString("class_of_accommodations"));
         }
         if (room.isEmpty()) {
-
-            throw new NoSuchElementException("room.not.found.by.id");
-//            throw new NoSuchElementException("Комнаты " + id + " не существует");
+            throw new NoSuchElementException(
+                    exceptionMessageSource.getMessage("room.not.found.by.id", new Object[]{id}, LocaleContextHolder.getLocale()));
         }
         return room;
     }

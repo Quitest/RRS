@@ -1,13 +1,18 @@
 package ru.pel.rrs.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Description;
+import org.springframework.context.support.AbstractResourceBasedMessageSource;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.validation.Validator;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.View;
@@ -26,6 +31,9 @@ import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
 import javax.servlet.Filter;
 import javax.sql.DataSource;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -40,14 +48,44 @@ public class AppConfig implements WebMvcConfigurer {
     public LocaleResolver localeResolver(){
 //        SessionLocaleResolver slr = new SessionLocaleResolver();
         AcceptHeaderLocaleResolver localeResolver = new AcceptHeaderLocaleResolver();
-        localeResolver.setDefaultLocale(Locale.ENGLISH);
+        localeResolver.setDefaultLocale(Locale.US);
         return localeResolver;
     }
 
-    public ResourceBundleMessageSource bundleMessageSource(){
-        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-        messageSource.setBasename("message");
+    @Bean
+//    @Qualifier
+    public ReloadableResourceBundleMessageSource messageSource(){
+        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+        messageSource.setBasename("classpath:messages");
+        messageSourceConfigurator(messageSource);
         return messageSource;
+    }
+
+    @Bean
+//    @Qualifier("exceptionsMessageSource")
+    public ReloadableResourceBundleMessageSource exceptionsMessageSource(){
+        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+        messageSource.setBasename("classpath:/exception/messages");
+        messageSourceConfigurator(messageSource);
+        return messageSource;
+    }
+
+    /**
+     * Настраивает все бины messageSource под одну гребенку.
+     * @param messageSource
+     */
+    private void messageSourceConfigurator(AbstractResourceBasedMessageSource messageSource){
+        messageSource.setCacheSeconds(30);
+        messageSource.setDefaultLocale(Locale.US);
+        messageSource.setDefaultEncoding(StandardCharsets.UTF_8.name());
+    }
+
+    @Override
+    public Validator getValidator() {
+//        return WebMvcConfigurer.super.getValidator();
+        LocalValidatorFactoryBean validatorFactoryBean = new LocalValidatorFactoryBean();
+        validatorFactoryBean.setValidationMessageSource(messageSource());
+        return validatorFactoryBean;
     }
 
     @Override

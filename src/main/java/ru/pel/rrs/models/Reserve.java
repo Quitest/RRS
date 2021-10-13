@@ -9,14 +9,14 @@ import java.time.LocalDateTime;
 
 @JsonIgnoreProperties({"empty"} //Игнор результата работы isEmpty(), если не будет, то в ответах будет boolean поле empty
 )
-@ConsistentDates(firstField = "checkIn", secondField = "checkOut", message = "Дата выезда должна быть позже даты заезда")
+@ConsistentDates(firstField = "checkIn", secondField = "checkOut", message = "{date.checkIn.must.be.before.checkOut}")
 public class Reserve {
     private long id;
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-    @Future(message = "Дата заезда должна быть в будущем")
+    @Future(message = "{checkIn.date.must.be.in.future}")
     private LocalDateTime checkIn;
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-    @Future(message = "Дата выезда должна быть в будущем")
+    @Future(message = "{checkOut.date.must.be.in.future}")
     private LocalDateTime checkOut;
     private long guestId;
     private long roomId;
