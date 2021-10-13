@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/reserves")
-public class ReservesControllerREST implements RESTController<Reserve> {
+public class ReservesControllerREST implements RESTController<Reserve, Long> {
     @Autowired
     ReserveDAO reserveDAO;
 
@@ -23,7 +23,7 @@ public class ReservesControllerREST implements RESTController<Reserve> {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Reserve> delete(@PathVariable Integer id) {
+    public ResponseEntity<Reserve> delete(@PathVariable Long id) {
         reserveDAO.delete(id);
         return ResponseEntity.noContent().build();
     }
@@ -34,7 +34,7 @@ public class ReservesControllerREST implements RESTController<Reserve> {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Reserve> getById(@PathVariable Integer id) throws SQLException {
+    public ResponseEntity<Reserve> getById(@PathVariable Long id) throws SQLException {
         return ResponseEntity.ok(reserveDAO.getById(id));
     }
 

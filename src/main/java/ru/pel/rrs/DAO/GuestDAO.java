@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @Component
-public class GuestDAO implements DAOInterface<Guest, Integer> {
+public class GuestDAO implements DAOInterface<Guest, Long> {
     private Connection connection;
 
     public GuestDAO(DataSource dataSource) {
@@ -36,7 +36,7 @@ public class GuestDAO implements DAOInterface<Guest, Integer> {
             if (newRows == 0) {
                 throw new SQLException("Создать гостя не удалось, измененных строк БД нет");
             }
-            guest.setId((int) getGeneratedId(statement));
+            guest.setId(getGeneratedId(statement));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -44,10 +44,10 @@ public class GuestDAO implements DAOInterface<Guest, Integer> {
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(Long id) {
         try {
             var statement = connection.prepareStatement("DELETE FROM guests WHERE id=?");
-            statement.setInt(1, id);
+            statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -62,7 +62,7 @@ public class GuestDAO implements DAOInterface<Guest, Integer> {
             var resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Guest guest = new Guest();
-                guest.setId(resultSet.getInt("id"));
+                guest.setId(resultSet.getLong("id"));
                 guest.setName(resultSet.getString("name"));
                 guest.setMiddleName(resultSet.getString("middle_name"));
                 guest.setLastname(resultSet.getString("lastname"));
@@ -76,15 +76,15 @@ public class GuestDAO implements DAOInterface<Guest, Integer> {
     }
 
     @Override
-    public Guest getById(Integer id) throws SQLException {
+    public Guest getById(Long id) throws SQLException {
 //        Guest guest = null;
 //        try {
         var statement = connection.prepareStatement("SELECT * from guests WHERE id=?");
-        statement.setInt(1, id);
+        statement.setLong(1, id);
         Guest guest = new Guest();
         var rs = statement.executeQuery();
         if (rs.next()) {
-            guest.setId(rs.getInt("id"));
+            guest.setId(rs.getLong("id"));
             guest.setLastname(rs.getString("lastname"));
             guest.setName(rs.getString("name"));
             guest.setMiddleName(rs.getString("middle_name"));
@@ -118,7 +118,7 @@ public class GuestDAO implements DAOInterface<Guest, Integer> {
             statement.setString(2, guest.getName());
             statement.setString(3, guest.getMiddleName());
             statement.setInt(4, guest.getAge());
-            statement.setInt(5, guest.getId());
+            statement.setLong(5, guest.getId());
             statement.executeUpdate();
 //        } catch (SQLException e) {
 //            e.printStackTrace();

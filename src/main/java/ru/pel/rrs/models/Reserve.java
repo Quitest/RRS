@@ -11,15 +11,15 @@ import java.time.LocalDateTime;
 )
 @ConsistentDates(firstField = "checkIn", secondField = "checkOut", message = "Дата выезда должна быть позже даты заезда")
 public class Reserve {
-    private int id;
+    private long id;
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @Future(message = "Дата заезда должна быть в будущем")
     private LocalDateTime checkIn;
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @Future(message = "Дата выезда должна быть в будущем")
     private LocalDateTime checkOut;
-    private int guestId;
-    private int roomId;
+    private long guestId;
+    private long roomId;
 
     public Reserve() {
         // Конструктор по-умолчанию используется аннотацией @ModelAttribute в RoomsController
@@ -41,27 +41,27 @@ public class Reserve {
         this.checkOut = checkOut;
     }
 
-    public int getGuestId() {
+    public long getGuestId() {
         return guestId;
     }
 
-    public void setGuestId(int guestId) {
+    public void setGuestId(long guestId) {
         this.guestId = guestId;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public int getRoomId() {
+    public long getRoomId() {
         return roomId;
     }
 
-    public void setRoomId(int roomId) {
+    public void setRoomId(long roomId) {
         this.roomId = roomId;
     }
 

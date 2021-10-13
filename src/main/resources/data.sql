@@ -3,12 +3,12 @@ DROP TABLE IF EXISTS guests;
 DROP TABLE IF EXISTS reserves;
 
 create table if not exists rooms(
-	id INT AUTO_INCREMENT  PRIMARY KEY,
+	id long  PRIMARY KEY,
 	class_of_accommodations VARCHAR(15)
 );
 
 create table if not exists guests(
-	id INT AUTO_INCREMENT  PRIMARY KEY,
+	id long AUTO_INCREMENT  PRIMARY KEY,
 	lastname varchar(15),
 	middle_name varchar(15),
 	name varchar(20),
@@ -16,7 +16,7 @@ create table if not exists guests(
 );
 
 CREATE TABLE IF NOT EXISTS reserves(
-    id INT AUTO_INCREMENT  PRIMARY KEY,
+    id long AUTO_INCREMENT  PRIMARY KEY,
     check_in TIMESTAMP WITH TIME ZONE,
     check_out TIMESTAMP WITH TIME ZONE,
     guest_id INT,

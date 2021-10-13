@@ -43,14 +43,14 @@ public class RoomsController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public String deleteRoom(@PathVariable("id") int id) {
+    public String deleteRoom(@PathVariable("id") long id) {
 
         roomDAO.delete(id);
         return "redirect:/rooms";
     }
 
     @GetMapping("/edit/{id}")
-    public String editRoom(Model model, @PathVariable("id") int id) throws SQLException {
+    public String editRoom(Model model, @PathVariable("id") long id) throws SQLException {
         var room = roomDAO.getById(id);
         model.addAttribute("editedRoom", room);
         if (room == null || room.getId() == 0) {
@@ -83,7 +83,7 @@ public class RoomsController {
     }
 
     @GetMapping("/{id}")
-    public String roomInfo(@PathVariable("id") int id, Model model) throws SQLException {
+    public String roomInfo(@PathVariable("id") long id, Model model) throws SQLException {
         var room = roomDAO.getById(id);
         model.addAttribute("roomInfo", room);
         if (room == null || room.getId() == 0) {

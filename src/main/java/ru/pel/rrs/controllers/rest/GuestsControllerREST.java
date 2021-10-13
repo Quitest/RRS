@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/guests")
-public class GuestsControllerREST implements RESTController<Guest> {
+public class GuestsControllerREST implements RESTController<Guest, Long> {
     @Autowired
     GuestDAO guestDAO;
 
@@ -27,12 +27,12 @@ public class GuestsControllerREST implements RESTController<Guest> {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Guest> getById(@PathVariable Integer id) throws SQLException {
+    public ResponseEntity<Guest> getById(@PathVariable Long id) throws SQLException {
         return ResponseEntity.ok(guestDAO.getById(id));
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Guest> delete(@PathVariable Integer id) {
+    public ResponseEntity<Guest> delete(@PathVariable Long id) {
         guestDAO.delete(id);
         return ResponseEntity.noContent().build();
     }

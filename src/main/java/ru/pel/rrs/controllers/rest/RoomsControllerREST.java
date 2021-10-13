@@ -22,7 +22,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/rooms")
-public class RoomsControllerREST implements RESTController<Room> {
+public class RoomsControllerREST implements RESTController<Room, Long> {
     @Autowired
     RoomDAO roomDAO;
 
@@ -33,7 +33,7 @@ public class RoomsControllerREST implements RESTController<Room> {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Room> delete(@PathVariable Integer id) {
+    public ResponseEntity<Room> delete(@PathVariable Long id) {
         roomDAO.delete(id);
         return ResponseEntity.noContent().build();
     }
@@ -44,7 +44,7 @@ public class RoomsControllerREST implements RESTController<Room> {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Room> getById(@PathVariable Integer id) throws SQLException {
+    public ResponseEntity<Room> getById(@PathVariable Long id) throws SQLException {
         Room room = roomDAO.getById(id);
         return ResponseEntity.ok(room);
     }

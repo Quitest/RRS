@@ -22,13 +22,13 @@ public class GuestsController {
     }
 
     @DeleteMapping
-    public String deleteGuest(@RequestParam("guestIdForDelete") int id) {
+    public String deleteGuest(@RequestParam("guestIdForDelete") long id) {
         guestDAO.delete(id);
         return "redirect:/guests";
     }
 
     @GetMapping("/edit/{id}")
-    public String editGuest(@PathVariable("id") int id, Model model) throws SQLException {
+    public String editGuest(@PathVariable("id") long id, Model model) throws SQLException {
         model.addAttribute("editableGuest", guestDAO.getById(id));
         return "/guests/edit-guest";
     }

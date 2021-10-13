@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 )
 public class Room {
     @Digits(integer = 3, fraction = 0)
-    private int id;
+    private long id;
     @NotEmpty(message = "Должно быть не пустым")
     @Size(min = 2, max = 15, message = "Длинна должна быть от 2 до 15 символов")
     private String classOfAccommodations;
@@ -19,7 +19,7 @@ public class Room {
     public Room() {
     }
 
-    public Room(int id, LocalDateTime checkIn, String classOfAccommodations) {
+    public Room(long id, LocalDateTime checkIn, String classOfAccommodations) {
         this.id = id;
         this.classOfAccommodations = classOfAccommodations;
     }
@@ -32,11 +32,11 @@ public class Room {
         this.classOfAccommodations = classOfAccommodations;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

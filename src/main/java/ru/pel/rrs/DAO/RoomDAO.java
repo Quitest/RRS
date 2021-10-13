@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @Component
-public class RoomDAO implements DAOInterface<Room, Integer> {
+public class RoomDAO implements DAOInterface<Room, Long> {
     //WTF по идее соединение надо закрывать или возвращать в пул, если он есть.
     private static Connection connection;
 
@@ -29,7 +29,7 @@ public class RoomDAO implements DAOInterface<Room, Integer> {
     public long create(Room room) {
         try {
             var statement = connection.prepareStatement("INSERT INTO rooms VALUES (?,?)", Statement.RETURN_GENERATED_KEYS);
-            statement.setInt(1, room.getId());
+            statement.setLong(1, room.getId());
             statement.setString(2, room.getClassOfAccommodations());
             var newRows = statement.executeUpdate();
             if (newRows == 0) {
@@ -47,10 +47,10 @@ public class RoomDAO implements DAOInterface<Room, Integer> {
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(Long id) {
         try {
             var statement = connection.prepareStatement("DELETE FROM rooms WHERE id = ?");
-            statement.setInt(1, id);
+            statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -66,7 +66,7 @@ public class RoomDAO implements DAOInterface<Room, Integer> {
 
             while (resultSet.next()) {
                 Room room = new Room();
-                room.setId(resultSet.getInt("id"));
+                room.setId(resultSet.getLong("id"));
                 room.setClassOfAccommodations(resultSet.getString("class_of_accommodations"));
                 rooms.add(room);
             }
@@ -77,15 +77,15 @@ public class RoomDAO implements DAOInterface<Room, Integer> {
     }
 
     @Override
-    public Room getById(Integer id) throws SQLException {
+    public Room getById(Long id) throws SQLException {
         String sql = "SELECT * FROM rooms WHERE id=?";
         var statement = connection.prepareStatement(sql);
-        statement.setInt(1, id);
+        statement.setLong(1, id);
 
         var resultSet = statement.executeQuery();
         Room room = new Room();
         if (resultSet.next()) {
-            room.setId(resultSet.getInt("id"));
+            room.setId(resultSet.getLong("id"));
             room.setClassOfAccommodations(resultSet.getString("class_of_accommodations"));
         }
         if (room.isEmpty()) {
@@ -100,7 +100,7 @@ public class RoomDAO implements DAOInterface<Room, Integer> {
                 "UPDATE rooms SET class_of_accommodations=? WHERE id=?");
 
         statement.setString(1, room.getClassOfAccommodations());
-        statement.setInt(2, room.getId());
+        statement.setLong(2, room.getId());
         statement.executeUpdate();
         return room.getId();
     }

@@ -16,14 +16,14 @@ import java.util.List;
  *
  * @param <T> тип возвращаемого объекта
  */
-public interface RESTController<T> {
+public interface RESTController<T,K> {
     ResponseEntity<T> create(T entity) throws SQLException;
 
-    ResponseEntity<T> delete(Integer id);
+    ResponseEntity<T> delete(K id);
 
     ResponseEntity<List<T>> getAll();
 
-    ResponseEntity<T> getById(Integer id) throws SQLException;
+    ResponseEntity<T> getById(K id) throws SQLException;
 
     ResponseEntity<T> update(T entity) throws SQLException;
 }

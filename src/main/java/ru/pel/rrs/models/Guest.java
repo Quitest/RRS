@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 )
 
 public class Guest {
-    private int id;
+    private long id;
     private String name;
     private String middleName;
     private String lastname;
@@ -25,11 +25,11 @@ public class Guest {
         this.age = age;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

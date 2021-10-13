@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @Component
-public class ReserveDAO implements DAOInterface<Reserve, Integer> {
+public class ReserveDAO implements DAOInterface<Reserve, Long> {
     private Connection connection;
 
     public ReserveDAO(DataSource dataSource) {
@@ -34,21 +34,21 @@ public class ReserveDAO implements DAOInterface<Reserve, Integer> {
                 "(check_in,check_out,room_id,guest_id) VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
         statement.setTimestamp(1, Timestamp.valueOf(reserve.getCheckIn()));
         statement.setTimestamp(2, Timestamp.valueOf(reserve.getCheckOut()));
-        statement.setInt(3, reserve.getRoomId());
-        statement.setInt(4, reserve.getGuestId());
+        statement.setLong(3, reserve.getRoomId());
+        statement.setLong(4, reserve.getGuestId());
         var affectedRows = statement.executeUpdate();
         if (affectedRows == 0) {
             throw new SQLException("Создать бронь не удалось, нет измененных строк");
         }
-        reserve.setId((int) getGeneratedId(statement));
+        reserve.setId(getGeneratedId(statement));
         return reserve.getRoomId();
     }
 
     @Override
-    public void delete(Integer idForDelete) {
+    public void delete(Long idForDelete) {
         try {
             var statement = connection.prepareStatement("DELETE FROM reserves WHERE id=?");
-            statement.setInt(1, idForDelete);
+            statement.setLong(1, idForDelete);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -63,11 +63,11 @@ public class ReserveDAO implements DAOInterface<Reserve, Integer> {
             var resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Reserve reserve = new Reserve();
-                reserve.setId(resultSet.getInt("id"));
+                reserve.setId(resultSet.getLong("id"));
                 reserve.setCheckIn(resultSet.getTimestamp("check_in").toLocalDateTime());
                 reserve.setCheckOut(resultSet.getTimestamp("check_out").toLocalDateTime());
-                reserve.setGuestId(resultSet.getInt("guest_id"));
-                reserve.setRoomId(resultSet.getInt("room_id"));
+                reserve.setGuestId(resultSet.getLong("guest_id"));
+                reserve.setRoomId(resultSet.getLong("room_id"));
                 reserveList.add(reserve);
             }
 
@@ -78,16 +78,16 @@ public class ReserveDAO implements DAOInterface<Reserve, Integer> {
     }
 
     @Override
-    public Reserve getById(Integer id) throws SQLException {
+    public Reserve getById(Long id) throws SQLException {
         Reserve reserveListrve = null;
         var statement = connection.prepareStatement("SELECT * FROM reserves WHERE id=?");
-        statement.setInt(1, id);
+        statement.setLong(1, id);
         var rs = statement.executeQuery();
         Reserve reserve = new Reserve();
         if (rs.next()) {
-            reserve.setId(rs.getInt("id"));
-            reserve.setGuestId(rs.getInt("guest_id"));
-            reserve.setRoomId(rs.getInt("room_id"));
+            reserve.setId(rs.getLong("id"));
+            reserve.setGuestId(rs.getLong("guest_id"));
+            reserve.setRoomId(rs.getLong("room_id"));
             reserve.setCheckIn(rs.getTimestamp("check_in").toLocalDateTime());
             reserve.setCheckOut(rs.getTimestamp("check_out").toLocalDateTime());
         }
@@ -122,7 +122,7 @@ public class ReserveDAO implements DAOInterface<Reserve, Integer> {
         statement.setLong(1, roomId);
         var resultSet = statement.executeQuery();
         while (resultSet.next()) {
-            long reservedById = resultSet.getInt("guest_id");
+            long reservedById = resultSet.getLong("guest_id");
             LocalDateTime reservedCheckIn = resultSet.getTimestamp("check_in").toLocalDateTime();
             LocalDateTime reservedCheckOut = resultSet.getTimestamp("check_out").toLocalDateTime();
 //            if (checkIn.isBefore(reservedCheckOut) && checkOut.isAfter(reservedCheckIn)) {
@@ -150,9 +150,9 @@ public class ReserveDAO implements DAOInterface<Reserve, Integer> {
                 .prepareStatement("UPDATE reserves SET check_in=?, check_out=?, room_id=?, guest_id=? WHERE id=?");
         statement.setTimestamp(1, Timestamp.valueOf(reserve.getCheckIn()));
         statement.setTimestamp(2, Timestamp.valueOf(reserve.getCheckOut()));
-        statement.setInt(3, reserve.getRoomId());
-        statement.setInt(4, reserve.getGuestId());
-        statement.setInt(5, reserve.getId());
+        statement.setLong(3, reserve.getRoomId());
+        statement.setLong(4, reserve.getGuestId());
+        statement.setLong(5, reserve.getId());
         statement.executeUpdate();
         return reserve.getRoomId();
     }

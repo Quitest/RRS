@@ -37,13 +37,13 @@ public class ReservesController {
     }
 
     @DeleteMapping
-    public String deleteReserve(@RequestParam(value = "roomIdForDelete") int idForDelete) {
+    public String deleteReserve(@RequestParam(value = "roomIdForDelete") Long idForDelete) {
         reserveDAO.delete(idForDelete);
         return "redirect:reserves/";
     }
 
     @GetMapping("edit/{id}")
-    public String editReserve(@PathVariable("id") int reserveId, Model model) throws SQLException {
+    public String editReserve(@PathVariable("id") long reserveId, Model model) throws SQLException {
         model.addAttribute("editableReserve", reserveDAO.getById(reserveId));
         model.addAttribute("roomList", roomDAO.getAll());
         model.addAttribute("guestList", guestDAO.getAll());
