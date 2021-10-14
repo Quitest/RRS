@@ -1,14 +1,12 @@
 package ru.pel.rrs.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Description;
 import org.springframework.context.support.AbstractResourceBasedMessageSource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.validation.Validator;
@@ -21,7 +19,6 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
-import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 import org.springframework.web.servlet.view.xml.MappingJackson2XmlView;
@@ -31,8 +28,6 @@ import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
 import javax.servlet.Filter;
 import javax.sql.DataSource;
-import java.nio.charset.Charset;
-import java.nio.charset.CharsetEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,9 +49,9 @@ public class AppConfig implements WebMvcConfigurer {
 
     @Bean
 //    @Qualifier
-    public ReloadableResourceBundleMessageSource messageSource(){
+    public ReloadableResourceBundleMessageSource validationsMessageSource(){
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-        messageSource.setBasename("classpath:messages");
+        messageSource.setBasename("classpath:/validation/messages");
         messageSourceConfigurator(messageSource);
         return messageSource;
     }
@@ -75,16 +70,17 @@ public class AppConfig implements WebMvcConfigurer {
      * @param messageSource
      */
     private void messageSourceConfigurator(AbstractResourceBasedMessageSource messageSource){
-        messageSource.setCacheSeconds(30);
+        messageSource.setCacheSeconds(1);
         messageSource.setDefaultLocale(Locale.US);
         messageSource.setDefaultEncoding(StandardCharsets.UTF_8.name());
     }
 
     @Override
+    @Description("Переопределенный валидатор. Нужен для локализации сообщений об ошибках валидации")
     public Validator getValidator() {
 //        return WebMvcConfigurer.super.getValidator();
         LocalValidatorFactoryBean validatorFactoryBean = new LocalValidatorFactoryBean();
-        validatorFactoryBean.setValidationMessageSource(messageSource());
+        validatorFactoryBean.setValidationMessageSource(validationsMessageSource());
         return validatorFactoryBean;
     }
 

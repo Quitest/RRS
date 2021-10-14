@@ -34,8 +34,9 @@ public class GuestDAO implements DAOInterface<Guest, Long> {
     @Override
     public long create(Guest guest) {
         try {
-            var statement = connection
-                    .prepareStatement("INSERT INTO guests (lastname, name, middle_name, age) VALUES (?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            var statement = connection.prepareStatement(
+                    "INSERT INTO guests (lastname, name, middle_name, age) VALUES (?,?,?,?)",
+                    Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, guest.getLastname());
             statement.setString(2, guest.getName());
             statement.setString(3, guest.getMiddleName());

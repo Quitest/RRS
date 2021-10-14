@@ -18,9 +18,9 @@ public class RoomDAO implements DAOInterface<Room, Long> {
     //WTF по идее соединение надо закрывать или возвращать в пул, если он есть.
     private Connection connection;
 
-    @Autowired
-    @Qualifier("messageSource")
-    private ReloadableResourceBundleMessageSource messageSource;
+//    @Autowired
+//    @Qualifier("messageSource")
+//    private ReloadableResourceBundleMessageSource validationsMessageSource;
 
     @Autowired
 //    @Qualifier("exceptionsMessageSource")

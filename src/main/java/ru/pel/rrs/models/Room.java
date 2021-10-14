@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
 public class Room {
     @Digits(integer = 3, fraction = 0)
     private long id;
-    @NotEmpty(message = "Должно быть не пустым")
-    @Size(min = 2, max = 15, message = "Длинна должна быть от 2 до 15 символов")
+    @NotEmpty(message = "{not.empty}")
+    @Size(min = 2, max = 15, message = "{length.error}")
     private String classOfAccommodations;
 
     public Room() {

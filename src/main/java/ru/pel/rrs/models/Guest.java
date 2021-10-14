@@ -4,6 +4,8 @@ package ru.pel.rrs.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import javax.validation.constraints.Min;
+
 @JsonIgnoreProperties({"empty"} //Игнор результата работы isEmpty(), если не будет, то в ответах будет boolean поле empty
 )
 
@@ -12,6 +14,7 @@ public class Guest {
     private String name;
     private String middleName;
     private String lastname;
+    @Min(value = 18, message = "{minimal.guest.age}")
     private int age;
 
     public Guest() {
