@@ -2,6 +2,8 @@
 // PVS-Studio Static Code Analyzer for C, C++, C#, and Java: http://www.viva64.com
 package ru.pel.rrs.DAO;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.stereotype.Component;
 import ru.pel.rrs.models.Reserve;
 
@@ -15,8 +17,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import static org.springframework.context.i18n.LocaleContextHolder.getLocale;
+
 @Component
 public class ReserveDAO implements DAOInterface<Reserve, Long> {
+    @Autowired
+    ReloadableResourceBundleMessageSource exceptionsMessageSource;
     private Connection connection;
 
     public ReserveDAO(DataSource dataSource) {
@@ -38,7 +44,8 @@ public class ReserveDAO implements DAOInterface<Reserve, Long> {
         statement.setLong(4, reserve.getGuestId());
         var affectedRows = statement.executeUpdate();
         if (affectedRows == 0) {
-            throw new SQLException("Создать бронь не удалось, нет измененных строк");
+            throw new SQLException(
+                    exceptionsMessageSource.getMessage("room.creating.failed", null, getLocale()));
         }
         reserve.setId(getGeneratedId(statement));
         return reserve.getRoomId();
@@ -92,7 +99,9 @@ public class ReserveDAO implements DAOInterface<Reserve, Long> {
             reserve.setCheckOut(rs.getTimestamp("check_out").toLocalDateTime());
         }
         if (reserve.isEmpty()) {
-            throw new NoSuchElementException("Бронь № " + id + " не существует");
+            throw new NoSuchElementException(exceptionsMessageSource.getMessage("id.does.not.exist",
+                    new Object[]{id},
+                    getLocale()));
         }
         return reserve;
     }
@@ -102,7 +111,10 @@ public class ReserveDAO implements DAOInterface<Reserve, Long> {
             if (generatedKeys.next()) {
                 return generatedKeys.getLong("id");
             } else {
-                throw new SQLException("Создать бронь не удалось, ID брони не удалось получить.");
+//                throw new SQLException("Создать бронь не удалось. ID брони не удалось получить.");
+                throw new SQLException(
+                        exceptionsMessageSource.getMessage("object.creation.failed.id.not.received", null, getLocale()));
+
             }
         }
     }
@@ -115,7 +127,7 @@ public class ReserveDAO implements DAOInterface<Reserve, Long> {
      * @param checkOut дата и время окончания брони
      * @return ID комнаты, если временной период запрашиваемой брони не пересекается с временным периодом существующей брони.
      * @throws IllegalArgumentException если комната занята в запрашиваемый период.
-     * @throws SQLException при ошибках работы SQL.
+     * @throws SQLException             при ошибках работы SQL.
      */
     public long isReserved(long guestId, long roomId, LocalDateTime checkIn, LocalDateTime checkOut) throws SQLException {
         var statement = connection.prepareStatement("SELECT guest_id, check_in, check_out FROM reserves WHERE room_id=?");
@@ -135,8 +147,11 @@ public class ReserveDAO implements DAOInterface<Reserve, Long> {
 //                        ". Она занята другим гостем";
 //                throw new IllegalArgumentException(msg);
 //            }
-            if (reservedById != guestId){
-                throw new IllegalArgumentException("Невозможно забронировать. Номер занят другим гостем");
+            if (reservedById != guestId) {
+//                throw new IllegalArgumentException("Невозможно забронировать. Номер занят другим гостем");
+//                throw new IllegalArgumentException("Reserving is failed. Room is busy.");
+                throw new IllegalArgumentException(
+                        exceptionsMessageSource.getMessage("reserving.is.failed.room.is.busy", null, getLocale()));
             }
         }
         return roomId;

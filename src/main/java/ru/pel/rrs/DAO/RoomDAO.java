@@ -16,15 +16,15 @@ import java.util.NoSuchElementException;
 @Component
 public class RoomDAO implements DAOInterface<Room, Long> {
     //WTF по идее соединение надо закрывать или возвращать в пул, если он есть.
-    private static Connection connection;
+    private Connection connection;
 
     @Autowired
     @Qualifier("messageSource")
     private ReloadableResourceBundleMessageSource messageSource;
 
     @Autowired
-    @Qualifier("exceptionsMessageSource")
-    private ReloadableResourceBundleMessageSource exceptionMessageSource;
+//    @Qualifier("exceptionsMessageSource")
+    private ReloadableResourceBundleMessageSource exceptionsMessageSource;
 
     @Autowired
     public RoomDAO(DataSource dataSource) {
@@ -45,13 +45,13 @@ public class RoomDAO implements DAOInterface<Room, Long> {
             var newRows = statement.executeUpdate();
             if (newRows == 0) {
                 throw new SQLException(
-                        exceptionMessageSource.getMessage("creating.room.is.failed.database.rows.was.not.modifed", null, LocaleContextHolder.getLocale()));
+                        exceptionsMessageSource.getMessage("creating.is.failed.database.rows.was.not.modifed", null, LocaleContextHolder.getLocale()));
 
             }
             try (var generatedKeys = statement.getGeneratedKeys()) {
                 if (!generatedKeys.next()) {
                     throw new SQLException(
-                            exceptionMessageSource.getMessage("room.creating.failed", null, LocaleContextHolder.getLocale()));
+                            exceptionsMessageSource.getMessage("room.creating.failed", null, LocaleContextHolder.getLocale()));
 
                 }
             }
@@ -105,7 +105,7 @@ public class RoomDAO implements DAOInterface<Room, Long> {
         }
         if (room.isEmpty()) {
             throw new NoSuchElementException(
-                    exceptionMessageSource.getMessage("room.not.found.by.id", new Object[]{id}, LocaleContextHolder.getLocale()));
+                    exceptionsMessageSource.getMessage("room.not.found.by.id", new Object[]{id}, LocaleContextHolder.getLocale()));
         }
         return room;
     }

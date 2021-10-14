@@ -1,5 +1,8 @@
 package ru.pel.rrs.DAO;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.stereotype.Component;
 import ru.pel.rrs.models.Guest;
 
@@ -11,8 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import static org.springframework.context.i18n.LocaleContextHolder.getLocale;
+
 @Component
 public class GuestDAO implements DAOInterface<Guest, Long> {
+    @Autowired
+//            @Qualifier("exceptionsMessageSource")
+    ReloadableResourceBundleMessageSource exceptionsMessageSource;
     private Connection connection;
 
     public GuestDAO(DataSource dataSource) {
@@ -34,7 +42,10 @@ public class GuestDAO implements DAOInterface<Guest, Long> {
             statement.setInt(4, guest.getAge());
             var newRows = statement.executeUpdate();
             if (newRows == 0) {
-                throw new SQLException("Создать гостя не удалось, измененных строк БД нет");
+                throw new SQLException(exceptionsMessageSource.getMessage("creating.is.failed.database.rows.was.not.modified",
+                                null,
+                                getLocale())
+                );
             }
             guest.setId(getGeneratedId(statement));
         } catch (SQLException e) {
@@ -77,8 +88,6 @@ public class GuestDAO implements DAOInterface<Guest, Long> {
 
     @Override
     public Guest getById(Long id) throws SQLException {
-//        Guest guest = null;
-//        try {
         var statement = connection.prepareStatement("SELECT * from guests WHERE id=?");
         statement.setLong(1, id);
         Guest guest = new Guest();
@@ -90,11 +99,10 @@ public class GuestDAO implements DAOInterface<Guest, Long> {
             guest.setMiddleName(rs.getString("middle_name"));
             guest.setAge(rs.getInt("age"));
         }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
         if (guest.isEmpty()) {
-            throw new NoSuchElementException("Гость " + id + " не существует");
+            throw new NoSuchElementException(exceptionsMessageSource.getMessage("id.does.not.exist",
+                    new Object[]{id},
+                    getLocale()));
         }
         return guest;
     }
@@ -104,25 +112,23 @@ public class GuestDAO implements DAOInterface<Guest, Long> {
             if (generatedKeys.next()) {
                 return generatedKeys.getLong("id");
             } else {
-                throw new SQLException("Создать гостя не удалось, ID гостя не удалось получить.");
+                throw new SQLException(exceptionsMessageSource.getMessage("object.creation.failed.id.not.received",
+                        null,
+                        getLocale()));
             }
         }
     }
 
     @Override
     public long update(Guest guest) throws SQLException {
-//        try {
-            var statement = connection
-                    .prepareStatement("UPDATE guests SET lastname=?, name=?, middle_name=?, age=? WHERE id=?");
-            statement.setString(1, guest.getLastname());
-            statement.setString(2, guest.getName());
-            statement.setString(3, guest.getMiddleName());
-            statement.setInt(4, guest.getAge());
-            statement.setLong(5, guest.getId());
-            statement.executeUpdate();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
+        var statement = connection
+                .prepareStatement("UPDATE guests SET lastname=?, name=?, middle_name=?, age=? WHERE id=?");
+        statement.setString(1, guest.getLastname());
+        statement.setString(2, guest.getName());
+        statement.setString(3, guest.getMiddleName());
+        statement.setInt(4, guest.getAge());
+        statement.setLong(5, guest.getId());
+        statement.executeUpdate();
         return guest.getId();
     }
 }
