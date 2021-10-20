@@ -10,21 +10,20 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.pel.rrs.DAO.RoomDAO;
 import ru.pel.rrs.models.Room;
-import ru.pel.rrs.services.RoomsService;
+import ru.pel.rrs.services.RoomService;
 
 import javax.validation.Valid;
 import java.sql.SQLException;
-import java.util.NoSuchElementException;
 
 @Controller
 @RequestMapping("/rooms")
 public class RoomsController {
 
-    @Autowired
-    private RoomDAO roomDAO;
+//    @Autowired
+//    private RoomDAO roomDAO;
 
     @Autowired
-    private RoomsService roomsService;
+    private RoomService roomService;
 
     @Autowired
     private MessageSource messageSource;
@@ -47,7 +46,7 @@ public class RoomsController {
             return "rooms/new-room";
         }
 //        roomDAO.create(room);
-        roomsService.save(room);
+        roomService.save(room);
         return "redirect:/rooms";
     }
 
@@ -55,14 +54,14 @@ public class RoomsController {
     public String deleteRoom(@PathVariable("id") long id) {
 
 //        roomDAO.delete(id);
-        roomsService.delete(id);
+        roomService.delete(id);
         return "redirect:/rooms";
     }
 
     @GetMapping("/edit/{id}")
     public String editRoom(Model model, @PathVariable("id") long id) throws SQLException {
 //        var room = roomDAO.getById(id);
-        var room = roomsService.getById(id);
+        var room = roomService.getById(id);
         model.addAttribute("editedRoom", room);
         // 20.10.2021 логика перенесена на сервисный слой
 //        if (room == null || room.getId() == 0) {
@@ -75,7 +74,7 @@ public class RoomsController {
     @GetMapping
     public String getAllRooms(Model model) {
 //        model.addAttribute("roomsList", roomDAO.getAll());
-        model.addAttribute("roomsList", roomsService.getAll());
+        model.addAttribute("roomsList", roomService.getAll());
         return "rooms/index";
     }
 
@@ -98,7 +97,7 @@ public class RoomsController {
     @GetMapping("/{id}")
     public String roomInfo(@PathVariable("id") long id, Model model) throws SQLException {
 //        var room = roomDAO.getById(id);
-        var room = roomsService.getById(id);
+        var room = roomService.getById(id);
         model.addAttribute("roomInfo", room);
         //20.10.2021 логика перенесена на сервисный слой
 //        if (room == null || room.getId() == 0) {
@@ -114,7 +113,7 @@ public class RoomsController {
             return "/rooms/edit-room";
         }
 //        roomDAO.update(room);
-        roomsService.save(room);
+        roomService.save(room);
         return "redirect:/rooms";
     }
 }

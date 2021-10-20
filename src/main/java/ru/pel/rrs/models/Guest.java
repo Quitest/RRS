@@ -4,21 +4,36 @@ package ru.pel.rrs.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import javax.persistence.*;
 import javax.validation.constraints.Min;
 
 @JsonIgnoreProperties({"empty"} //Игнор результата работы isEmpty(), если не будет, то в ответах будет boolean поле empty
 )
-
+@Entity
+@Table(name = "guests")
 public class Guest {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     private String name;
+
+    @Column(name = "middle_name")
     private String middleName;
+
     private String lastname;
+
     @Min(value = 18, message = "{minimal.guest.age}")
     private int age;
 
+    @Column(name = "passport")
+    private int passport;
+
     public Guest() {
+        // Конструктор по-умолчанию используется, в частности, аннотацией @ModelAttribute в GuestsController
     }
+
+    //Getters & Setters
 
     public int getAge() {
         return age;
@@ -60,6 +75,7 @@ public class Guest {
         this.name = name;
     }
 
+    //FIXME логику перенести в слой сервиса
     public boolean isEmpty() {
         return id == 0 &
                 name == null &

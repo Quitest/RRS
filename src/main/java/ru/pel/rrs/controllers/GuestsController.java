@@ -6,36 +6,44 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.pel.rrs.DAO.GuestDAO;
 import ru.pel.rrs.models.Guest;
+import ru.pel.rrs.repositories.GuestRepository;
 
 import java.sql.SQLException;
 
 @Controller
 @RequestMapping("/guests")
 public class GuestsController {
+//    @Autowired
+//    GuestDAO guestDAO;
+
     @Autowired
-    GuestDAO guestDAO;
+    private GuestRepository guestService;
 
     @PostMapping("/create")
     public String createGuest(Guest guest) {
-        guestDAO.create(guest);
+//        guestDAO.create(guest);
+        guestService.save(guest);
         return "redirect:/guests";
     }
 
     @DeleteMapping
     public String deleteGuest(@RequestParam("guestIdForDelete") long id) {
-        guestDAO.delete(id);
+//        guestDAO.delete(id);
+        guestService.deleteById(id);
         return "redirect:/guests";
     }
 
     @GetMapping("/edit/{id}")
     public String editGuest(@PathVariable("id") long id, Model model) throws SQLException {
-        model.addAttribute("editableGuest", guestDAO.getById(id));
+//        model.addAttribute("editableGuest", guestDAO.getById(id));
+        model.addAttribute("editableGuest", guestService.getById(id));
         return "/guests/edit-guest";
     }
 
     @GetMapping
     public String getAllGuests(Model model) {
-        model.addAttribute("guestsList", guestDAO.getAll());
+//        model.addAttribute("guestsList", guestDAO.getAll());
+        model.addAttribute("guestsList", guestService.findAll());
         return "guests/index";
     }
 
@@ -46,7 +54,8 @@ public class GuestsController {
 
     @PatchMapping("/edit/{id}")
     public String updateGuest(Guest guest) throws SQLException {
-        guestDAO.update(guest);
+//        guestDAO.update(guest);
+        guestService.save(guest);
         return "redirect:/guests";
     }
 }
