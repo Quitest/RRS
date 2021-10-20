@@ -1,7 +1,9 @@
 package ru.pel.rrs.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Data;
 
+import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -9,8 +11,13 @@ import java.time.LocalDateTime;
 
 @JsonIgnoreProperties({"empty"} //Игнор результата работы isEmpty(), если не будет, то в ответах будет boolean поле empty
 )
+@Entity
+@Data
+@Table(name = "rooms")
 public class Room {
-    @Digits(integer = 3, fraction = 0)
+//    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @Digits(integer = 3, fraction = 0)
+    @Id
     private long id;
     @NotEmpty(message = "{not.empty}")
     @Size(min = 2, max = 15, message = "{length.error}")

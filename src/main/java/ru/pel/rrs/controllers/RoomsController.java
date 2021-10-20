@@ -10,10 +10,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.pel.rrs.DAO.RoomDAO;
 import ru.pel.rrs.models.Room;
+import ru.pel.rrs.services.RoomsService;
 
 import javax.validation.Valid;
 import java.sql.SQLException;
-import java.util.Locale;
 import java.util.NoSuchElementException;
 
 @Controller
@@ -22,6 +22,9 @@ public class RoomsController {
 
     @Autowired
     private RoomDAO roomDAO;
+
+    @Autowired
+    private RoomsService roomsService;
 
     @Autowired
     private MessageSource messageSource;
@@ -43,31 +46,36 @@ public class RoomsController {
         if (bindingResult.hasErrors()) {
             return "rooms/new-room";
         }
-        roomDAO.create(room);
+//        roomDAO.create(room);
+        roomsService.save(room);
         return "redirect:/rooms";
     }
 
     @DeleteMapping("/delete/{id}")
     public String deleteRoom(@PathVariable("id") long id) {
 
-        roomDAO.delete(id);
+//        roomDAO.delete(id);
+        roomsService.delete(id);
         return "redirect:/rooms";
     }
 
     @GetMapping("/edit/{id}")
     public String editRoom(Model model, @PathVariable("id") long id) throws SQLException {
-        var room = roomDAO.getById(id);
+//        var room = roomDAO.getById(id);
+        var room = roomsService.getById(id);
         model.addAttribute("editedRoom", room);
-        if (room == null || room.getId() == 0) {
-            String msg = "Комнаты с ID=" + id + " не существует";
-            throw new NoSuchElementException(msg);
-        }
+        // 20.10.2021 логика перенесена на сервисный слой
+//        if (room == null || room.getId() == 0) {
+//            String msg = "Комнаты с ID=" + id + " не существует";
+//            throw new NoSuchElementException(msg);
+//        }
         return "/rooms/edit-room";
     }
 
     @GetMapping
     public String getAllRooms(Model model) {
-        model.addAttribute("roomsList", roomDAO.getAll());
+//        model.addAttribute("roomsList", roomDAO.getAll());
+        model.addAttribute("roomsList", roomsService.getAll());
         return "rooms/index";
     }
 
@@ -89,11 +97,13 @@ public class RoomsController {
 
     @GetMapping("/{id}")
     public String roomInfo(@PathVariable("id") long id, Model model) throws SQLException {
-        var room = roomDAO.getById(id);
+//        var room = roomDAO.getById(id);
+        var room = roomsService.getById(id);
         model.addAttribute("roomInfo", room);
-        if (room == null || room.getId() == 0) {
-            throw new NoSuchElementException("Комнаты с таким ID не найдено");
-        }
+        //20.10.2021 логика перенесена на сервисный слой
+//        if (room == null || room.getId() == 0) {
+//            throw new NoSuchElementException("Комнаты с таким ID не найдено");
+//        }
         return "rooms/room-info";
     }
 
@@ -103,7 +113,8 @@ public class RoomsController {
         if (bindingResult.hasErrors()) {
             return "/rooms/edit-room";
         }
-        roomDAO.update(room);
+//        roomDAO.update(room);
+        roomsService.save(room);
         return "redirect:/rooms";
     }
 }
