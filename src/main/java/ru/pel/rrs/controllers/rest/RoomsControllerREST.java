@@ -8,6 +8,7 @@ import ru.pel.rrs.models.Room;
 import ru.pel.rrs.repositories.RoomRepository;
 import ru.pel.rrs.services.RoomService;
 
+import javax.transaction.Transactional;
 import java.sql.SQLException;
 import java.util.List;
 

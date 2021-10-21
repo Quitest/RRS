@@ -1,4 +1,4 @@
-package ru.pel.rrs.controllers;
+package ru.pel.rrs.controllers.mvc;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

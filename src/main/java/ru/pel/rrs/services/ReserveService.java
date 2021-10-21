@@ -2,6 +2,7 @@ package ru.pel.rrs.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.pel.rrs.models.Guest;
 import ru.pel.rrs.models.Reserve;
 import ru.pel.rrs.models.Room;
@@ -29,7 +30,7 @@ public class ReserveService {
     }
 
     public Reserve getById(long id){
-        return reserveRepository.getById(id);
+        return reserveRepository.findById(id).orElseThrow();
     }
 
     public Reserve save(Reserve reserve){

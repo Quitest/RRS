@@ -26,8 +26,8 @@ public class Guest {
     @Min(value = 18, message = "{minimal.guest.age}")
     private int age;
 
-    @Column(name = "passport")
-    private int passport;
+//    @Column(name = "passport")
+//    private int passport;
 
     public Guest() {
         // Конструктор по-умолчанию используется, в частности, аннотацией @ModelAttribute в GuestsController

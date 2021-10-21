@@ -21,6 +21,7 @@ public class ReservesControllerREST implements RESTController<Reserve, Long> {
     ReserveService reserveService;
 
     @PostMapping
+    //TODO почитать про работу моей проверки https://stackoverflow.com/questions/52460568/could-not-commit-jpa-transaction-nested-exception-is-javax-persistence-rollback
     public ResponseEntity<Reserve> create(@Valid @RequestBody Reserve reserve) throws SQLException {
 //        reserveDAO.create(reserve);
         reserveService.save(reserve);

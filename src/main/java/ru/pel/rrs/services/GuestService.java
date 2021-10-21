@@ -31,7 +31,8 @@ public class GuestService {
     }
 
     public Guest getById(long id){
-        Guest guest = guestRepository.getById(id);
+//        Guest guest = guestRepository.getById(id);
+        Guest guest = guestRepository.findById(id).orElseThrow();
         if (guest.isEmpty()) {
             throw new NoSuchElementException(
                     exceptionsMessageSource.getMessage("room.not.found.by.id", new Object[]{id}, LocaleContextHolder.getLocale()));

@@ -32,7 +32,8 @@ public class RoomService {
     }
 
     public Room getById(long id){
-        Room room = roomRepository.getById(id);
+        Room room = roomRepository.findById(id).orElseThrow();
+//        Room room = roomRepository.getById(id);
 //        if (room == null || room.getId() == 0) {
 //            throw new NoSuchElementException("Комнаты с таким ID не найдено");
 //        }
