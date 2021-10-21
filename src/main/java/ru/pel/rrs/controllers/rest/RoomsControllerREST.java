@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.pel.rrs.DAO.RoomDAO;
 import ru.pel.rrs.models.Room;
+import ru.pel.rrs.repositories.RoomRepository;
+import ru.pel.rrs.services.RoomService;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -23,36 +25,42 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/rooms")
 public class RoomsControllerREST implements RESTController<Room, Long> {
+//    @Autowired
+//    RoomDAO roomDAO;
+
     @Autowired
-    RoomDAO roomDAO;
+    RoomService roomService;
 
     @PostMapping
     public ResponseEntity<Room> create(@RequestBody Room room) {
-        roomDAO.create(room);
+//        roomDAO.create(room);
+        roomService.save(room);
         return ResponseEntity.ok(room);
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<Room> delete(@PathVariable Long id) {
-        roomDAO.delete(id);
+//        roomDAO.delete(id);
+        roomService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping
     public ResponseEntity<List<Room>> getAll() {
-        return ResponseEntity.ok(roomDAO.getAll());
+//        return ResponseEntity.ok(roomDAO.getAll());
+        return ResponseEntity.ok(roomService.getAll());
     }
 
     @GetMapping("{id}")
     public ResponseEntity<Room> getById(@PathVariable Long id) throws SQLException {
-        Room room = roomDAO.getById(id);
-        return ResponseEntity.ok(room);
+//        Room room = roomDAO.getById(id);
+        return ResponseEntity.ok(roomService.getById(id));
     }
 
     @PutMapping
     public ResponseEntity<Room> update(@RequestBody Room room) throws SQLException {
-        roomDAO.update(room);
-        return ResponseEntity.ok(room);
+//        roomDAO.update(room);
+        return ResponseEntity.ok(roomService.save(room));
     }
 
 //    @ResponseStatus(HttpStatus.BAD_REQUEST)
