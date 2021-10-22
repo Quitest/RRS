@@ -17,6 +17,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * Тесты RoomsController. Тесты подтягивают весь контекст приложения:
+ * Минусы - долгий запуск и работа.
+ * Плюсы - тестируется весь путь от запроса до БД и обратно.
+ */
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -26,7 +31,7 @@ class RoomsControllerRESTTest {
     private static Room updatedRoom;
     @Autowired
     private MockMvc mockMvc;
-    private ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper = new ObjectMapper();
 
     @BeforeAll
     static void init() {
