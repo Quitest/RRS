@@ -1,10 +1,9 @@
 package ru.pel.rrs.DAO;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.stereotype.Component;
-import ru.pel.rrs.models.Guest;
+import ru.pel.rrs.entities.Guest;
 
 import javax.sql.DataSource;
 import java.sql.Connection;

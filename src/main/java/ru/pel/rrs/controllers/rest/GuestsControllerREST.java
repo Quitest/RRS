@@ -3,8 +3,7 @@ package ru.pel.rrs.controllers.rest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.pel.rrs.DAO.GuestDAO;
-import ru.pel.rrs.models.Guest;
+import ru.pel.rrs.entities.Guest;
 import ru.pel.rrs.services.GuestService;
 
 import java.sql.SQLException;

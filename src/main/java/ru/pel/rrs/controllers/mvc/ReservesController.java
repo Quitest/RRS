@@ -5,10 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.pel.rrs.DAO.GuestDAO;
-import ru.pel.rrs.DAO.ReserveDAO;
-import ru.pel.rrs.DAO.RoomDAO;
-import ru.pel.rrs.models.Reserve;
+import ru.pel.rrs.entities.Reserve;
 import ru.pel.rrs.services.ReserveService;
 
 import javax.validation.Valid;

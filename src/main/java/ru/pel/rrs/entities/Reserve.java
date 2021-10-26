@@ -1,18 +1,23 @@
-package ru.pel.rrs.models;
+package ru.pel.rrs.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 import ru.pel.rrs.annotations.ConsistentDates;
 
 import javax.persistence.*;
 import javax.validation.constraints.Future;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @JsonIgnoreProperties({"empty"} //Игнор результата работы isEmpty(), если не будет, то в ответах будет boolean поле empty
 )
 @ConsistentDates(firstField = "checkIn", secondField = "checkOut", message = "{date.checkIn.must.be.before.checkOut}")
 @Entity
 @Table(name = "reserves")
+@Getter
+@Setter
 public class Reserve {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,55 +33,16 @@ public class Reserve {
     @Future(message = "{date.must.be.in.future}")
     private LocalDateTime checkOut;
 
-    @Column(name = "guest_id")
-    private long guestId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "guest_id")
+    private Guest guest;
 
-    @Column(name = "room_id")
-    private long roomId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "room_id")
+    private Room room;
 
     public Reserve() {
         // Конструктор по-умолчанию используется, в частности, аннотацией @ModelAttribute в ReservesController
-    }
-
-    //Getters & Setters
-    public LocalDateTime getCheckIn() {
-        return checkIn;
-    }
-
-    public void setCheckIn(LocalDateTime checkIn) {
-        this.checkIn = checkIn;
-    }
-
-    public LocalDateTime getCheckOut() {
-        return checkOut;
-    }
-
-    public void setCheckOut(LocalDateTime checkOut) {
-        this.checkOut = checkOut;
-    }
-
-    public long getGuestId() {
-        return guestId;
-    }
-
-    public void setGuestId(long guestId) {
-        this.guestId = guestId;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public long getRoomId() {
-        return roomId;
-    }
-
-    public void setRoomId(long roomId) {
-        this.roomId = roomId;
     }
 
     /**
@@ -88,8 +54,8 @@ public class Reserve {
     public boolean isEmpty() {
         return id == 0 &
                 checkIn == null &
-                checkOut == null &
-                guestId == 0 &
-                roomId == 0;
+                checkOut == null;// &
+//                guestId == 0 &
+//                roomId == 0;
     }
 }

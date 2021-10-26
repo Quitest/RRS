@@ -1,16 +1,22 @@
 // This is a personal academic project. Dear PVS-Studio, please check it.
 // PVS-Studio Static Code Analyzer for C, C++, C#, and Java: http://www.viva64.com
-package ru.pel.rrs.models;
+package ru.pel.rrs.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
+import java.util.List;
+import java.util.Set;
 
 @JsonIgnoreProperties({"empty"} //Игнор результата работы isEmpty(), если не будет, то в ответах будет boolean поле empty
 )
 @Entity
 @Table(name = "guests")
+@Getter
+@Setter
 public class Guest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,53 +32,11 @@ public class Guest {
     @Min(value = 18, message = "{minimal.guest.age}")
     private int age;
 
-//    @Column(name = "passport")
-//    private int passport;
+    @OneToMany(mappedBy = "guest", fetch = FetchType.LAZY)
+    private Set<Reserve> reserves;
 
     public Guest() {
         // Конструктор по-умолчанию используется, в частности, аннотацией @ModelAttribute в GuestsController
-    }
-
-    //Getters & Setters
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    public String getMiddleName() {
-        return middleName;
-    }
-
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     //FIXME логику перенести в слой сервиса

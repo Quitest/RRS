@@ -4,8 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.pel.rrs.DAO.GuestDAO;
-import ru.pel.rrs.models.Guest;
+import ru.pel.rrs.entities.Guest;
 import ru.pel.rrs.repositories.GuestRepository;
 
 import java.sql.SQLException;

@@ -1,7 +1,7 @@
 package ru.pel.rrs.services;
 
-import ru.pel.rrs.models.Room;
-import ru.pel.rrs.models.Guest;
+import ru.pel.rrs.entities.Room;
+import ru.pel.rrs.entities.Guest;
 
 import java.time.LocalDateTime;
 

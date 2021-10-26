@@ -123,24 +123,6 @@ public class AppConfig implements WebMvcConfigurer {
         return resolver;
     }
 
-    //TODO реализовать пул соединений, что бы DAO брали connection из пула при необходимости, а потом возвращали.
-    @Bean
-    public DataSource dataSource() {
-        String dbType = env.getProperty("db.type");
-        String dbDriver = env.getProperty(dbType + ".driver");
-        String dbUrl = env.getProperty(dbType + ".url");
-        String dbUser = env.getProperty(dbType + ".user");
-        String dbPass = env.getProperty(dbType + ".pass");
-
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(dbDriver);
-        dataSource.setUrl(dbUrl);
-        dataSource.setUsername(dbUser);
-        dataSource.setPassword(dbPass);
-
-        return dataSource;
-    }
-
     @Bean
     @Description("Registration filter for hidden http methods in forms")
     public FilterRegistrationBean<Filter> hiddenHttpMethodFilter() {

@@ -3,8 +3,7 @@ package ru.pel.rrs.controllers.rest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.pel.rrs.DAO.ReserveDAO;
-import ru.pel.rrs.models.Reserve;
+import ru.pel.rrs.entities.Reserve;
 import ru.pel.rrs.services.ReserveService;
 
 import javax.validation.Valid;

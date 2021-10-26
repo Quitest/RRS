@@ -3,12 +3,9 @@ package ru.pel.rrs.controllers.rest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.pel.rrs.DAO.RoomDAO;
-import ru.pel.rrs.models.Room;
-import ru.pel.rrs.repositories.RoomRepository;
+import ru.pel.rrs.entities.Room;
 import ru.pel.rrs.services.RoomService;
 
-import javax.transaction.Transactional;
 import java.sql.SQLException;
 import java.util.List;
 
