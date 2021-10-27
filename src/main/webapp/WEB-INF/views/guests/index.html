@@ -3,48 +3,48 @@
 <head>
     <link rel="stylesheet" type="text/css" href="/resources/style/global.css">
     <!--    Библиотека иконок для кнопок-->
-<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
     <script src="https://kit.fontawesome.com/79be85c73a.js" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <title>Список гостей</title>
 </head>
 <body>
 <table>
+    <caption>Панель управления:</caption>
     <tr>
-        <td>
+        <th scope="col">
             <form th:action="@{/reserves}" th:method="GET">
-                <input type="submit" value="Управление бронями">
+                <input type="submit" value="Бронями">
             </form>
-        </td>
-        <td>
+        </th>
+        <th scope="col">
             <form th:action="@{/guests}" th:method="GET">
-                <input type="submit" value="Управление гостями">
+                <input type="submit" value="Гостями">
             </form>
-        </td>
-        <td>
+        </th>
+        <th scope="col">
             <form th:action="@{/rooms}" th:method="GET">
-                <input type="submit" value="Управление номерами">
+                <input type="submit" value="Номерами">
             </form>
-        </td>
+        </th>
     </tr>
 </table>
 
-<table cellspacing="0" border="1" cellpadding="2">
-    <thead align="center">
+<hr>
+
+<table border="1">
+    <caption>Список зарегистрированных гостей</caption>
     <tr>
-        <td>ID гостя</td>
-        <td>Фамилия</td>
-        <td>Имя</td>
-        <td>Отчество</td>
-        <td>Возраст</td>
-        <td colspan="2">
+        <th scope="col">ID гостя</th>
+        <th scope="col">Фамилия</th>
+        <th scope="col">Имя</th>
+        <th scope="col">Отчество</th>
+        <th scope="col">Возраст</th>
+        <th scope="col" colspan="2">
             <form th:action="@{/guests/create}" th:method="GET">
-<!--                <input type="submit" value="Новый">-->
                 <button title="Новый гость"><i class="fas fa-plus-square"></i></button>
             </form>
-        </td>
+        </th>
     </tr>
-    </thead>
     <tr th:each="guest : ${guestsList}">
         <td th:text="${guest.getId()}">ID гостя</td>
         <td th:text="${guest.getLastname()}">Ф</td>
@@ -53,22 +53,16 @@
         <td th:text="${guest.getAge()}">Возраст</td>
         <td>
             <form th:action="@{/guests/edit/{id}(id=${guest.getId()})}" th:method="GET">
-                <!--                <button>Изменить</button>-->
                 <button title="Изменить"><i class="fas fa-user-edit"></i></button>
             </form>
         </td>
         <td>
             <form th:action="@{/guests}" th:method="DELETE">
-                <!--                <button type="submit" th:name="guestIdForDelete" th:value="${guest.getId()}">Удалить</button>-->
                 <button type="submit" th:name="guestIdForDelete" th:value="${guest.getId()}" title="Удалить"><i
                         class="fas fa-trash"></i></button>
             </form>
         </td>
     </tr>
 </table>
-
-<hr>
-
-
 </body>
 </html>

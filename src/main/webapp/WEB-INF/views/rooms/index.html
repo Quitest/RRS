@@ -2,45 +2,46 @@
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <link rel="stylesheet" type="text/css" href="/resources/style/global.css">
-<!--    Библиотека иконок для кнопок-->
-<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
+    <!--    Библиотека иконок для кнопок-->
     <script src="https://kit.fontawesome.com/79be85c73a.js" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <title>Список всех номеров</title>
 </head>
 <body>
 <table>
+    <caption>Панель управления:</caption>
     <tr>
-        <td>
+        <th scope="col">
             <form th:action="@{/reserves}" th:method="GET">
-                <input type="submit" value="Управление бронями">
+                <input type="submit" value="Бронями">
             </form>
-        </td>
-        <td>
+        </th>
+        <th scope="col">
             <form th:action="@{/guests}" th:method="GET">
-                <input type="submit" value="Управление гостями">
+                <input type="submit" value="Гостями">
             </form>
-        </td>
-        <td>
+        </th>
+        <th scope="col">
             <form th:action="@{/rooms}" th:method="GET">
-                <input type="submit" value="Управление номерами">
+                <input type="submit" value="Номерами">
             </form>
-        </td>
+        </th>
     </tr>
 </table>
 
-<table cellspacing="0" border="1" cellpadding="2">
-    <thead align="center">
+<hr>
+
+<table border="1">
+    <caption>Список существующих номеров</caption>
     <tr>
-        <td>Номер</td>
-        <td>Класс размещения</td>
-        <td colspan="2">
+        <th scope="col">Номер</th>
+        <th scope="col">Класс размещения</th>
+        <th scope="col" colspan="2">
             <form th:action="@{/rooms/new-room}" th:method="GET">
                 <button title="Новый номер"><i class="fas fa-plus-square"></i></button>
             </form>
-        </td>
+        </th>
     </tr>
-    </thead>
     <tr th:each="room : ${roomsList}">
         <td th:text="${room.getId()}">номер комнаты</td>
         <td th:text="${room.getClassOfAccommodations()}">класс размещения</td>
@@ -51,12 +52,10 @@
         </td>
         <td>
             <form th:action="@{/rooms/delete/{id}(id=${room.getId()})}" th:method="DELETE">
-                <button type="submit" title="Удалить"><i class="fas fa-trash"></i> </button>
+                <button type="submit" title="Удалить"><i class="fas fa-trash"></i></button>
             </form>
         </td>
     </tr>
 </table>
-<br/>
-<hr/>
 </body>
 </html>

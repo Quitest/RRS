@@ -6,18 +6,18 @@
     <title>Редактирование брони</title>
 </head>
 <body>
-<form th:action="@{/reserves/edit/{id}(id=${editableReserve.getId()})}" th:method="PATCH" th:object="${editableReserve}">
+<form th:action="@{/reserves/edit/{id}(id=${editableReserve.getId()})}" th:method="PATCH"
+      th:object="${editableReserve}">
     <table>
+        <caption>Редактирование брони</caption>
         <tr>
-            <td><label for="reserveId">Номер брони:</label> </td>
+            <th scope="col"><label for="reserveId">Номер брони:</label></th>
             <td><input id="reserveId" type="text" readonly th:value="*{getId()}"></td>
         </tr>
         <tr>
-            <td><label for="guestId">ID гостя: </label></td>
+            <th scope="col"><label for="guestId">ID гостя: </label></th>
             <td>
-                <!--                <input id="guestId" type="text" th:field="*{guestId}">-->
-                <select id="guestId" th:field="*{guestId}">
-<!--                    <option value="0">Укажите гостя</option>-->
+                <select id="guestId" th:field="*{guest}">
                     <option th:each="guest : ${guestList}"
                             th:value="${guest.id}"
                             th:text="${guest.lastname}+' '+${guest.name}+' '+${guest.middleName}"></option>
@@ -25,11 +25,9 @@
             </td>
         </tr>
         <tr>
-            <td><label for="id">Номер:</label></td>
+            <th scope="col"><label for="id">Номер:</label></th>
             <td>
-                <!--                <input id="id" type="text" th:field="*{roomId}"/>-->
-                <select id="id" th:field="*{roomId}">
-<!--                    <option value="0">Укажите номер</option>-->
+                <select id="id" th:field="*{room}">
                     <option th:each="room : ${roomList}"
                             th:value="${room.id}"
                             th:text="${room.id}">
@@ -38,18 +36,12 @@
             </td>
         </tr>
         <tr>
-            <td><label for="checkIn">Укажите дату и время заезда: </label></td>
+            <th scope="col"><label for="checkIn">Дата и время заезда: </label></th>
             <td><input id="checkIn" type="datetime-local" th:field="*{checkIn}"/></td>
-<!--            <td class="error-style" th:if="${#fields.hasErrors('checkIn')}" th:errors="*{checkIn}"></td>-->
         </tr>
         <tr>
-            <td><label for="checkOut">Укажите дату и время выезда: </label></td>
+            <th scope="col"><label for="checkOut">Дата и время выезда: </label></th>
             <td><input id="checkOut" type="datetime-local" th:field="*{checkOut}"/></td>
-<!--            <td >-->
-<!--                <ul>-->
-<!--                    <li class="error-style" th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>-->
-<!--                </ul>-->
-<!--            </td>-->
         </tr>
         <tr>
             <td><input type="submit" value="Обновить бронь"/></td>

@@ -7,20 +7,21 @@
 <body>
 <form th:action="@{/guests/create}" th:method="POST" th:object="${newGuest}">
     <table>
+        <caption>Регистрация нового гостя</caption>
         <tr>
-            <td><label for="lastname">Фамилия:</label></td>
+            <th scope="col"><label for="lastname">Фамилия:</label></th>
             <td><input id="lastname" type="text" th:field="*{lastname}"></td>
         </tr>
         <tr>
-            <td><label for="name">Имя:</label></td>
+            <th scope="col"><label for="name">Имя:</label></th>
             <td><input id="name" type="text" th:field="*{name}"></td>
         </tr>
         <tr>
-            <td><label for="middleName">Отчество:</label></td>
+            <th scope="col"><label for="middleName">Отчество:</label></th>
             <td><input id="middleName" type="text" th:field="*{middleName}"></td>
         </tr>
         <tr>
-            <td><label for="age">Возраст:</label></td>
+            <th scope="col"><label for="age">Возраст:</label></th>
             <td><input id="age" type="text" th:field="*{age}"></td>
         </tr>
     </table>

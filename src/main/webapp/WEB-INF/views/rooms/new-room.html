@@ -9,12 +9,13 @@
 <form th:method="POST" th:action="@{/rooms}" th:object="${newRoom}">
 
     <table>
+        <caption>Создание номера</caption>
         <tr>
-            <td><label for="id">Номер:</label></td>
+            <th scope="col"><label for="id">Номер:</label></th>
             <td><input id="id" type="text" th:field="*{id}"/></td>
         </tr>
         <tr>
-            <td><label for="roomClassOfAccommodations">Класс размещения: </label></td>
+            <th scope="col"><label for="roomClassOfAccommodations">Класс размещения: </label></th>
             <td><input id="roomClassOfAccommodations" type="text" th:field="*{classOfAccommodations}"/></td>
             <td class="error-style" th:if="${#fields.hasErrors('classOfAccommodations')}"
                 th:errors="*{classOfAccommodations}"></td>
@@ -23,7 +24,6 @@
             <td><input type="submit" value="Создать"/></td>
         </tr>
     </table>
-
 </form>
 </body>
 </html>

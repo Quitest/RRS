@@ -8,12 +8,13 @@
 <body>
 <form th:action="@{/rooms/{id}}" th:method="PATCH" th:object="${editedRoom}">
     <table>
+        <caption>Редактирование данных о номере</caption>
         <tr>
-            <td><label for="roomId">Номер: </label></td>
+            <th scope="col"><label for="roomId">Номер: </label></th>
             <td><input id="roomId" type="text" readonly  th:field="*{id}"></td>
         </tr>
         <tr>
-            <td><label for="classOfAccommodations">Класс размещения:</label></td>
+            <th scope="col"><label for="classOfAccommodations">Класс размещения:</label></th>
             <td><input id="classOfAccommodations" type="text" th:field="*{classOfAccommodations}" ></td>
             <td class="error-style" th:if="${#fields.hasErrors('classOfAccommodations')}"
                 th:errors="*{classOfAccommodations}"></td>

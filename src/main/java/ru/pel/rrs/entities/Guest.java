@@ -8,7 +8,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
-import java.util.List;
 import java.util.Set;
 
 @JsonIgnoreProperties({"empty"} //Игнор результата работы isEmpty(), если не будет, то в ответах будет boolean поле empty
@@ -37,6 +36,15 @@ public class Guest {
 
     public Guest() {
         // Конструктор по-умолчанию используется, в частности, аннотацией @ModelAttribute в GuestsController
+    }
+
+    @Override
+    public String toString() {
+        return lastname +
+                " " +
+                name +
+                " " +
+                middleName;
     }
 
     //FIXME логику перенести в слой сервиса
