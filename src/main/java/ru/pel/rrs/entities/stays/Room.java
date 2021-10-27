@@ -22,7 +22,7 @@ import java.util.Set;
 @Table(name = "rooms")
 @Getter
 @Setter
-public class Room extends Stays {
+public class Room {
 
     @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,6 +42,8 @@ public class Room extends Stays {
     public Room() {
         // Явное указание на наличие конструктора по-умолчанию.
     }
+
+
 
     /**
      * Проверка на пустоту, т.е. если все поля нулевые.
