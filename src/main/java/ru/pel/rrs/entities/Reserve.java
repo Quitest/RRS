@@ -5,11 +5,11 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 import ru.pel.rrs.annotations.ConsistentDates;
+import ru.pel.rrs.entities.stays.Room;
 
 import javax.persistence.*;
 import javax.validation.constraints.Future;
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @JsonIgnoreProperties({"empty"} //Игнор результата работы isEmpty(), если не будет, то в ответах будет boolean поле empty
 )

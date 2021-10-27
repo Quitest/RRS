@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.pel.rrs.entities.Guest;
 import ru.pel.rrs.entities.Reserve;
-import ru.pel.rrs.entities.Room;
+import ru.pel.rrs.entities.stays.Room;
 import ru.pel.rrs.repositories.GuestRepository;
 import ru.pel.rrs.repositories.ReserveRepository;
 import ru.pel.rrs.repositories.RoomRepository;

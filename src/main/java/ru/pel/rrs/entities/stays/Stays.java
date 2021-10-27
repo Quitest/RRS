@@ -1,4 +1,4 @@
-package ru.pel.rrs.entities;
+package ru.pel.rrs.entities.stays;
 
 /**
  * По задумке жилье в самом общем смысле: номер, комната, квартира, дом, бунгало, палатко-место и т.д.

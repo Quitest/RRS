@@ -1,8 +1,10 @@
-package ru.pel.rrs.entities;
+package ru.pel.rrs.entities.stays;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
+import ru.pel.rrs.entities.Reserve;
+import ru.pel.rrs.entities.stays.Stays;
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
@@ -11,6 +13,9 @@ import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.util.Set;
 
+/**
+ * Гостиничный номер
+ */
 @JsonIgnoreProperties({"empty"} //Игнор результата работы isEmpty(), если не будет, то в ответах будет boolean поле empty
 )
 @Entity

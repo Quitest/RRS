@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.stereotype.Service;
-import ru.pel.rrs.entities.Room;
+import ru.pel.rrs.entities.stays.Room;
 import ru.pel.rrs.repositories.RoomRepository;
 
 import java.util.List;

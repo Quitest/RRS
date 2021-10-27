@@ -1,6 +1,6 @@
 package ru.pel.rrs.services;
 
-import ru.pel.rrs.entities.Room;
+import ru.pel.rrs.entities.stays.Room;
 import ru.pel.rrs.entities.Guest;
 
 import java.time.LocalDateTime;
