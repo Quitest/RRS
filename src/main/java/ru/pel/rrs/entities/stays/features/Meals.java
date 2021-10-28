@@ -1,22 +1,23 @@
 package ru.pel.rrs.entities.stays.features;
 
-public enum Meals {
-    KITCHEN("Kitchen facilities"),
+import lombok.Getter;
+import lombok.Setter;
+import ru.pel.rrs.entities.stays.Stays;
 
-    BREAKFAST("Breakfast Included"),
+import javax.persistence.*;
+import java.util.Set;
 
-    ALL("All meals included"),
+@Entity
+@Getter
+@Setter
+public class Meals {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
-    BREAKFAST_LUNCH("Breakfast & lunch included"),
+    private String mealName;
+    private boolean available;
 
-    BREAKFAST_DINNER("Breakfast & dinner included");
-
-    String type;
-    Meals(String type){
-        this.type = type;
-    }
-
-    public String getValue(){
-        return type;
-    }
+    @ManyToMany(mappedBy = "mealSet")
+    private Set<Stays> staysSet;
 }

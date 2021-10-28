@@ -27,7 +27,7 @@ public interface Builder {
      *
      * @param meals
      */
-    void setMeals(Meals meals);
+    void setMeals(Set<Meals> meals);
 
     /**
      * Тип собственности/размещения
@@ -41,7 +41,7 @@ public interface Builder {
      *
      * @param roomFacilities
      */
-    void setRoomFacilities(RoomFacilities roomFacilities);
+    void setRoomFacilities(Set<RoomFacilities> roomFacilities);
 
     /**
      * Количество комнат

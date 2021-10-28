@@ -8,9 +8,9 @@ public class StaysBuilder implements Builder {
 
     private Set<Facilities> facilities;
     private Set<FunThingsToDo> funThingsToDo;
-    private Meals meals;
+    private Set<Meals> meals;
     private PropertyType propertyType;
-    private RoomFacilities roomFacilities;
+    private Set<RoomFacilities> roomFacilities;
     private int roomNumber;
     private int number;
 
@@ -29,7 +29,7 @@ public class StaysBuilder implements Builder {
     }
 
     @Override
-    public void setMeals(Meals meals) {
+    public void setMeals(Set<Meals> meals) {
         this.meals = meals;
     }
 
@@ -44,7 +44,7 @@ public class StaysBuilder implements Builder {
     }
 
     @Override
-    public void setRoomFacilities(RoomFacilities roomFacilities) {
+    public void setRoomFacilities(Set<RoomFacilities> roomFacilities) {
         this.roomFacilities = roomFacilities;
     }
 
