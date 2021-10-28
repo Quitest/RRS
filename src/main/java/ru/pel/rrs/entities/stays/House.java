@@ -1,4 +1,4 @@
-package ru.pel.rrs.entities.stays;
-
-public class House{
-}
+//package ru.pel.rrs.entities.stays;
+//
+//public class House{
+//}

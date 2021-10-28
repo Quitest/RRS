@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 import ru.pel.rrs.annotations.ConsistentDates;
 import ru.pel.rrs.entities.stays.Room;
+import ru.pel.rrs.entities.stays.Stays;
 
 import javax.persistence.*;
 import javax.validation.constraints.Future;
@@ -40,6 +41,10 @@ public class Reserve {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id")
     private Room room;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "stays_id")
+    private Stays stays;
 
     public Reserve() {
         // Конструктор по-умолчанию используется, в частности, аннотацией @ModelAttribute в ReservesController

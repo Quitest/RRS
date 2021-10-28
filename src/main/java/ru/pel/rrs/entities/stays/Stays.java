@@ -2,6 +2,7 @@ package ru.pel.rrs.entities.stays;
 
 import lombok.Getter;
 import lombok.Setter;
+import ru.pel.rrs.entities.Reserve;
 import ru.pel.rrs.entities.stays.features.*;
 
 import javax.persistence.*;
@@ -41,8 +42,10 @@ public class Stays {
             inverseJoinColumns = @JoinColumn(name = "meal_id")
     )
     private Set<Meals> mealSet;
-
     private PropertyType propertyType;
+
+    @OneToMany(mappedBy = "stays", fetch = FetchType.LAZY)
+    private Set<Reserve> reserveSet;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(

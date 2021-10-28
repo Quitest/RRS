@@ -1,7 +1,7 @@
-package ru.pel.rrs.entities.stays;
-
-/**
- * Квартира
- */
-public class Apartment {
-}
+//package ru.pel.rrs.entities.stays;
+//
+///**
+// * Квартира
+// */
+//public class Apartment {
+//}
