@@ -19,7 +19,7 @@ public class Stays {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
             name = "stays_facilities",
             joinColumns = @JoinColumn(name = "stays_id"),
@@ -27,7 +27,7 @@ public class Stays {
     )
     private Set<Facilities> facilities;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
             name = "stays_fun_things_to_do",
             joinColumns = @JoinColumn(name = "stays_id"),
@@ -35,24 +35,27 @@ public class Stays {
     )
     private Set<FunThingsToDo> funThingsToDo;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "stays_meals",
-            joinColumns = @JoinColumn(name = "stays_id"),
-            inverseJoinColumns = @JoinColumn(name = "meal_id")
-    )
-    private Set<Meals> mealSet;
+//    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JoinTable(
+//            name = "stays_meals",
+//            joinColumns = @JoinColumn(name = "stays_id"),
+//            inverseJoinColumns = @JoinColumn(name = "meal_id")
+//    )
+    @OneToMany(mappedBy = "stays", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<Meals> meals;
+
     private PropertyType propertyType;
 
     @OneToMany(mappedBy = "stays", fetch = FetchType.LAZY)
     private Set<Reserve> reserveSet;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "stays_room_facilities",
-            joinColumns = @JoinColumn(name = "stays_id"),
-            inverseJoinColumns = @JoinColumn(name = "room_facility_id")
-    )
+//    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JoinTable(
+//            name = "stays_room_facilities",
+//            joinColumns = @JoinColumn(name = "stays_id"),
+//            inverseJoinColumns = @JoinColumn(name = "room_facility_id")
+//    )
+    @OneToMany(mappedBy = "stays", fetch = FetchType.LAZY)
     private Set<RoomFacilities> roomFacilitiesSet;
     private int roomNumber;
     private int number;
@@ -60,11 +63,11 @@ public class Stays {
     public Stays() {
     }
 
-    public Stays(Set<Facilities> facilities, Set<FunThingsToDo> funThingsToDo, Set<Meals> mealSet, PropertyType propertyType,
+    public Stays(Set<Facilities> facilities, Set<FunThingsToDo> funThingsToDo, Set<Meals> meals, PropertyType propertyType,
                  Set<RoomFacilities> roomFacilitiesSet, int roomNumber, int number) {
         this.facilities = facilities;
         this.funThingsToDo = funThingsToDo;
-        this.mealSet = mealSet;
+        this.meals = meals;
         this.propertyType = propertyType;
         this.roomFacilitiesSet = roomFacilitiesSet;
         this.roomNumber = roomNumber;

@@ -28,7 +28,7 @@ public class Guest {
 
     private String lastname;
 
-    @Min(value = 18, message = "{minimal.guest.age}")
+//    @Min(value = 18, message = "{minimal.guest.age}")
     private int age;
 
     @OneToMany(mappedBy = "guest", fetch = FetchType.LAZY)

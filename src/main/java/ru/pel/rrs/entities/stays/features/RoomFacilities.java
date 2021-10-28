@@ -1,6 +1,8 @@
 package ru.pel.rrs.entities.stays.features;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ru.pel.rrs.entities.stays.Stays;
 
@@ -18,6 +20,9 @@ public class RoomFacilities {
     private String roomFacilityName;
     private boolean available;
 
-    @ManyToMany(mappedBy = "roomFacilitiesSet")
-    private Set<Stays> staysSet;
+//    @ManyToMany(mappedBy = "roomFacilitiesSet")
+//    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "stays_id")
+    private Stays stays;
 }

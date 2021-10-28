@@ -1,5 +1,6 @@
 package ru.pel.rrs.config;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -161,5 +162,11 @@ public class AppConfig implements WebMvcConfigurer {
         viewResolver.setTemplateEngine(templateEngine());
         viewResolver.setCharacterEncoding("UTF-8");
         return viewResolver;
+    }
+
+    @Bean
+    @Description("Предназначен для конвертации DTO->Entity и Entity->DTO")
+    public ModelMapper modelMapper(){
+        return new ModelMapper();
     }
 }

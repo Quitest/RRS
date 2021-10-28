@@ -1,5 +1,6 @@
 package ru.pel.rrs.entities.stays.features;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import ru.pel.rrs.entities.stays.Stays;
@@ -19,5 +20,6 @@ public class FunThingsToDo {
     private boolean available;
 
     @ManyToMany(mappedBy = "funThingsToDo")
+    @JsonIgnore
     private Set<Stays> staysSet;
 }
