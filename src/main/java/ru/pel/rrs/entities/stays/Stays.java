@@ -35,15 +35,16 @@ public class Stays {
     )
     private Set<FunThingsToDo> funThingsToDo;
 
-//    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    @JoinTable(
-//            name = "stays_meals",
-//            joinColumns = @JoinColumn(name = "stays_id"),
-//            inverseJoinColumns = @JoinColumn(name = "meal_id")
-//    )
-    @OneToMany(mappedBy = "stays", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "stays_meals",
+            joinColumns = @JoinColumn(name = "stays_id"),
+            inverseJoinColumns = @JoinColumn(name = "meal_id")
+    )
+//    @OneToMany(mappedBy = "stays", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Meals> meals;
 
+    @Column(name = "property_type")
     private PropertyType propertyType;
 
     @OneToMany(mappedBy = "stays", fetch = FetchType.LAZY)
