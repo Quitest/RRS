@@ -2,7 +2,6 @@ package ru.pel.rrs.entities.stays;
 
 import ru.pel.rrs.entities.stays.features.Meals;
 import ru.pel.rrs.entities.stays.features.PropertyType;
-import ru.pel.rrs.entities.stays.features.RoomFacilities;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -18,8 +17,8 @@ public class StaysDirector {
         meals.add(new Meals("кухня", true));
         builder.setMeals(meals);
 
-//        Set<RoomFacilities> roomFacilities = new HashSet<>();
-//        roomFacilities.add(new RoomFacilities())
+//        Set<RoomFacility> roomFacilities = new HashSet<>();
+//        roomFacilities.add(new RoomFacility())
 //        builder.setRoomFacilities();
     }
 }

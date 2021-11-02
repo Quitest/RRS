@@ -25,6 +25,10 @@ public class StaysController /*implements RESTController<Stays,Long>*/ {
 
     @PostMapping
     public ResponseEntity<Stays> create(@RequestBody Stays entity) throws SQLException {
+        // FIXME: 03.11.2021 Задача "увязки" entity не для слоя контроллеров
+        entity.setRoomFacilitiesSet(entity.getRoomFacilitiesSet());
+        entity.getRoomFacilitiesSet().stream()
+                .forEach(f->f.setStays(entity));
         return ResponseEntity.ok(staysService.save(entity));
     }
 
