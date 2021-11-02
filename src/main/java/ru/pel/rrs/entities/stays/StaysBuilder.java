@@ -10,7 +10,7 @@ public class StaysBuilder implements Builder {
     private Set<FunThingsToDo> funThingsToDo;
     private Set<Meals> meals;
     private PropertyType propertyType;
-    private Set<RoomFacilities> roomFacilities;
+    private Set<RoomFacility> roomFacilities;
     private int roomNumber;
     private int number;
 
@@ -44,7 +44,7 @@ public class StaysBuilder implements Builder {
     }
 
     @Override
-    public void setRoomFacilities(Set<RoomFacilities> roomFacilities) {
+    public void setRoomFacilities(Set<RoomFacility> roomFacilities) {
         this.roomFacilities = roomFacilities;
     }
 

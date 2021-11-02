@@ -6,6 +6,7 @@ import ru.pel.rrs.entities.Reserve;
 import ru.pel.rrs.entities.stays.features.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -23,24 +24,21 @@ public class Stays {
     @JoinTable(
             name = "stays_facilities",
             joinColumns = @JoinColumn(name = "stays_id"),
-            inverseJoinColumns = @JoinColumn(name = "facility_id")
-    )
+            inverseJoinColumns = @JoinColumn(name = "facility_id"))
     private Set<Facilities> facilities;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
             name = "stays_fun_things_to_do",
             joinColumns = @JoinColumn(name = "stays_id"),
-            inverseJoinColumns = @JoinColumn(name = "fun_thing_id")
-    )
+            inverseJoinColumns = @JoinColumn(name = "fun_thing_id"))
     private Set<FunThingsToDo> funThingsToDo;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
             name = "stays_meals",
             joinColumns = @JoinColumn(name = "stays_id"),
-            inverseJoinColumns = @JoinColumn(name = "meal_id")
-    )
+            inverseJoinColumns = @JoinColumn(name = "meal_id"))
 //    @OneToMany(mappedBy = "stays", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Meals> meals;
 
@@ -56,8 +54,8 @@ public class Stays {
 //            joinColumns = @JoinColumn(name = "stays_id"),
 //            inverseJoinColumns = @JoinColumn(name = "room_facility_id")
 //    )
-    @OneToMany(mappedBy = "stays", fetch = FetchType.LAZY)
-    private Set<RoomFacilities> roomFacilitiesSet;
+    @OneToMany(mappedBy = "stays", cascade = CascadeType.ALL)
+    private Set<RoomFacility> roomFacilitiesSet = new HashSet<>();
     private int roomNumber;
     private int number;
 
@@ -65,7 +63,7 @@ public class Stays {
     }
 
     public Stays(Set<Facilities> facilities, Set<FunThingsToDo> funThingsToDo, Set<Meals> meals, PropertyType propertyType,
-                 Set<RoomFacilities> roomFacilitiesSet, int roomNumber, int number) {
+                 Set<RoomFacility> roomFacilitiesSet, int roomNumber, int number) {
         this.facilities = facilities;
         this.funThingsToDo = funThingsToDo;
         this.meals = meals;

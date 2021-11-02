@@ -41,7 +41,7 @@ public interface Builder {
      *
      * @param roomFacilities
      */
-    void setRoomFacilities(Set<RoomFacilities> roomFacilities);
+    void setRoomFacilities(Set<RoomFacility> roomFacilities);
 
     /**
      * Количество комнат
