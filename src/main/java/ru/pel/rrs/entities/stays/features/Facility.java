@@ -11,7 +11,7 @@ import java.util.Set;
 @Entity
 @Setter
 @Getter
-public class Facilities {
+public class Facility {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -20,7 +20,7 @@ public class Facilities {
     private boolean available;
 
     @ManyToMany(mappedBy = "facilities")
-    @JsonIgnore
+//    @JsonIgnore
     private Set<Stays> staysSet;
 }
 /*

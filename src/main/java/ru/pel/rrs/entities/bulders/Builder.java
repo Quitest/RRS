@@ -1,4 +1,4 @@
-package ru.pel.rrs.entities.stays;
+package ru.pel.rrs.entities.bulders;
 
 import ru.pel.rrs.entities.stays.features.*;
 
@@ -13,14 +13,14 @@ public interface Builder {
      *
      * @param facilities
      */
-    void setFacilities(Set<Facilities> facilities);
+    void setFacilities(Set<Facility> facilities);
 
     /**
      * Чем заняться в свободное время
      *
      * @param funThingsToDo
      */
-    void setFunThingsToDo(Set<FunThingsToDo> funThingsToDo);
+    void setFunThingsToDo(Set<FunThingToDo> funThingsToDo);
 
     /**
      * Тип питания.

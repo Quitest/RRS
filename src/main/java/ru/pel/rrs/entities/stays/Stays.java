@@ -25,14 +25,14 @@ public class Stays {
             name = "stays_facilities",
             joinColumns = @JoinColumn(name = "stays_id"),
             inverseJoinColumns = @JoinColumn(name = "facility_id"))
-    private Set<Facilities> facilities;
+    private Set<Facility> facilities;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
             name = "stays_fun_things_to_do",
             joinColumns = @JoinColumn(name = "stays_id"),
             inverseJoinColumns = @JoinColumn(name = "fun_thing_id"))
-    private Set<FunThingsToDo> funThingsToDo;
+    private Set<FunThingToDo> funThingsToDo;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
@@ -62,7 +62,7 @@ public class Stays {
     public Stays() {
     }
 
-    public Stays(Set<Facilities> facilities, Set<FunThingsToDo> funThingsToDo, Set<Meals> meals, PropertyType propertyType,
+    public Stays(Set<Facility> facilities, Set<FunThingToDo> funThingsToDo, Set<Meals> meals, PropertyType propertyType,
                  Set<RoomFacility> roomFacilitiesSet, int roomNumber, int number) {
         this.facilities = facilities;
         this.funThingsToDo = funThingsToDo;

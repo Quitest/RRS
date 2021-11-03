@@ -26,7 +26,7 @@ public class RoomFacility {
 //    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "stays_id"/*, nullable = false*/)
-    @JsonIgnore
+//    @JsonIgnore
     private Stays stays;
 
     public RoomFacility(String roomFacilityName, boolean available) {

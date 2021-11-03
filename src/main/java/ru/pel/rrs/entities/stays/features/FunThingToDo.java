@@ -8,18 +8,24 @@ import ru.pel.rrs.entities.stays.Stays;
 import javax.persistence.*;
 import java.util.Set;
 
+/**
+ * Веселые занятия, досуг.
+ */
 @Entity
 @Getter
 @Setter
-public class FunThingsToDo {
+public class FunThingToDo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String funThing;
-    private boolean available;
+    /**
+     * Удаленность в километрах.
+     */
+    private float remoteness;
 
     @ManyToMany(mappedBy = "funThingsToDo")
-    @JsonIgnore
+//    @JsonIgnore
     private Set<Stays> staysSet;
 }

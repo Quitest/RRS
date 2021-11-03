@@ -1,14 +1,14 @@
 package ru.pel.rrs.controllers.rest;
 
+//import org.modelmapper.ModelMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.pel.rrs.dto.StaysDTO;
-import ru.pel.rrs.entities.stays.Builder;
+import ru.pel.rrs.entities.bulders.StaysBuilder;
 import ru.pel.rrs.entities.stays.Stays;
-import ru.pel.rrs.entities.stays.StaysBuilder;
-import ru.pel.rrs.entities.stays.StaysDirector;
+import ru.pel.rrs.entities.bulders.StaysDirector;
 import ru.pel.rrs.services.StaysService;
 
 import java.sql.SQLException;
@@ -25,10 +25,7 @@ public class StaysController /*implements RESTController<Stays,Long>*/ {
 
     @PostMapping
     public ResponseEntity<Stays> create(@RequestBody Stays entity) throws SQLException {
-        // FIXME: 03.11.2021 Задача "увязки" entity не для слоя контроллеров
-        entity.setRoomFacilitiesSet(entity.getRoomFacilitiesSet());
-        entity.getRoomFacilitiesSet().stream()
-                .forEach(f->f.setStays(entity));
+
         return ResponseEntity.ok(staysService.save(entity));
     }
 
@@ -49,12 +46,12 @@ public class StaysController /*implements RESTController<Stays,Long>*/ {
     }
 
     @GetMapping
-    public ResponseEntity<List<Stays>> getAll() {
-//        List<StaysDTO> staysDTOS = staysService.getAll().stream()
-//                .map(this::convertToDto)
-//                .toList();
-//        return ResponseEntity.ok(staysDTOS);
-        return ResponseEntity.ok(staysService.getAll());
+    public ResponseEntity<List<StaysDTO>> getAll() {
+        List<StaysDTO> staysDTOS = staysService.getAll().stream()
+                .map(this::convertToDto)
+                .toList();
+        return ResponseEntity.ok(staysDTOS);
+//        return ResponseEntity.ok(staysService.getAll());
     }
     
     @GetMapping("/{id}")

@@ -21,7 +21,7 @@ public class Meals {
     private boolean available;
 
     @ManyToMany(mappedBy = "meals")
-    @JsonIgnore
+//    @JsonIgnore
     private Set<Stays> stays;
 //    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 //    @JoinColumn(name = "stays_id")

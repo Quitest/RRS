@@ -1,4 +1,4 @@
-package ru.pel.rrs.entities.stays;
+package ru.pel.rrs.entities.bulders;
 
 import ru.pel.rrs.entities.stays.features.Meals;
 import ru.pel.rrs.entities.stays.features.PropertyType;

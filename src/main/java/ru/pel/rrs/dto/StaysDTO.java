@@ -18,13 +18,12 @@ import java.util.Set;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.PUBLIC_ONLY)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class StaysDTO {
-    private long id;
-    private Set<Facilities> facilities;
-    private Set<FunThingsToDo> funThingsToDo;
-    private Set<Meals> meals;
+    private Set<FacilityDTO> facilities; //DTO+
+    private Set<FunThingToDoDTO> funThingsToDo; //DTO+
+    private Set<MealsDTO> meals;
     private PropertyType propertyType;
-    private Set<Reserve> reserveSet;
-    private Set<RoomFacility> roomFacilitiesSet;
+    private Set<ReserveDTO> reserveSet;
+    private Set<RoomFacilityDTO> roomFacilitiesSet;
     private int roomNumber;
     private int number;
 }

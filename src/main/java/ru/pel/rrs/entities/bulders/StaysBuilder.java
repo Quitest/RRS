@@ -1,13 +1,14 @@
-package ru.pel.rrs.entities.stays;
+package ru.pel.rrs.entities.bulders;
 
+import ru.pel.rrs.entities.stays.Stays;
 import ru.pel.rrs.entities.stays.features.*;
 
 import java.util.Set;
 
 public class StaysBuilder implements Builder {
 
-    private Set<Facilities> facilities;
-    private Set<FunThingsToDo> funThingsToDo;
+    private Set<Facility> facilities;
+    private Set<FunThingToDo> funThingsToDo;
     private Set<Meals> meals;
     private PropertyType propertyType;
     private Set<RoomFacility> roomFacilities;
@@ -19,12 +20,12 @@ public class StaysBuilder implements Builder {
     }
 
     @Override
-    public void setFacilities(Set<Facilities> facilities) {
+    public void setFacilities(Set<Facility> facilities) {
         this.facilities = facilities;
     }
 
     @Override
-    public void setFunThingsToDo(Set<FunThingsToDo> funThingsToDo) {
+    public void setFunThingsToDo(Set<FunThingToDo> funThingsToDo) {
         this.funThingsToDo = funThingsToDo;
     }
 

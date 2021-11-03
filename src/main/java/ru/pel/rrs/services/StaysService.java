@@ -26,6 +26,10 @@ public class StaysService {
     }
 
     public Stays save(Stays stays) {
+        stays.setRoomFacilitiesSet(stays.getRoomFacilitiesSet());
+        stays.getRoomFacilitiesSet()
+                .forEach(f->f.setStays(stays));
+
         return staysRepository.save(stays);
     }
 }
