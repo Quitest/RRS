@@ -5,5 +5,7 @@ import org.springframework.stereotype.Repository;
 import ru.pel.rrs.entities.stays.Stays;
 
 @Repository
-public interface StaysRepository extends JpaRepository<Stays, Long> {
+public interface StaysRepository extends JpaRepository<Stays, Long>, StaysFinderRepository {
+
+
 }

@@ -1,9 +1,11 @@
 package ru.pel.rrs.services;
 
+import org.springframework.web.server.MethodNotAllowedException;
 import ru.pel.rrs.entities.stays.Room;
 import ru.pel.rrs.entities.Guest;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public interface Service {
     /**
@@ -17,7 +19,9 @@ public interface Service {
      * @throws Throwable Если ресурс занят
      */
     //TODO написать свое исключение. Вариант - конкретный тип исключения может бросать конкретный тип ресурса.
-    long acquire(Guest guest, Room room, LocalDateTime start, LocalDateTime stop) throws Throwable;
+    default long acquire(Guest guest, Room room, LocalDateTime start, LocalDateTime stop){
+        throw  new UnsupportedOperationException("Еще не реализован");
+    }
 
     /**
      * Поиск резерва по идентификатору
@@ -26,7 +30,9 @@ public interface Service {
      * @return найденный ресурс.
      */
     //TODO Решить: если ресурс не найден, что возвращать null или пустой ресурс, или вообще Optional?
-    Room findById(long id);
+    default Room findById(long id){
+        throw  new UnsupportedOperationException("Еще не реализован");
+    }
 
     /**
      * Освободить ресурс, по идентификатору.
@@ -35,9 +41,16 @@ public interface Service {
      * @return true - ресурс освобожден успешно, false - в противном случае.
      */
     //TODO освобождать ресурс может только тот кто его резервировал?
-    boolean release(long id);
+    default boolean release(long id){
+        throw  new UnsupportedOperationException("Еще не реализован");
+    }
 
     //TODO Опционально можно реализовать:
     // Поиск резерва по критериям: пользователю, времени, ресурсу…
     // Поиск ближайшего свободного места по времени,…
+
+    default List findBy(){
+        throw  new UnsupportedOperationException("Еще не реализован");
+    }
+
 }

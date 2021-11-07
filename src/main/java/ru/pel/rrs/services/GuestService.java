@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
-public class GuestService {
+public class GuestService implements ru.pel.rrs.services.Service {
     @Autowired
     private GuestRepository guestRepository;
 

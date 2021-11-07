@@ -16,10 +16,10 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.PUBLIC_ONLY)
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class StaysDTO {
-    private Set<FacilityDTO> facilities; //DTO+
-    private Set<FunThingToDoDTO> funThingsToDo; //DTO+
+    private Set<FacilityDTO> facilities;
+    private Set<FunThingToDoDTO> funThingsToDo;
     private Set<MealsDTO> meals;
     private PropertyType propertyType;
     private Set<ReserveDTO> reserveSet;

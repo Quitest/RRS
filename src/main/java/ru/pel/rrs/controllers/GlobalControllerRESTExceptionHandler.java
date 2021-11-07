@@ -29,7 +29,8 @@ public class GlobalControllerRESTExceptionHandler extends ResponseEntityExceptio
             IllegalArgumentException.class})
     protected ResponseEntity<Object> handleConflict(RuntimeException ex, WebRequest request) {
         return handleExceptionInternal(ex,
-                new ExceptionBody(getUrlFromWebRequest(request), ex),
+//                new ExceptionBody(getUrlFromWebRequest(request), ex),
+                ex.getLocalizedMessage(),
                 new HttpHeaders(),
                 HttpStatus.NOT_FOUND,
                 request);
