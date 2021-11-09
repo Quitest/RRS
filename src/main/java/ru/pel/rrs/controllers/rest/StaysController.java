@@ -78,8 +78,9 @@ public class StaysController /*implements RESTController<Stays,Long>*/ {
     }
 
     @GetMapping("/find")
-    public  ResponseEntity<List<StaysDTO>> findStays(@RequestParam String facilities){
-        List<Stays> byFacilities = staysService.findByFacilities(Set.of(facilities));
+    public  ResponseEntity<List<StaysDTO>> findStays(@RequestBody String propertyType){
+//        Set<String> f = Set.of(propertyType);
+        List<Stays> byFacilities = staysService.findByFacilities(propertyType);
         List<StaysDTO> staysDTOS = new ArrayList<>();
         for (Stays s : byFacilities){
             staysDTOS.add(convertToDto(s));

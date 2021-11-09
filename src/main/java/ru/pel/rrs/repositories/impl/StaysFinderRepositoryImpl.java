@@ -1,6 +1,7 @@
 package ru.pel.rrs.repositories.impl;
 
 import ru.pel.rrs.entities.stays.Stays;
+import ru.pel.rrs.entities.stays.features.Facility;
 import ru.pel.rrs.repositories.StaysFinderRepository;
 
 import javax.persistence.EntityManager;
@@ -15,21 +16,27 @@ public class StaysFinderRepositoryImpl implements StaysFinderRepository {
     @PersistenceContext
     EntityManager entityManager;
 //TODO ознакомиться с https://easyjava.ru/data/jpa/jpa-criteria/
+    //Знакомство с Criteria API
     @Override
-    public List<Stays> findByFacilities(Set<String> facilities) {
+    public List<Stays> findByFacilities(String propertyType) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Stays> query = cb.createQuery(Stays.class);
         Root<Stays> stays = query.from(Stays.class);
 
-        Path<String> facilityPath = stays.get("facilities");
-//        Path<String> facilityPath = stays.get("facilityName");
+//        Path<String> facilityPath = stays.get("propertyType");
+        Path<String> facilityPath = stays.get("propertyType");
+//        Path<String> facilityName = facilityPath.get("facilityName");
+
 
         List<Predicate> predicates = new ArrayList<>();
-        for (String f : facilities){
-            predicates.add(cb.like(facilityPath, f));
-        }
+//        for (String f : propertyType){
+//            predicates.add(cb.like(f, facilityPath));
+//            predicates.add(cb.isMember(f, facilityPath));
+//            }
+        predicates.add(cb.like(facilityPath,propertyType));
+
         query.select(stays)
-                .where(cb.or(predicates.toArray(new Predicate[predicates.size()])));
+                .where(cb.or(predicates.toArray(new Predicate[0])));
         List<Stays> resultList=null;
         try {
             TypedQuery<Stays> query1 = entityManager.createQuery(query);

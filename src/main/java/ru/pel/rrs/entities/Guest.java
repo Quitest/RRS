@@ -10,6 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import java.util.Set;
 
+
 @JsonIgnoreProperties({"empty"} //Игнор результата работы isEmpty(), если не будет, то в ответах будет boolean поле empty
 )
 @Entity
@@ -28,7 +29,7 @@ public class Guest {
 
     private String lastname;
 
-//    @Min(value = 18, message = "{minimal.guest.age}")
+    @Min(value = 18, message = "{minimal.guest.age}")
     private int age;
 
     @OneToMany(mappedBy = "guest", fetch = FetchType.LAZY)
