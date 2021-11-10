@@ -78,7 +78,7 @@ public class StaysController /*implements RESTController<Stays,Long>*/ {
     }
 
     @GetMapping("/find")
-    public  ResponseEntity<List<StaysDTO>> findStays(@RequestBody String propertyType){
+    public  ResponseEntity<List<StaysDTO>> findStays(@RequestBody(required = false) Set<String> propertyType){
 //        Set<String> f = Set.of(propertyType);
         List<Stays> byFacilities = staysService.findByFacilities(propertyType);
         List<StaysDTO> staysDTOS = new ArrayList<>();

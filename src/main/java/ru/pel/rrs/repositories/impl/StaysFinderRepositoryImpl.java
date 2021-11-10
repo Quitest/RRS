@@ -6,7 +6,6 @@ import ru.pel.rrs.repositories.StaysFinderRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,29 +17,41 @@ public class StaysFinderRepositoryImpl implements StaysFinderRepository {
 //TODO ознакомиться с https://easyjava.ru/data/jpa/jpa-criteria/
     //Знакомство с Criteria API
     @Override
-    public List<Stays> findByFacilities(String propertyType) {
+    public List<Stays> findByFacilities(Set<String> facilities) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+
+        CriteriaQuery<Facility> facilityCriteriaQuery = cb.createQuery(Facility.class);
+        Root<Facility> facilityRoot = facilityCriteriaQuery.from(Facility.class);
+
+        facilityCriteriaQuery.select(facilityRoot).where(facilityRoot.get("facilityName").in(facilities));
+        List<Facility> resultList1 = entityManager.createQuery(facilityCriteriaQuery).getResultList();
+
+
         CriteriaQuery<Stays> query = cb.createQuery(Stays.class);
         Root<Stays> stays = query.from(Stays.class);
 
-//        Path<String> facilityPath = stays.get("propertyType");
-        Path<String> facilityPath = stays.get("propertyType");
+        //источник https://www.baeldung.com/jpa-criteria-api-in-expressions
+        query.select(stays).where(cb.in(stays.get("facilities")).value(facilityCriteriaQuery));
+
+//        Path<Set<Facility>> facilityPath = stays.get("facilities");
+
 //        Path<String> facilityName = facilityPath.get("facilityName");
+//        List<Predicate> predicates = new ArrayList<>();
+//        for(String f : facilities){
+//            predicates.add(cb.like(f,stays.get("facilities")));
+//        }
 
 
-        List<Predicate> predicates = new ArrayList<>();
-//        for (String f : propertyType){
-//            predicates.add(cb.like(f, facilityPath));
-//            predicates.add(cb.isMember(f, facilityPath));
-//            }
-        predicates.add(cb.like(facilityPath,propertyType));
+//        query.select(stays).where(cb.or(predicates.toArray(new Predicate[0])));
+//        query.select(stays).where(cb.like(facilityPath,facilities));
+//        query.select(stays).where(cb.gt(stays.get("roomNumber"),1));
+//        query.select(stays).where(cb.like(stays.get(Stays_.roomNumber)));
+//        query.select(stays).where(stays.get("facilities").in(facilities));
 
-        query.select(stays)
-                .where(cb.or(predicates.toArray(new Predicate[0])));
         List<Stays> resultList=null;
         try {
-            TypedQuery<Stays> query1 = entityManager.createQuery(query);
-            resultList = query1.getResultList();
+            resultList = entityManager.createQuery(query).getResultList();
+//            resultList = query1.getResultList();
         }catch (Exception e){
             e.printStackTrace();
         }
