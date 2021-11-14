@@ -6,6 +6,7 @@ import ru.pel.rrs.entities.stays.Stays;
 import ru.pel.rrs.repositories.StaysRepository;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class StaysService implements ru.pel.rrs.services.Service {
@@ -48,7 +49,7 @@ public class StaysService implements ru.pel.rrs.services.Service {
         return staysRepository.save(stays);
     }
 
-    public List<Stays> findByFacilities(String facilities){
+    public List<Stays> findByFacilities(Set<String> facilities){
         return staysRepository.findByFacilities(facilities);
     }
 
