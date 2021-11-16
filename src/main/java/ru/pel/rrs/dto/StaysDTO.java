@@ -18,6 +18,7 @@ import java.util.Set;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.PUBLIC_ONLY)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class StaysDTO {
+    private long id;
     private Set<FacilityDTO> facilities;
     private Set<FunThingToDoDTO> funThingsToDo;
     private Set<MealsDTO> meals;

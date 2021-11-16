@@ -17,36 +17,36 @@ public class StaysFinderRepositoryImpl implements StaysFinderRepository {
 //TODO ознакомиться с https://easyjava.ru/data/jpa/jpa-criteria/
     //Знакомство с Criteria API
     @Override
-    public List<Stays> findByFacilities(Set<String> facilities) {
+    public List<Stays> findByFacilities(Set<String> facilitiesNames) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 
         CriteriaQuery<Facility> facilityCriteriaQuery = cb.createQuery(Facility.class);
         Root<Facility> facilityRoot = facilityCriteriaQuery.from(Facility.class);
 
-        facilityCriteriaQuery.select(facilityRoot).where(facilityRoot.get("facilityName").in(facilities));
-        List<Facility> resultList1 = entityManager.createQuery(facilityCriteriaQuery).getResultList();
+        facilityCriteriaQuery.select(facilityRoot).where(facilityRoot.get("facilityName").in(facilitiesNames));
+        List<Facility> facilityList = entityManager.createQuery(facilityCriteriaQuery).getResultList();
 
 
         CriteriaQuery<Stays> query = cb.createQuery(Stays.class);
-        Root<Stays> stays = query.from(Stays.class);
+        Root<Stays> staysRoot = query.from(Stays.class);
 
         //источник https://www.baeldung.com/jpa-criteria-api-in-expressions
-        query.select(stays).where(cb.in(stays.get("facilities")).value(facilityCriteriaQuery));
+        query.select(staysRoot).where(cb.in(staysRoot.get("facilities").get("facilityName")).value(facilityCriteriaQuery));
 
-//        Path<Set<Facility>> facilityPath = stays.get("facilities");
+//        Path<Set<Facility>> facilityPath = staysRoot.get("facilitiesNames");
 
 //        Path<String> facilityName = facilityPath.get("facilityName");
 //        List<Predicate> predicates = new ArrayList<>();
-//        for(String f : facilities){
-//            predicates.add(cb.like(f,stays.get("facilities")));
+//        for(String f : facilitiesNames){
+//            predicates.add(cb.like(f,staysRoot.get("facilitiesNames")));
 //        }
 
 
-//        query.select(stays).where(cb.or(predicates.toArray(new Predicate[0])));
-//        query.select(stays).where(cb.like(facilityPath,facilities));
-//        query.select(stays).where(cb.gt(stays.get("roomNumber"),1));
-//        query.select(stays).where(cb.like(stays.get(Stays_.roomNumber)));
-//        query.select(stays).where(stays.get("facilities").in(facilities));
+//        query.select(staysRoot).where(cb.or(predicates.toArray(new Predicate[0])));
+//        query.select(staysRoot).where(cb.like(facilityPath,facilitiesNames));
+//        query.select(staysRoot).where(cb.gt(staysRoot.get("roomNumber"),1));
+//        query.select(staysRoot).where(cb.like(staysRoot.get(Stays_.roomNumber)));
+//        query.select(staysRoot).where(staysRoot.get("facilitiesNames").in(facilitiesNames));
 
         List<Stays> resultList=null;
         try {

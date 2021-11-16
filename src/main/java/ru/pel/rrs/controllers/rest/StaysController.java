@@ -47,8 +47,9 @@ public class StaysController /*implements RESTController<Stays,Long>*/ {
     }
 
     @PostMapping
-    public ResponseEntity<StaysDTO> create(@RequestBody Stays stays) {
-        StaysDTO saved = convertToDto(staysService.save(stays));
+    public ResponseEntity<StaysDTO> create(@RequestBody StaysDTO staysDTO) {
+        //WTF надо ли делать столько конвертаций DTO->Entity->DTO?
+        StaysDTO saved = convertToDto(staysService.save(convertToEntity(staysDTO)));
         return ResponseEntity.ok(saved);
     }
 

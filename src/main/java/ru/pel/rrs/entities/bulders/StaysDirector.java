@@ -1,5 +1,6 @@
 package ru.pel.rrs.entities.bulders;
 
+import ru.pel.rrs.entities.stays.features.Facility;
 import ru.pel.rrs.entities.stays.features.Meals;
 import ru.pel.rrs.entities.stays.features.PropertyType;
 
@@ -16,6 +17,13 @@ public class StaysDirector {
         Set<Meals> meals = new HashSet<>();
         meals.add(new Meals("кухня", true));
         builder.setMeals(meals);
+
+        Facility facility = new Facility();
+        facility.setFacilityName("гараж");
+        facility.setAvailable(true);
+        Set<Facility> facilities = new HashSet<>();
+        facilities.add(facility);
+        builder.setFacilities(facilities);
 
 //        Set<RoomFacility> roomFacilities = new HashSet<>();
 //        roomFacilities.add(new RoomFacility())
